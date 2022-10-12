@@ -1,0 +1,29 @@
+name: Design Template
+description: UI 디자인 추가 및 변경
+title: "[Design]: Design 이슈 제목"
+labels: ["design"]
+
+body:
+  - type: textarea
+    id: design-title
+    attributes:
+      label: Design
+      description: 구현할 기능이나 UI 에 대한 설명을 적습니다.
+      placeholder: ex. Figma나 기타 디자인 툴의 스크린샷을 첨부합니다.
+      value: |
+        <table> 
+                <tr>
+                   <td><img src="링크" width="350" ></td>
+                   <td><img src="링크" width="350" ></td>
+                </tr>
+    validations:
+      required: true
+      
+  - type: textarea
+    id: todo
+    attributes:
+      label: What to do
+      description: 해야 하는 디자인 사안을 나열하세요
+      placeholder: ex. - tableView 구현
+    validations:
+      required: true
