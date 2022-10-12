@@ -29,17 +29,4 @@ body:
         - ex. HomeView
     validations:
       required: false
-      
-  - type: dropdown
-    id: priority
-    attributes:
-      label: 우선순위
-      description: Backlog에서의 중요도
-      options:
-        - ★★★★★
-        - ★★★★
-        - ★★★
-        - ★★
-        - ★
-    validations:
-      required: true
+
