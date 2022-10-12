@@ -22,7 +22,7 @@ body:
     id: todo
     attributes:
       label: What to do
-      description: 해야 하는 디자인 사안을 나열하세요
+      description: 작업할 디자인 구현에 대한 설명을 적어주세요.
       placeholder: ex. - tableView 구현
     validations:
       required: true
