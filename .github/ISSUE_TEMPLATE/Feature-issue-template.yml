@@ -25,8 +25,7 @@ body:
     attributes:
       label: Related View(Optional)
       description: 작업하는 사항에 영향을 받는 View(화면)
-      value: |
-        - ex. HomeView
+      placeholder: ex. HomeView
     validations:
       required: false
 
