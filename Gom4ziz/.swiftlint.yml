@@ -1,0 +1,12 @@
+disabled_rules:
+  - identifier_name
+
+excluded:
+
+line_length:
+    warning: 240
+    error: 300
+    ignores_function_declarations: true
+    ignores_comments: true
+    ignores_interpolated_strings: true
+    ignores_urls: true
