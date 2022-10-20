@@ -20,16 +20,16 @@ extension UserInfo {
     ]
 }
 
-extension PromiseRoom {
-    static let mockData: PromiseRoom = PromiseRoom(id: "123", name: "통영 가즈아", date: nil, place: "통영", isEnd: false)
-    static let mockDataList: [PromiseRoom] = [
-        PromiseRoom(id: UUID().uuidString, name: "통영 가즈아", date: nil, place: "통영", isEnd: false),
-        PromiseRoom(id: UUID().uuidString, name: "대구 가즈아", date: nil, place: "통영", isEnd: true),
-        PromiseRoom(id: UUID().uuidString, name: "부산 가즈아", date: nil, place: "통영", isEnd: false),
-        PromiseRoom(id: UUID().uuidString, name: "서울 가지말자", date: nil, place: nil, isEnd: true),
-        PromiseRoom(id: UUID().uuidString, name: "울릉도 가지말자", date: nil, place: "울릉도", isEnd: false),
-        PromiseRoom(id: UUID().uuidString, name: "유럽 가즈아", date: nil, place: "유럽", isEnd: true),
-        PromiseRoom(id: UUID().uuidString, name: "바르벳 가즈아", date: nil, place: "포항", isEnd: false)
+extension PlansRoom {
+    static let mockData: PlansRoom = PlansRoom(id: "123", name: "통영 가즈아", date: nil, place: "통영", isEnd: false)
+    static let mockDataList: [PlansRoom] = [
+        PlansRoom(id: UUID().uuidString, name: "통영 가즈아", date: nil, place: "통영", isEnd: false),
+        PlansRoom(id: UUID().uuidString, name: "대구 가즈아", date: nil, place: "통영", isEnd: true),
+        PlansRoom(id: UUID().uuidString, name: "부산 가즈아", date: nil, place: "통영", isEnd: false),
+        PlansRoom(id: UUID().uuidString, name: "서울 가지말자", date: nil, place: nil, isEnd: true),
+        PlansRoom(id: UUID().uuidString, name: "울릉도 가지말자", date: nil, place: "울릉도", isEnd: false),
+        PlansRoom(id: UUID().uuidString, name: "유럽 가즈아", date: nil, place: "유럽", isEnd: true),
+        PlansRoom(id: UUID().uuidString, name: "바르벳 가즈아", date: nil, place: "포항", isEnd: false)
     ]
 }
 #endif
