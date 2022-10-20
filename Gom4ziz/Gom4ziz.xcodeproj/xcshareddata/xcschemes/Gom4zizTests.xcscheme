@@ -97,15 +97,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0062EB8D2900222700B0A6AB"
-            BuildableName = "Gom4zizTests.xctest"
-            BlueprintName = "Gom4zizTests"
-            ReferencedContainer = "container:Gom4ziz.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
