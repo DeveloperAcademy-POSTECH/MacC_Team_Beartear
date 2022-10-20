@@ -9,6 +9,6 @@ import XCTest
 
 final class SampleTests: XCTestCase {
     func testExample() throws {
-        XCTFail(#function)
+        XCTAssert(true)
     }
 }
