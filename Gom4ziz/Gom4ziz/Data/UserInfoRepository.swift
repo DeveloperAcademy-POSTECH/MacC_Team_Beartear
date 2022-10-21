@@ -12,6 +12,7 @@ import RxSwift
 protocol UserInfoRepository {
     func requestUserInfo(of uid: String) -> Observable<UserInfo>
     func addUserInfo(userInfo: UserInfo) -> Single<Void>
+    func deleteUserInfo(of uid: String) -> Single<Void>
 }
 
 final class FirebaseUserInfoRepository {
@@ -39,6 +40,12 @@ extension FirebaseUserInfoRepository: UserInfoRepository {
         getUserInfoRef(of: userInfo.id)
             .rx
             .setData(userInfo)
+    }
+
+    func deleteUserInfo(of uid: String) -> Single<Void> {
+        getUserInfoRef(of: uid)
+            .rx
+            .deleteDocument()
     }
 }
 

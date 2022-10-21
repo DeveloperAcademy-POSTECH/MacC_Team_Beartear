@@ -20,34 +20,6 @@
                ReferencedContainer = "container:Gom4ziz.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0062EB8D2900222700B0A6AB"
-               BuildableName = "Gom4zizTests.xctest"
-               BlueprintName = "Gom4zizTests"
-               ReferencedContainer = "container:Gom4ziz.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0062EB972900222700B0A6AB"
-               BuildableName = "Gom4zizUITests.xctest"
-               BlueprintName = "Gom4zizUITests"
-               ReferencedContainer = "container:Gom4ziz.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

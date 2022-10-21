@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0062EB8D2900222700B0A6AB"
+               BlueprintIdentifier = "003E5E512902CF89004C597A"
                BuildableName = "Gom4zizTests.xctest"
                BlueprintName = "Gom4zizTests"
                ReferencedContainer = "container:Gom4ziz.xcodeproj">
@@ -34,20 +34,6 @@
                ReferencedContainer = "container:Gom4ziz.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0062EB972900222700B0A6AB"
-               BuildableName = "Gom4zizUITests.xctest"
-               BlueprintName = "Gom4zizUITests"
-               ReferencedContainer = "container:Gom4ziz.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -61,20 +47,9 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0062EB8D2900222700B0A6AB"
+               BlueprintIdentifier = "003E5E512902CF89004C597A"
                BuildableName = "Gom4zizTests.xctest"
                BlueprintName = "Gom4zizTests"
-               ReferencedContainer = "container:Gom4ziz.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0062EB972900222700B0A6AB"
-               BuildableName = "Gom4zizUITests.xctest"
-               BlueprintName = "Gom4zizUITests"
                ReferencedContainer = "container:Gom4ziz.xcodeproj">
             </BuildableReference>
          </TestableReference>

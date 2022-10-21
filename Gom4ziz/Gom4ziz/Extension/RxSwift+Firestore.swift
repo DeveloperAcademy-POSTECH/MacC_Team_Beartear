@@ -13,6 +13,15 @@ enum RxFirestoreError: Error {
     case documentIsNotExist // document 가 없는 에러
 }
 
+extension RxFirestoreError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .documentIsNotExist:
+            return "데이터가 존재하지 않습니다."
+        }
+    }
+}
+
 extension Reactive where Base: DocumentReference {
 
     /// get document snapshot with given document reference
