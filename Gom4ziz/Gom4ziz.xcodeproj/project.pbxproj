@@ -19,6 +19,8 @@
 		002821F12901889000717E2C /* UserInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002821F02901889000717E2C /* UserInfoRepository.swift */; };
 		002821F329018E7700717E2C /* RxSwift+Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002821F229018E7700717E2C /* RxSwift+Firestore.swift */; };
 		002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 002821F52901932A00717E2C /* FirebaseFirestoreSwift */; };
+		002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002821F729022B2100717E2C /* UserInfoIdCache.swift */; };
+		002821FA2902353400717E2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 002821F92902353400717E2C /* GoogleService-Info.plist */; };
 		0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7B2900222600B0A6AB /* AppDelegate.swift */; };
 		0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7D2900222600B0A6AB /* SceneDelegate.swift */; };
 		0062EB802900222600B0A6AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7F2900222600B0A6AB /* ViewController.swift */; };
@@ -55,6 +57,8 @@
 		002821EE2901884100717E2C /* ProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
 		002821F02901889000717E2C /* UserInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRepository.swift; sourceTree = "<group>"; };
 		002821F229018E7700717E2C /* RxSwift+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxSwift+Firestore.swift"; sourceTree = "<group>"; };
+		002821F729022B2100717E2C /* UserInfoIdCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoIdCache.swift; sourceTree = "<group>"; };
+		002821F92902353400717E2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0062EB782900222600B0A6AB /* Gom4ziz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gom4ziz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0062EB7B2900222600B0A6AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0062EB7D2900222600B0A6AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		0062EB6F2900222600B0A6AB = {
 			isa = PBXGroup;
 			children = (
+				002821F92902353400717E2C /* GoogleService-Info.plist */,
 				0062EBAC290023A600B0A6AB /* .swiftlint.yml */,
 				0062EB7A2900222600B0A6AB /* Gom4ziz */,
 				0062EB912900222700B0A6AB /* Gom4zizTests */,
@@ -192,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				002821F02901889000717E2C /* UserInfoRepository.swift */,
+				002821F729022B2100717E2C /* UserInfoIdCache.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 			files = (
 				0062EBAD290023A600B0A6AB /* .swiftlint.yml in Resources */,
 				0062EB882900222700B0A6AB /* LaunchScreen.storyboard in Resources */,
+				002821FA2902353400717E2C /* GoogleService-Info.plist in Resources */,
 				0062EB852900222700B0A6AB /* Assets.xcassets in Resources */,
 				0062EB832900222600B0A6AB /* Main.storyboard in Resources */,
 			);
@@ -416,6 +423,7 @@
 				001B1C812900FE5B00F5C875 /* PromiseRoom.swift in Sources */,
 				001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */,
 				0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */,
+				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,
 				002821F329018E7700717E2C /* RxSwift+Firestore.swift in Sources */,
