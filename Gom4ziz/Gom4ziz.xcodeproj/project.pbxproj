@@ -21,6 +21,9 @@
 		002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 002821F52901932A00717E2C /* FirebaseFirestoreSwift */; };
 		002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002821F729022B2100717E2C /* UserInfoIdCache.swift */; };
 		002821FA2902353400717E2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 002821F92902353400717E2C /* GoogleService-Info.plist */; };
+		003E5E5C2902D0FA004C597A /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 003E5E5B2902D0FA004C597A /* RxBlocking */; };
+		003E5E5E2902D0FA004C597A /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 003E5E5D2902D0FA004C597A /* RxTest */; };
+		003E5E602902D1A6004C597A /* UserInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */; };
 		0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7B2900222600B0A6AB /* AppDelegate.swift */; };
 		0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7D2900222600B0A6AB /* SceneDelegate.swift */; };
 		0062EB802900222600B0A6AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7F2900222600B0A6AB /* ViewController.swift */; };
@@ -34,14 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0062EB8F2900222700B0A6AB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0062EB702900222600B0A6AB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0062EB772900222600B0A6AB;
-			remoteInfo = Gom4ziz;
-		};
-		0062EB992900222700B0A6AB /* PBXContainerItemProxy */ = {
+		003E5E562902CF89004C597A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0062EB702900222600B0A6AB /* Project object */;
 			proxyType = 1;
@@ -59,6 +55,8 @@
 		002821F229018E7700717E2C /* RxSwift+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxSwift+Firestore.swift"; sourceTree = "<group>"; };
 		002821F729022B2100717E2C /* UserInfoIdCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoIdCache.swift; sourceTree = "<group>"; };
 		002821F92902353400717E2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		003E5E522902CF89004C597A /* Gom4zizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gom4zizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		0062EB782900222600B0A6AB /* Gom4ziz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gom4ziz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0062EB7B2900222600B0A6AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0062EB7D2900222600B0A6AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,8 +65,6 @@
 		0062EB842900222700B0A6AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0062EB872900222700B0A6AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0062EB892900222700B0A6AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0062EB8E2900222700B0A6AB /* Gom4zizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gom4zizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0062EB982900222700B0A6AB /* Gom4zizUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gom4zizUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0062EBAC290023A600B0A6AB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		0062EBB92900289800B0A6AB /* SampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTests.swift; sourceTree = "<group>"; };
 		0062EBBB290028CB00B0A6AB /* SampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUITests.swift; sourceTree = "<group>"; };
@@ -76,6 +72,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		003E5E4F2902CF89004C597A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				003E5E5E2902D0FA004C597A /* RxTest in Frameworks */,
+				003E5E5C2902D0FA004C597A /* RxBlocking in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0062EB752900222600B0A6AB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -86,20 +91,6 @@
 				001B1CA62901270C00F5C875 /* RxRelay in Frameworks */,
 				001B1C8829010C4B00F5C875 /* FirebaseFirestore in Frameworks */,
 				002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0062EB8B2900222700B0A6AB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0062EB952900222700B0A6AB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,14 +114,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		003E5E532902CF89004C597A /* Gom4zizTests */ = {
+			isa = PBXGroup;
+			children = (
+				003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */,
+			);
+			path = Gom4zizTests;
+			sourceTree = "<group>";
+		};
 		0062EB6F2900222600B0A6AB = {
 			isa = PBXGroup;
 			children = (
 				002821F92902353400717E2C /* GoogleService-Info.plist */,
 				0062EBAC290023A600B0A6AB /* .swiftlint.yml */,
 				0062EB7A2900222600B0A6AB /* Gom4ziz */,
-				0062EB912900222700B0A6AB /* Gom4zizTests */,
-				0062EB9B2900222700B0A6AB /* Gom4zizUITests */,
+				003E5E532902CF89004C597A /* Gom4zizTests */,
 				0062EB792900222600B0A6AB /* Products */,
 				002821F42901932A00717E2C /* Frameworks */,
 			);
@@ -140,8 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				0062EB782900222600B0A6AB /* Gom4ziz.app */,
-				0062EB8E2900222700B0A6AB /* Gom4zizTests.xctest */,
-				0062EB982900222700B0A6AB /* Gom4zizUITests.xctest */,
+				003E5E522902CF89004C597A /* Gom4zizTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,22 +155,6 @@
 				0062EBB32900254E00B0A6AB /* Utility */,
 			);
 			path = Gom4ziz;
-			sourceTree = "<group>";
-		};
-		0062EB912900222700B0A6AB /* Gom4zizTests */ = {
-			isa = PBXGroup;
-			children = (
-				0062EBB92900289800B0A6AB /* SampleTests.swift */,
-			);
-			path = Gom4zizTests;
-			sourceTree = "<group>";
-		};
-		0062EB9B2900222700B0A6AB /* Gom4zizUITests */ = {
-			isa = PBXGroup;
-			children = (
-				0062EBBB290028CB00B0A6AB /* SampleUITests.swift */,
-			);
-			path = Gom4zizUITests;
 			sourceTree = "<group>";
 		};
 		0062EBAE290024F500B0A6AB /* Presenter */ = {
@@ -249,6 +230,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		003E5E512902CF89004C597A /* Gom4zizTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 003E5E582902CF89004C597A /* Build configuration list for PBXNativeTarget "Gom4zizTests" */;
+			buildPhases = (
+				003E5E4E2902CF89004C597A /* Sources */,
+				003E5E4F2902CF89004C597A /* Frameworks */,
+				003E5E502902CF89004C597A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				003E5E572902CF89004C597A /* PBXTargetDependency */,
+			);
+			name = Gom4zizTests;
+			packageProductDependencies = (
+				003E5E5B2902D0FA004C597A /* RxBlocking */,
+				003E5E5D2902D0FA004C597A /* RxTest */,
+			);
+			productName = Gom4zizTests;
+			productReference = 003E5E522902CF89004C597A /* Gom4zizTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		0062EB772900222600B0A6AB /* Gom4ziz */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0062EBA22900222700B0A6AB /* Build configuration list for PBXNativeTarget "Gom4ziz" */;
@@ -275,42 +278,6 @@
 			productReference = 0062EB782900222600B0A6AB /* Gom4ziz.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0062EB8D2900222700B0A6AB /* Gom4zizTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0062EBA52900222700B0A6AB /* Build configuration list for PBXNativeTarget "Gom4zizTests" */;
-			buildPhases = (
-				0062EB8A2900222700B0A6AB /* Sources */,
-				0062EB8B2900222700B0A6AB /* Frameworks */,
-				0062EB8C2900222700B0A6AB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0062EB902900222700B0A6AB /* PBXTargetDependency */,
-			);
-			name = Gom4zizTests;
-			productName = Gom4zizTests;
-			productReference = 0062EB8E2900222700B0A6AB /* Gom4zizTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		0062EB972900222700B0A6AB /* Gom4zizUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0062EBA82900222700B0A6AB /* Build configuration list for PBXNativeTarget "Gom4zizUITests" */;
-			buildPhases = (
-				0062EB942900222700B0A6AB /* Sources */,
-				0062EB952900222700B0A6AB /* Frameworks */,
-				0062EB962900222700B0A6AB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0062EB9A2900222700B0A6AB /* PBXTargetDependency */,
-			);
-			name = Gom4zizUITests;
-			productName = Gom4zizUITests;
-			productReference = 0062EB982900222700B0A6AB /* Gom4zizUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -321,18 +288,13 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					003E5E512902CF89004C597A = {
+						CreatedOnToolsVersion = 14.0.1;
+						LastSwiftMigration = 1400;
+						TestTargetID = 0062EB772900222600B0A6AB;
+					};
 					0062EB772900222600B0A6AB = {
 						CreatedOnToolsVersion = 14.0.1;
-					};
-					0062EB8D2900222700B0A6AB = {
-						CreatedOnToolsVersion = 14.0.1;
-						LastSwiftMigration = 1400;
-						TestTargetID = 0062EB772900222600B0A6AB;
-					};
-					0062EB972900222700B0A6AB = {
-						CreatedOnToolsVersion = 14.0.1;
-						LastSwiftMigration = 1400;
-						TestTargetID = 0062EB772900222600B0A6AB;
 					};
 				};
 			};
@@ -354,13 +316,19 @@
 			projectRoot = "";
 			targets = (
 				0062EB772900222600B0A6AB /* Gom4ziz */,
-				0062EB8D2900222700B0A6AB /* Gom4zizTests */,
-				0062EB972900222700B0A6AB /* Gom4zizUITests */,
+				003E5E512902CF89004C597A /* Gom4zizTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		003E5E502902CF89004C597A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0062EB762900222600B0A6AB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -370,20 +338,6 @@
 				002821FA2902353400717E2C /* GoogleService-Info.plist in Resources */,
 				0062EB852900222700B0A6AB /* Assets.xcassets in Resources */,
 				0062EB832900222600B0A6AB /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0062EB8C2900222700B0A6AB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0062EB962900222700B0A6AB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +365,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		003E5E4E2902CF89004C597A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				003E5E602902D1A6004C597A /* UserInfoRepositoryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0062EB742900222600B0A6AB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,34 +392,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0062EB8A2900222700B0A6AB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0062EBBA2900289800B0A6AB /* SampleTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0062EB942900222700B0A6AB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0062EBBC290028CB00B0A6AB /* SampleUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		0062EB902900222700B0A6AB /* PBXTargetDependency */ = {
+		003E5E572902CF89004C597A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0062EB772900222600B0A6AB /* Gom4ziz */;
-			targetProxy = 0062EB8F2900222700B0A6AB /* PBXContainerItemProxy */;
-		};
-		0062EB9A2900222700B0A6AB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0062EB772900222600B0A6AB /* Gom4ziz */;
-			targetProxy = 0062EB992900222700B0A6AB /* PBXContainerItemProxy */;
+			targetProxy = 003E5E562902CF89004C597A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -481,6 +422,55 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		003E5E592902CF89004C597A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4zizTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gom4ziz.app/Gom4ziz";
+			};
+			name = Debug;
+		};
+		003E5E5A2902CF89004C597A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4zizTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gom4ziz.app/Gom4ziz";
+			};
+			name = Release;
+		};
 		0062EBA02900222700B0A6AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -653,113 +643,18 @@
 			};
 			name = Release;
 		};
-		0062EBA62900222700B0A6AB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44RS35G3C5;
-				EXCLUDED_ARCHS = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4zizTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gom4ziz.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gom4ziz";
-			};
-			name = Debug;
-		};
-		0062EBA72900222700B0A6AB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44RS35G3C5;
-				EXCLUDED_ARCHS = "";
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4zizTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gom4ziz.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gom4ziz";
-			};
-			name = Release;
-		};
-		0062EBA92900222700B0A6AB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44RS35G3C5;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4zizUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Gom4ziz;
-			};
-			name = Debug;
-		};
-		0062EBAA2900222700B0A6AB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44RS35G3C5;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4zizUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Gom4ziz;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		003E5E582902CF89004C597A /* Build configuration list for PBXNativeTarget "Gom4zizTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				003E5E592902CF89004C597A /* Debug */,
+				003E5E5A2902CF89004C597A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0062EB732900222600B0A6AB /* Build configuration list for PBXProject "Gom4ziz" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -774,24 +669,6 @@
 			buildConfigurations = (
 				0062EBA32900222700B0A6AB /* Debug */,
 				0062EBA42900222700B0A6AB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0062EBA52900222700B0A6AB /* Build configuration list for PBXNativeTarget "Gom4zizTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0062EBA62900222700B0A6AB /* Debug */,
-				0062EBA72900222700B0A6AB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0062EBA82900222700B0A6AB /* Build configuration list for PBXNativeTarget "Gom4zizUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0062EBA92900222700B0A6AB /* Debug */,
-				0062EBAA2900222700B0A6AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -847,6 +724,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		003E5E5B2902D0FA004C597A /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 001B1CA22901270C00F5C875 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
+		};
+		003E5E5D2902D0FA004C597A /* RxTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 001B1CA22901270C00F5C875 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxTest;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
