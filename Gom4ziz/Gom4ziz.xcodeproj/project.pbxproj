@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000A52FF2904D43400CEDACC /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 000A52FE2904D43400CEDACC /* RxKakaoSDKCommon */; };
+		000A53012904D43400CEDACC /* RxKakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 000A53002904D43400CEDACC /* RxKakaoSDKShare */; };
+		000A53082904D85700CEDACC /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A53072904D85700CEDACC /* APIKey.swift */; };
 		001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001B1C7E2900FCC800F5C875 /* UserInfo.swift */; };
 		001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001B1C802900FE5B00F5C875 /* PlansRoom.swift */; };
 		001B1C832901049400F5C875 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001B1C822901049400F5C875 /* MockData.swift */; };
@@ -31,8 +34,6 @@
 		0062EB852900222700B0A6AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB842900222700B0A6AB /* Assets.xcassets */; };
 		0062EB882900222700B0A6AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB862900222700B0A6AB /* LaunchScreen.storyboard */; };
 		0062EBAD290023A600B0A6AB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0062EBAC290023A600B0A6AB /* .swiftlint.yml */; };
-		0062EBBA2900289800B0A6AB /* SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EBB92900289800B0A6AB /* SampleTests.swift */; };
-		0062EBBC290028CB00B0A6AB /* SampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EBBB290028CB00B0A6AB /* SampleUITests.swift */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		000A53072904D85700CEDACC /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		001B1C7E2900FCC800F5C875 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		001B1C802900FE5B00F5C875 /* PlansRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoom.swift; sourceTree = "<group>"; };
 		001B1C822901049400F5C875 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -66,8 +68,6 @@
 		0062EB872900222700B0A6AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0062EB892900222700B0A6AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0062EBAC290023A600B0A6AB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		0062EBB92900289800B0A6AB /* SampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTests.swift; sourceTree = "<group>"; };
-		0062EBBB290028CB00B0A6AB /* SampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUITests.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -88,7 +88,9 @@
 				001B1CA42901270C00F5C875 /* RxCocoa in Frameworks */,
 				001B1C8629010C4B00F5C875 /* FirebaseAuth in Frameworks */,
 				001B1CA82901270C00F5C875 /* RxSwift in Frameworks */,
+				000A52FF2904D43400CEDACC /* RxKakaoSDKCommon in Frameworks */,
 				001B1CA62901270C00F5C875 /* RxRelay in Frameworks */,
+				000A53012904D43400CEDACC /* RxKakaoSDKShare in Frameworks */,
 				001B1C8829010C4B00F5C875 /* FirebaseFirestore in Frameworks */,
 				002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */,
 			);
@@ -97,6 +99,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000A53022904D7E900CEDACC /* Secret */ = {
+			isa = PBXGroup;
+			children = (
+				000A53072904D85700CEDACC /* APIKey.swift */,
+			);
+			path = Secret;
+			sourceTree = "<group>";
+		};
 		001B1C7D2900FCBE00F5C875 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +156,7 @@
 		0062EB7A2900222600B0A6AB /* Gom4ziz */ = {
 			isa = PBXGroup;
 			children = (
+				000A53022904D7E900CEDACC /* Secret */,
 				0062EBB0290024FB00B0A6AB /* Data */,
 				0062EBAF290024F900B0A6AB /* Domain */,
 				0062EBB12900254600B0A6AB /* Extension */,
@@ -273,6 +284,8 @@
 				001B1CA52901270C00F5C875 /* RxRelay */,
 				001B1CA72901270C00F5C875 /* RxSwift */,
 				002821F52901932A00717E2C /* FirebaseFirestoreSwift */,
+				000A52FE2904D43400CEDACC /* RxKakaoSDKCommon */,
+				000A53002904D43400CEDACC /* RxKakaoSDKShare */,
 			);
 			productName = Gom4ziz;
 			productReference = 0062EB782900222600B0A6AB /* Gom4ziz.app */;
@@ -310,6 +323,7 @@
 			packageReferences = (
 				001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				001B1CA22901270C00F5C875 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				000A52FD2904D43400CEDACC /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 			);
 			productRefGroup = 0062EB792900222600B0A6AB /* Products */;
 			projectDirPath = "";
@@ -382,12 +396,13 @@
 				F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */,
 				0062EB802900222600B0A6AB /* ViewController.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
-				001B1C812900FE5B00F5C875 /* PromiseRoom.swift in Sources */,
+				001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */,
 				001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */,
 				0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */,
 				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,
+				000A53082904D85700CEDACC /* APIKey.swift in Sources */,
 				002821F329018E7700717E2C /* RxSwift+Firestore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,6 +691,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		000A52FD2904D43400CEDACC /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -695,6 +718,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		000A52FE2904D43400CEDACC /* RxKakaoSDKCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000A52FD2904D43400CEDACC /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKCommon;
+		};
+		000A53002904D43400CEDACC /* RxKakaoSDKShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 000A52FD2904D43400CEDACC /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKShare;
+		};
 		001B1C8529010C4B00F5C875 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
