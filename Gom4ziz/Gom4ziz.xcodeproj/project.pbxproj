@@ -42,6 +42,7 @@
 		007EA00D2906290B000B8E31 /* DeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */; };
 		007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01029062E1D000B8E31 /* Deeplink.swift */; };
 		007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01229062E4C000B8E31 /* DeeplinkParser.swift */; };
+		00A12CED290651980024934C /* DeeplinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12CEC290651980024934C /* DeeplinkParserTests.swift */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
 		F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */; };
@@ -86,6 +87,7 @@
 		007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkHandler.swift; sourceTree = "<group>"; };
 		007EA01029062E1D000B8E31 /* Deeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplink.swift; sourceTree = "<group>"; };
 		007EA01229062E4C000B8E31 /* DeeplinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParser.swift; sourceTree = "<group>"; };
+		00A12CEC290651980024934C /* DeeplinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParserTests.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
 		F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepositoryTests.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		003E5E532902CF89004C597A /* Gom4zizTests */ = {
 			isa = PBXGroup;
 			children = (
+				00A12CE9290651850024934C /* System */,
 				003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */,
 				F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */,
 			);
@@ -298,6 +301,14 @@
 				007EA01229062E4C000B8E31 /* DeeplinkParser.swift */,
 			);
 			path = Deeplink;
+			sourceTree = "<group>";
+		};
+		00A12CE9290651850024934C /* System */ = {
+			isa = PBXGroup;
+			children = (
+				00A12CEC290651980024934C /* DeeplinkParserTests.swift */,
+			);
+			path = System;
 			sourceTree = "<group>";
 		};
 		F251F35D2903EDD6003B6690 /* PlansRoomList */ = {
@@ -453,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00A12CED290651980024934C /* DeeplinkParserTests.swift in Sources */,
 				003E5E602902D1A6004C597A /* UserInfoRepositoryTests.swift in Sources */,
 				F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */,
 			);
