@@ -40,6 +40,9 @@
 		0062EB882900222700B0A6AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB862900222700B0A6AB /* LaunchScreen.storyboard */; };
 		0062EBAD290023A600B0A6AB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0062EBAC290023A600B0A6AB /* .swiftlint.yml */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
+		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
+		F251F36129054FC3003B6690 /* PlamsRoomIdCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36029054FC3003B6690 /* PlamsRoomIdCache.swift */; };
+		F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,9 @@
 		0062EB892900222700B0A6AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0062EBAC290023A600B0A6AB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
+		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
+		F251F36029054FC3003B6690 /* PlamsRoomIdCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlamsRoomIdCache.swift; sourceTree = "<group>"; };
+		F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepositoryTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */,
+				F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */,
 			);
 			path = Gom4zizTests;
 			sourceTree = "<group>";
@@ -236,6 +243,8 @@
 			children = (
 				002821F02901889000717E2C /* UserInfoRepository.swift */,
 				002821F729022B2100717E2C /* UserInfoIdCache.swift */,
+				F251F35E290549EF003B6690 /* PlansRoomRepository.swift */,
+				F251F36029054FC3003B6690 /* PlamsRoomIdCache.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -431,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				003E5E602902D1A6004C597A /* UserInfoRepositoryTests.swift in Sources */,
+				F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +450,7 @@
 			files = (
 				001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */,
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
+				F251F36129054FC3003B6690 /* PlamsRoomIdCache.swift in Sources */,
 				F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
 				000A53152904F33800CEDACC /* ShareTestView.swift in Sources */,
@@ -449,6 +460,7 @@
 				001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */,
 				0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */,
 				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
+				F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
 				000A53122904F31A00CEDACC /* ShareTestViewController.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,

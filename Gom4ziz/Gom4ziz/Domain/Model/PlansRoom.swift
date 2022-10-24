@@ -7,14 +7,17 @@
 
 import Foundation
 
+/// 약속 방을 나타내는 struct
 struct PlansRoom: Identifiable, Hashable, Codable {
-    let id: String
-    let name: String
-    let date: Date?
-    let place: String?
-    let isEnd: Bool
+    let id: String // Room 고유의 아이디
+    let name: String // Room의 타이틀
+    let date: Date? // 약속 일자
+    let place: String? // 약속 장소
+    let isEnd: Bool // 투표 마감 여부
+    let currentMemberIds: [String] // 현재 방에 참여한 유저의 id 배열
 }
 
+// MARK: - toString
 extension PlansRoom: CustomStringConvertible {
     var description: String {
         "약속방 이름: \(name) 약속 날짜: \(date?.description ?? "날짜 없음") 약속 장소: \(place ?? "장소 없음") 마감여부: \(isEnd)"
