@@ -86,7 +86,7 @@ final class PlansRoomRepositoryTests: XCTestCase {
 
             // update
             XCTAssertEqual(testPlansRoom.id, plansRoom.id)
-            _ = try repository.updatePlansRoom(of: testPlansRoom.id, for: plansRoom).toBlocking().first()
+            _ = try repository.updatePlansRoom(for: plansRoom).toBlocking().first()
             let result = repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().materialize()
             switch result {
             case .completed(elements: let response):
@@ -113,7 +113,7 @@ final class PlansRoomRepositoryTests: XCTestCase {
 
             // update
             XCTAssertEqual(testPlansRoom, plansRoom)
-            _ = try repository.updatePlansRoom(of: testPlansRoom.id, for: plansRoom).toBlocking().first()
+            _ = try repository.updatePlansRoom(for: plansRoom).toBlocking().first()
 
             // request
             guard let plansRoom = try repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().first() else {
