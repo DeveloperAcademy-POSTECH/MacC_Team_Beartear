@@ -19,3 +19,12 @@ extension Deeplink: CustomStringConvertible {
         }
     }
 }
+
+extension Deeplink: Equatable {
+    static func == (lhs: Deeplink, rhs: Deeplink) -> Bool {
+        switch (lhs, rhs) {
+        case (.invitePromiseRoom(let first), .invitePromiseRoom(let second)):
+            return first == second
+        }
+    }
+}
