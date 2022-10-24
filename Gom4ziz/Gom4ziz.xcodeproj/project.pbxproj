@@ -10,6 +10,12 @@
 		000A52FF2904D43400CEDACC /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 000A52FE2904D43400CEDACC /* RxKakaoSDKCommon */; };
 		000A53012904D43400CEDACC /* RxKakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 000A53002904D43400CEDACC /* RxKakaoSDKShare */; };
 		000A53082904D85700CEDACC /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A53072904D85700CEDACC /* APIKey.swift */; };
+		000A530D2904E27400CEDACC /* KakaoMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A530C2904E27400CEDACC /* KakaoMessageSender.swift */; };
+		000A53122904F31A00CEDACC /* ShareTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A53112904F31A00CEDACC /* ShareTestViewController.swift */; };
+		000A53152904F33800CEDACC /* ShareTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A53142904F33800CEDACC /* ShareTestView.swift */; };
+		000A53172904F38800CEDACC /* SwiftUI+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A53162904F38800CEDACC /* SwiftUI+UIKit.swift */; };
+		000A531C29050CB400CEDACC /* KakaoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A531B29050CB400CEDACC /* KakaoMessage.swift */; };
+		000A531F29050DA700CEDACC /* SendInviteUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000A531E29050DA700CEDACC /* SendInviteUsecase.swift */; };
 		001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001B1C7E2900FCC800F5C875 /* UserInfo.swift */; };
 		001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001B1C802900FE5B00F5C875 /* PlansRoom.swift */; };
 		001B1C832901049400F5C875 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001B1C822901049400F5C875 /* MockData.swift */; };
@@ -29,7 +35,6 @@
 		003E5E602902D1A6004C597A /* UserInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */; };
 		0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7B2900222600B0A6AB /* AppDelegate.swift */; };
 		0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7D2900222600B0A6AB /* SceneDelegate.swift */; };
-		0062EB802900222600B0A6AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EB7F2900222600B0A6AB /* ViewController.swift */; };
 		0062EB832900222600B0A6AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB812900222600B0A6AB /* Main.storyboard */; };
 		0062EB852900222700B0A6AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB842900222700B0A6AB /* Assets.xcassets */; };
 		0062EB882900222700B0A6AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB862900222700B0A6AB /* LaunchScreen.storyboard */; };
@@ -49,6 +54,12 @@
 
 /* Begin PBXFileReference section */
 		000A53072904D85700CEDACC /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		000A530C2904E27400CEDACC /* KakaoMessageSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMessageSender.swift; sourceTree = "<group>"; };
+		000A53112904F31A00CEDACC /* ShareTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTestViewController.swift; sourceTree = "<group>"; };
+		000A53142904F33800CEDACC /* ShareTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareTestView.swift; sourceTree = "<group>"; };
+		000A53162904F38800CEDACC /* SwiftUI+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+UIKit.swift"; sourceTree = "<group>"; };
+		000A531B29050CB400CEDACC /* KakaoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoMessage.swift; sourceTree = "<group>"; };
+		000A531E29050DA700CEDACC /* SendInviteUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendInviteUsecase.swift; sourceTree = "<group>"; };
 		001B1C7E2900FCC800F5C875 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		001B1C802900FE5B00F5C875 /* PlansRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoom.swift; sourceTree = "<group>"; };
 		001B1C822901049400F5C875 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
@@ -62,7 +73,6 @@
 		0062EB782900222600B0A6AB /* Gom4ziz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gom4ziz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0062EB7B2900222600B0A6AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0062EB7D2900222600B0A6AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0062EB7F2900222600B0A6AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0062EB822900222600B0A6AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0062EB842900222700B0A6AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0062EB872900222700B0A6AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -105,6 +115,39 @@
 				000A53072904D85700CEDACC /* APIKey.swift */,
 			);
 			path = Secret;
+			sourceTree = "<group>";
+		};
+		000A53092904DF8900CEDACC /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		000A53132904F32500CEDACC /* ShareTest */ = {
+			isa = PBXGroup;
+			children = (
+				000A53112904F31A00CEDACC /* ShareTestViewController.swift */,
+				000A53142904F33800CEDACC /* ShareTestView.swift */,
+			);
+			path = ShareTest;
+			sourceTree = "<group>";
+		};
+		000A531A29050C9400CEDACC /* MessageSender */ = {
+			isa = PBXGroup;
+			children = (
+				000A530C2904E27400CEDACC /* KakaoMessageSender.swift */,
+				000A531B29050CB400CEDACC /* KakaoMessage.swift */,
+			);
+			path = MessageSender;
+			sourceTree = "<group>";
+		};
+		000A531D29050D9500CEDACC /* Usecase */ = {
+			isa = PBXGroup;
+			children = (
+				000A531E29050DA700CEDACC /* SendInviteUsecase.swift */,
+			);
+			path = Usecase;
 			sourceTree = "<group>";
 		};
 		001B1C7D2900FCBE00F5C875 /* Model */ = {
@@ -156,6 +199,7 @@
 		0062EB7A2900222600B0A6AB /* Gom4ziz */ = {
 			isa = PBXGroup;
 			children = (
+				000A53092904DF8900CEDACC /* Service */,
 				000A53022904D7E900CEDACC /* Secret */,
 				0062EBB0290024FB00B0A6AB /* Data */,
 				0062EBAF290024F900B0A6AB /* Domain */,
@@ -171,8 +215,8 @@
 		0062EBAE290024F500B0A6AB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				000A53132904F32500CEDACC /* ShareTest */,
 				F251F35D2903EDD6003B6690 /* PlansRoomList */,
-				0062EB7F2900222600B0A6AB /* ViewController.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -180,6 +224,8 @@
 		0062EBAF290024F900B0A6AB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				000A531D29050D9500CEDACC /* Usecase */,
+				000A531A29050C9400CEDACC /* MessageSender */,
 				001B1C7D2900FCBE00F5C875 /* Model */,
 			);
 			path = Domain;
@@ -199,6 +245,7 @@
 			children = (
 				002821EE2901884100717E2C /* ProcessInfo.swift */,
 				002821F229018E7700717E2C /* RxSwift+Firestore.swift */,
+				000A53162904F38800CEDACC /* SwiftUI+UIKit.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -394,16 +441,21 @@
 				001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */,
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
 				F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */,
-				0062EB802900222600B0A6AB /* ViewController.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
+				000A53152904F33800CEDACC /* ShareTestView.swift in Sources */,
+				000A531C29050CB400CEDACC /* KakaoMessage.swift in Sources */,
+				000A531F29050DA700CEDACC /* SendInviteUsecase.swift in Sources */,
 				001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */,
 				001B1C812900FE5B00F5C875 /* PlansRoom.swift in Sources */,
 				0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */,
 				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
+				000A53122904F31A00CEDACC /* ShareTestViewController.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,
 				000A53082904D85700CEDACC /* APIKey.swift in Sources */,
 				002821F329018E7700717E2C /* RxSwift+Firestore.swift in Sources */,
+				000A53172904F38800CEDACC /* SwiftUI+UIKit.swift in Sources */,
+				000A530D2904E27400CEDACC /* KakaoMessageSender.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +657,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -634,6 +687,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";

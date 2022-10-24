@@ -12,7 +12,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = scene as? UIWindowScene  else {
+            return
+        }
 
+        window = UIWindow(windowScene: windowScene)
+        window?.makeKeyAndVisible()
+        // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
+        changeRootViewController(ShareTestViewController())
+    }
+
+    // TODO: DeepLink 처리 함수. 추후 카카오 딥링크를 파싱해야함
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        print(URLContexts)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -31,5 +43,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidEnterBackground(_ scene: UIScene) {
 
+    }
+}
+
+private extension SceneDelegate {
+
+
+    /// 윈도우의 루트 뷰컨을 바꾸는 함수
+    /// - Parameter controller: 바꿀 뷰컨트롤러
+    func changeRootViewController(_ controller: UIViewController) {
+        window?.rootViewController = controller
     }
 }
