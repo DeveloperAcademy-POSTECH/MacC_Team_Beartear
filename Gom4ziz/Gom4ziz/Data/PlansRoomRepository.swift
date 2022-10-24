@@ -11,7 +11,7 @@ import RxSwift
 
 protocol PlansRoomRepository {
     func requestPlansRoom(of roomId: String) -> Observable<PlansRoom>
-    func fetchPlansRoomList(of roomId: String, for uid: String) -> Observable<[PlansRoom]>
+    func fetchPlansRoomList(for uid: String) -> Observable<[PlansRoom]>
     func addPlansRoom(for plansRoom: PlansRoom) -> Single<Void>
     func updatePlansRoom(of roomId: String, for plansRoom: PlansRoom) -> Single<Void>
     func deletePlansRoom(of roomId: String) -> Single<Void>
@@ -29,10 +29,10 @@ final class FirebasePlansRoomRepository {
 }
 
 extension FirebasePlansRoomRepository: PlansRoomRepository {
-    func fetchPlansRoomList(of roomId: String, for uid: String) -> Observable<[PlansRoom]> {
+    func fetchPlansRoomList(for uid: String) -> Observable<[PlansRoom]> {
         Observable<[PlansRoom]>.create { [self] observer in
             fetchPlansRoomsRef()
-                .getDocuments(source: plansRoomIdCache.cached(roomId) ? .cache : .server) { [self] snapshot, error in
+                .getDocuments { snapshot, error in
                     do {
                         guard error == nil else {
                             observer.onError(error!)
@@ -44,18 +44,8 @@ extension FirebasePlansRoomRepository: PlansRoomRepository {
                         }
                         var temp: [PlansRoom] = []
                         for document in snapshot.documents {
-                            let roomId = try document.data(as: PlansRoom.self).id
-                            fetchPlansRoomRef(of: roomId)
-                                .getDocument(source: plansRoomIdCache.cached(roomId) ? .cache : .server) { snapshot, error in
-                                    if error != nil {
-                                        print("no plans room id")
-                                        return
-                                    }
-                                    guard let data = try? snapshot?.data(as: PlansRoom.self) else {
-                                        return
-                                    }
-                                    temp.append(data)
-                                }
+                            let data = try document.data(as: PlansRoom.self)
+                            temp.append(data)
                         }
                         observer.onNext(temp)
                         observer.onCompleted()
