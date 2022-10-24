@@ -20,8 +20,6 @@ final class PlansRoomRepositoryTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
-        _ = try repository.deletePlansRoom(of: testPlansRoom.id).toBlocking().first()
-        repository = nil
         try super.tearDownWithError()
     }
 
@@ -29,7 +27,7 @@ final class PlansRoomRepositoryTests: XCTestCase {
         do {
             // add
             _ = try repository.addPlansRoom(for: testPlansRoom).toBlocking().first()
-            guard let rooms = try repository.fetchPlansRoomList(of: "123", for: "123").toBlocking().first() else {
+            guard let rooms = try repository.fetchPlansRoomList(for: "123").toBlocking().first() else {
                 XCTFail(#function + " plans room should be exist!!")
                 return
             }
@@ -43,6 +41,7 @@ final class PlansRoomRepositoryTests: XCTestCase {
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
             }
+            repository = nil
         } catch {
             XCTFail(#function + " \(error.localizedDescription)")
         }
@@ -86,14 +85,14 @@ final class PlansRoomRepositoryTests: XCTestCase {
             }
 
             // update
-            XCTAssertNotEqual(testPlansRoom, plansRoom)
+            XCTAssertEqual(testPlansRoom.id, plansRoom.id)
             _ = try repository.updatePlansRoom(of: testPlansRoom.id, for: plansRoom).toBlocking().first()
             let result = repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().materialize()
             switch result {
             case .completed(elements: let response):
-                XCTAssert(response.isEmpty)
+                XCTAssertFalse(response.isEmpty)
             case .failed(elements: let plansRooms, error: let error):
-                XCTAssert(plansRooms.isEmpty)
+                XCTAssertFalse(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
             }
             repository = nil
@@ -113,7 +112,7 @@ final class PlansRoomRepositoryTests: XCTestCase {
             }
 
             // update
-            XCTAssertNotEqual(testPlansRoom, plansRoom)
+            XCTAssertEqual(testPlansRoom, plansRoom)
             _ = try repository.updatePlansRoom(of: testPlansRoom.id, for: plansRoom).toBlocking().first()
 
             // request
