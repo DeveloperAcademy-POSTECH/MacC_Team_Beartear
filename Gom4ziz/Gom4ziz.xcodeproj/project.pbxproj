@@ -34,6 +34,9 @@
 		CC1837062902CD8500D466EB /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837052902CD8500D466EB /* KakaoSDKAuth */; };
 		CC1837082902CD8500D466EB /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837072902CD8500D466EB /* KakaoSDKCommon */; };
 		CC18370A2902CD8500D466EB /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837092902CD8500D466EB /* KakaoSDKUser */; };
+		CCBC31BB2906221B0087F635 /* KakaoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBC31BA2906221B0087F635 /* KakaoLoginView.swift */; };
+		CCBC31BD290622270087F635 /* KakaoLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBC31BC290622270087F635 /* KakaoLoginViewController.swift */; };
+		CCBC31BF290622580087F635 /* UIKit + SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBC31BE290622580087F635 /* UIKit + SwiftUI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,9 @@
 		0062EBAC290023A600B0A6AB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		0062EBB92900289800B0A6AB /* SampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTests.swift; sourceTree = "<group>"; };
 		0062EBBB290028CB00B0A6AB /* SampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUITests.swift; sourceTree = "<group>"; };
+		CCBC31BA2906221B0087F635 /* KakaoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginView.swift; sourceTree = "<group>"; };
+		CCBC31BC290622270087F635 /* KakaoLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginViewController.swift; sourceTree = "<group>"; };
+		CCBC31BE290622580087F635 /* UIKit + SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit + SwiftUI.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +190,7 @@
 		0062EBAE290024F500B0A6AB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				CCBC31B9290622040087F635 /* KakaoLoginTestView */,
 				0062EB7F2900222600B0A6AB /* ViewController.swift */,
 			);
 			path = Presenter;
@@ -210,6 +217,7 @@
 			children = (
 				002821EE2901884100717E2C /* ProcessInfo.swift */,
 				002821F229018E7700717E2C /* RxSwift+Firestore.swift */,
+				CCBC31BE290622580087F635 /* UIKit + SwiftUI.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -239,6 +247,15 @@
 				0062EB812900222600B0A6AB /* Main.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		CCBC31B9290622040087F635 /* KakaoLoginTestView */ = {
+			isa = PBXGroup;
+			children = (
+				CCBC31BA2906221B0087F635 /* KakaoLoginView.swift */,
+				CCBC31BC290622270087F635 /* KakaoLoginViewController.swift */,
+			);
+			path = KakaoLoginTestView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -417,9 +434,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCBC31BF290622580087F635 /* UIKit + SwiftUI.swift in Sources */,
 				001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */,
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
+				CCBC31BB2906221B0087F635 /* KakaoLoginView.swift in Sources */,
 				0062EB802900222600B0A6AB /* ViewController.swift in Sources */,
+				CCBC31BD290622270087F635 /* KakaoLoginViewController.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
 				001B1C812900FE5B00F5C875 /* PromiseRoom.swift in Sources */,
 				0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */,
@@ -600,9 +620,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J7ZP3WYXRW;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -630,9 +650,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J7ZP3WYXRW;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
