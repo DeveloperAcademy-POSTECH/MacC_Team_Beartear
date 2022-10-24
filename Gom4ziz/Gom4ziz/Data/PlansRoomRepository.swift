@@ -13,7 +13,7 @@ protocol PlansRoomRepository {
     func requestPlansRoom(of roomId: String) -> Observable<PlansRoom>
     func fetchPlansRoomList(for uid: String) -> Observable<[PlansRoom]>
     func addPlansRoom(for plansRoom: PlansRoom) -> Single<Void>
-    func updatePlansRoom(of roomId: String, for plansRoom: PlansRoom) -> Single<Void>
+    func updatePlansRoom(for plansRoom: PlansRoom) -> Single<Void>
     func deletePlansRoom(of roomId: String) -> Single<Void>
 }
 
@@ -69,8 +69,8 @@ extension FirebasePlansRoomRepository: PlansRoomRepository {
             .rx
             .setData(plansRoom)
     }
-    func updatePlansRoom(of roomId: String, for plansRoom: PlansRoom) -> Single<Void> {
-        fetchPlansRoomRef(of: roomId)
+    func updatePlansRoom(for plansRoom: PlansRoom) -> Single<Void> {
+        fetchPlansRoomRef(of: plansRoom.id)
             .rx
             .setData(plansRoom)
     }
