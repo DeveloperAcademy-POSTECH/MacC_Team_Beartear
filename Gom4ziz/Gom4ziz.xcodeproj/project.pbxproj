@@ -39,6 +39,9 @@
 		0062EB852900222700B0A6AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB842900222700B0A6AB /* Assets.xcassets */; };
 		0062EB882900222700B0A6AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0062EB862900222700B0A6AB /* LaunchScreen.storyboard */; };
 		0062EBAD290023A600B0A6AB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0062EBAC290023A600B0A6AB /* .swiftlint.yml */; };
+		007EA00D2906290B000B8E31 /* DeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */; };
+		007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01029062E1D000B8E31 /* Deeplink.swift */; };
+		007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01229062E4C000B8E31 /* DeeplinkParser.swift */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
 		F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */; };
@@ -80,6 +83,9 @@
 		0062EB872900222700B0A6AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0062EB892900222700B0A6AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0062EBAC290023A600B0A6AB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkHandler.swift; sourceTree = "<group>"; };
+		007EA01029062E1D000B8E31 /* Deeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplink.swift; sourceTree = "<group>"; };
+		007EA01229062E4C000B8E31 /* DeeplinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParser.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
 		F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepositoryTests.swift; sourceTree = "<group>"; };
@@ -266,6 +272,7 @@
 		0062EBB42900255300B0A6AB /* System */ = {
 			isa = PBXGroup;
 			children = (
+				007EA00F29062E15000B8E31 /* Deeplink */,
 				0062EB7B2900222600B0A6AB /* AppDelegate.swift */,
 				0062EB7D2900222600B0A6AB /* SceneDelegate.swift */,
 			);
@@ -281,6 +288,16 @@
 				0062EB812900222600B0A6AB /* Main.storyboard */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		007EA00F29062E15000B8E31 /* Deeplink */ = {
+			isa = PBXGroup;
+			children = (
+				007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */,
+				007EA01029062E1D000B8E31 /* Deeplink.swift */,
+				007EA01229062E4C000B8E31 /* DeeplinkParser.swift */,
+			);
+			path = Deeplink;
 			sourceTree = "<group>";
 		};
 		F251F35D2903EDD6003B6690 /* PlansRoomList */ = {
@@ -449,6 +466,7 @@
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
 				F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
+				007EA00D2906290B000B8E31 /* DeeplinkHandler.swift in Sources */,
 				000A53152904F33800CEDACC /* ShareTestView.swift in Sources */,
 				000A531C29050CB400CEDACC /* KakaoMessage.swift in Sources */,
 				000A531F29050DA700CEDACC /* SendInviteUsecase.swift in Sources */,
@@ -457,7 +475,9 @@
 				0062EB7C2900222600B0A6AB /* AppDelegate.swift in Sources */,
 				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
 				F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */,
+				007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
+				007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */,
 				000A53122904F31A00CEDACC /* ShareTestViewController.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,
 				000A53082904D85700CEDACC /* APIKey.swift in Sources */,
@@ -666,9 +686,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 44RS35G3C5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
