@@ -10,7 +10,6 @@ import FirebaseFirestore
 import RxSwift
 
 protocol PlansRoomRepository {
-    func requestPlansRoom(of roomId: String) -> Observable<PlansRoom>
     func fetchPlansRoomList(for uid: String) -> Observable<[PlansRoom]>
     func addPlansRoom(for plansRoom: PlansRoom) -> Single<Void>
     func updatePlansRoom(for plansRoom: PlansRoom) -> Single<Void>
@@ -20,8 +19,6 @@ protocol PlansRoomRepository {
 final class FirebasePlansRoomRepository {
     static let shared: PlansRoomRepository = FirebasePlansRoomRepository()
     private let db: Firestore = Firestore.firestore()
-    private let userInfoIdCache: UserInfoIdCache = UserInfoIdCache()
-    private let plansRoomIdCache: PlansRoomIdCache = PlansRoomIdCache()
     private var plansRoomCollectionName: String {
         ProcessInfo().isRunningTests ? "TestPlansRooms" : "PlansRooms"
     }
@@ -56,24 +53,19 @@ extension FirebasePlansRoomRepository: PlansRoomRepository {
             return Disposables.create()
         }
     }
-    func requestPlansRoom(of roomId: String) -> Observable<PlansRoom> {
-        fetchPlansRoomRef(of: roomId)
-            .rx
-            .decodable(as: PlansRoom.self, source: plansRoomIdCache.cached(roomId) ? .cache : .server)
-            .do(onNext: { [weak self] in
-                self?.plansRoomIdCache.cache($0.id)
-            })
-    }
+
     func addPlansRoom(for plansRoom: PlansRoom) -> Single<Void> {
         fetchPlansRoomRef(of: plansRoom.id)
             .rx
             .setData(plansRoom)
     }
+
     func updatePlansRoom(for plansRoom: PlansRoom) -> Single<Void> {
         fetchPlansRoomRef(of: plansRoom.id)
             .rx
             .setData(plansRoom)
     }
+
     func deletePlansRoom(of roomId: String) -> Single<Void> {
         fetchPlansRoomRef(of: roomId)
             .rx
@@ -87,6 +79,7 @@ private extension FirebasePlansRoomRepository {
         db.collection(plansRoomCollectionName)
             .document(roomId)
     }
+
     func fetchPlansRoomsRef() -> CollectionReference {
         db.collection(plansRoomCollectionName)
     }

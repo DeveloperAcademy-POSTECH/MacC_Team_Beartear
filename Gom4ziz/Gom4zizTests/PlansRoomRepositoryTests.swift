@@ -33,10 +33,10 @@ final class PlansRoomRepositoryTests: XCTestCase {
             }
             XCTAssertEqual(rooms.first?.id, "1111")
             _ = try repository.deletePlansRoom(of: testPlansRoom.id).toBlocking().first()
-            let result = repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().materialize()
+            let result = repository.fetchPlansRoomList(for: "123").toBlocking().materialize()
             switch result {
             case .completed(elements: let response):
-                XCTAssert(response.isEmpty)
+                XCTAssert(response.first!.isEmpty)
             case .failed(elements: let plansRooms, error: let error):
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
@@ -52,18 +52,18 @@ final class PlansRoomRepositoryTests: XCTestCase {
             // add
             _ = try repository.addPlansRoom(for: testPlansRoom).toBlocking().first()
             // request
-            guard let plansRoom = try repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().first() else {
+            guard let rooms = try repository.fetchPlansRoomList(for: "123").toBlocking().first() else {
                 XCTFail(#function + " plans room should be exist!!")
                 return
             }
 
             // delete
-            XCTAssertEqual(testPlansRoom, plansRoom)
+            XCTAssertEqual(testPlansRoom, rooms.first!)
             _ = try repository.deletePlansRoom(of: testPlansRoom.id).toBlocking().first()
-            let result = repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().materialize()
+            let result = repository.fetchPlansRoomList(for: "123").toBlocking().materialize()
             switch result {
             case .completed(elements: let response):
-                XCTAssert(response.isEmpty)
+                XCTAssert(response.first!.isEmpty)
             case .failed(elements: let plansRooms, error: let error):
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
@@ -79,15 +79,15 @@ final class PlansRoomRepositoryTests: XCTestCase {
             // add
             _ = try repository.addPlansRoom(for: testPlansRoom).toBlocking().first()
             // request
-            guard let plansRoom = try repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().first() else {
+            guard let rooms = try repository.fetchPlansRoomList(for: "123").toBlocking().first() else {
                 XCTFail(#function + " plans room should be exist!!")
                 return
             }
 
             // update
-            XCTAssertEqual(testPlansRoom.id, plansRoom.id)
-            _ = try repository.updatePlansRoom(for: plansRoom).toBlocking().first()
-            let result = repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().materialize()
+            XCTAssertEqual(testPlansRoom.id, rooms.first?.id)
+            _ = try repository.updatePlansRoom(for: rooms.first!).toBlocking().first()
+            let result = repository.fetchPlansRoomList(for: "123").toBlocking().materialize()
             switch result {
             case .completed(elements: let response):
                 XCTAssertFalse(response.isEmpty)
@@ -106,28 +106,28 @@ final class PlansRoomRepositoryTests: XCTestCase {
             // add
             _ = try repository.addPlansRoom(for: testPlansRoom).toBlocking().first()
             // request
-            guard let plansRoom = try repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().first() else {
+            guard let rooms = try repository.fetchPlansRoomList(for: "123").toBlocking().first() else {
                 XCTFail(#function + " plans room should be exist!!")
                 return
             }
 
             // update
-            XCTAssertEqual(testPlansRoom, plansRoom)
-            _ = try repository.updatePlansRoom(for: plansRoom).toBlocking().first()
+            XCTAssertEqual(testPlansRoom, rooms.first!)
+            _ = try repository.updatePlansRoom(for: rooms.first!).toBlocking().first()
 
             // request
-            guard let plansRoom = try repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().first() else {
+            guard let otherRooms = try repository.fetchPlansRoomList(for: "123").toBlocking().first() else {
                 XCTFail(#function + " plans room should be exist!!")
                 return
             }
 
             // delete
-            XCTAssertEqual(testPlansRoom, plansRoom)
+            XCTAssertEqual(testPlansRoom, otherRooms.first!)
             _ = try repository.deletePlansRoom(of: testPlansRoom.id).toBlocking().first()
-            let result = repository.requestPlansRoom(of: testPlansRoom.id).toBlocking().materialize()
+            let result = repository.fetchPlansRoomList(for: "123").toBlocking().materialize()
             switch result {
             case .completed(elements: let response):
-                XCTAssert(response.isEmpty)
+                XCTAssert(response.first!.isEmpty)
             case .failed(elements: let plansRooms, error: let error):
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
