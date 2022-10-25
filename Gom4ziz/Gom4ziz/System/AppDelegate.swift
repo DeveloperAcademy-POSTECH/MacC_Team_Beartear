@@ -5,9 +5,10 @@
 //  Created by JongHo Park on 2022/10/19.
 //
 
+import UIKit
+
 import Firebase
 import RxKakaoSDKCommon
-import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
