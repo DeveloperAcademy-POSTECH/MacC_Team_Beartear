@@ -28,15 +28,8 @@
 		0062EBAD290023A600B0A6AB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 0062EBAC290023A600B0A6AB /* .swiftlint.yml */; };
 		0062EBBA2900289800B0A6AB /* SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EBB92900289800B0A6AB /* SampleTests.swift */; };
 		0062EBBC290028CB00B0A6AB /* SampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0062EBBB290028CB00B0A6AB /* SampleUITests.swift */; };
-		CC1836FF2902CD5D00D466EB /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CC1836FE2902CD5D00D466EB /* RxKakaoSDKAuth */; };
-		CC1837012902CD5D00D466EB /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837002902CD5D00D466EB /* RxKakaoSDKCommon */; };
-		CC1837032902CD5D00D466EB /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837022902CD5D00D466EB /* RxKakaoSDKUser */; };
-		CC1837062902CD8500D466EB /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837052902CD8500D466EB /* KakaoSDKAuth */; };
-		CC1837082902CD8500D466EB /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837072902CD8500D466EB /* KakaoSDKCommon */; };
-		CC18370A2902CD8500D466EB /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = CC1837092902CD8500D466EB /* KakaoSDKUser */; };
 		CCBC31BB2906221B0087F635 /* KakaoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBC31BA2906221B0087F635 /* KakaoLoginView.swift */; };
 		CCBC31BD290622270087F635 /* KakaoLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBC31BC290622270087F635 /* KakaoLoginViewController.swift */; };
-		CCBC31BF290622580087F635 /* UIKit + SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBC31BE290622580087F635 /* UIKit + SwiftUI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,7 +71,6 @@
 		0062EBBB290028CB00B0A6AB /* SampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleUITests.swift; sourceTree = "<group>"; };
 		CCBC31BA2906221B0087F635 /* KakaoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginView.swift; sourceTree = "<group>"; };
 		CCBC31BC290622270087F635 /* KakaoLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginViewController.swift; sourceTree = "<group>"; };
-		CCBC31BE290622580087F635 /* UIKit + SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit + SwiftUI.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,17 +79,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				001B1CA42901270C00F5C875 /* RxCocoa in Frameworks */,
-				CC1837082902CD8500D466EB /* KakaoSDKCommon in Frameworks */,
-				CC1836FF2902CD5D00D466EB /* RxKakaoSDKAuth in Frameworks */,
 				001B1C8629010C4B00F5C875 /* FirebaseAuth in Frameworks */,
 				001B1CA82901270C00F5C875 /* RxSwift in Frameworks */,
-				CC1837012902CD5D00D466EB /* RxKakaoSDKCommon in Frameworks */,
 				001B1CA62901270C00F5C875 /* RxRelay in Frameworks */,
-				CC1837032902CD5D00D466EB /* RxKakaoSDKUser in Frameworks */,
-				CC18370A2902CD8500D466EB /* KakaoSDKUser in Frameworks */,
 				001B1C8829010C4B00F5C875 /* FirebaseFirestore in Frameworks */,
 				002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */,
-				CC1837062902CD8500D466EB /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +203,6 @@
 			children = (
 				002821EE2901884100717E2C /* ProcessInfo.swift */,
 				002821F229018E7700717E2C /* RxSwift+Firestore.swift */,
-				CCBC31BE290622580087F635 /* UIKit + SwiftUI.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -282,12 +267,6 @@
 				001B1CA52901270C00F5C875 /* RxRelay */,
 				001B1CA72901270C00F5C875 /* RxSwift */,
 				002821F52901932A00717E2C /* FirebaseFirestoreSwift */,
-				CC1836FE2902CD5D00D466EB /* RxKakaoSDKAuth */,
-				CC1837002902CD5D00D466EB /* RxKakaoSDKCommon */,
-				CC1837022902CD5D00D466EB /* RxKakaoSDKUser */,
-				CC1837052902CD8500D466EB /* KakaoSDKAuth */,
-				CC1837072902CD8500D466EB /* KakaoSDKCommon */,
-				CC1837092902CD8500D466EB /* KakaoSDKUser */,
 			);
 			productName = Gom4ziz;
 			productReference = 0062EB782900222600B0A6AB /* Gom4ziz.app */;
@@ -366,8 +345,6 @@
 			packageReferences = (
 				001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				001B1CA22901270C00F5C875 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				CC1836FD2902CD5D00D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
-				CC1837042902CD8500D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 0062EB792900222600B0A6AB /* Products */;
 			projectDirPath = "";
@@ -434,7 +411,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCBC31BF290622580087F635 /* UIKit + SwiftUI.swift in Sources */,
 				001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */,
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
 				CCBC31BB2906221B0087F635 /* KakaoLoginView.swift in Sources */,
@@ -836,22 +812,6 @@
 				minimumVersion = 6.0.0;
 			};
 		};
-		CC1836FD2902CD5D00D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-		CC1837042902CD8500D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -884,36 +844,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
-		};
-		CC1836FE2902CD5D00D466EB /* RxKakaoSDKAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CC1836FD2902CD5D00D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
-			productName = RxKakaoSDKAuth;
-		};
-		CC1837002902CD5D00D466EB /* RxKakaoSDKCommon */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CC1836FD2902CD5D00D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
-			productName = RxKakaoSDKCommon;
-		};
-		CC1837022902CD5D00D466EB /* RxKakaoSDKUser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CC1836FD2902CD5D00D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
-			productName = RxKakaoSDKUser;
-		};
-		CC1837052902CD8500D466EB /* KakaoSDKAuth */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CC1837042902CD8500D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
-			productName = KakaoSDKAuth;
-		};
-		CC1837072902CD8500D466EB /* KakaoSDKCommon */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CC1837042902CD8500D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
-			productName = KakaoSDKCommon;
-		};
-		CC1837092902CD8500D466EB /* KakaoSDKUser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CC1837042902CD8500D466EB /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
-			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
