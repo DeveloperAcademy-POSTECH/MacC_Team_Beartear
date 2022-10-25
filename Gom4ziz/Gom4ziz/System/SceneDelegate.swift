@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseAuth
+import RxKakaoSDKAuth
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
         // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
-        changeRootViewController(AppleTestViewController())
+        changeRootViewController(KakaoLoginViewController())
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -31,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         deeplinkHandler.handle(url)
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
     }
 
