@@ -14,6 +14,7 @@ protocol PlansRoomRepository {
     func addPlansRoom(for plansRoom: PlansRoom) -> Single<Void>
     func updatePlansRoom(for plansRoom: PlansRoom) -> Single<Void>
     func deletePlansRoom(of roomId: String) -> Single<Void>
+    func joinPlansRoom(uid: String, plansRoom: PlansRoom) -> Single<Void>
 }
 
 final class FirebasePlansRoomRepository {
@@ -26,6 +27,15 @@ final class FirebasePlansRoomRepository {
 }
 
 extension FirebasePlansRoomRepository: PlansRoomRepository {
+
+    func joinPlansRoom(uid: String, plansRoom: PlansRoom) -> Single<Void> {
+        fetchPlansRoomRef(of: plansRoom.id)
+            .rx
+            .updateDocument(updateQuery: [
+                "currentMemberIds": FieldValue.arrayUnion([uid])
+            ])
+    }
+
     func fetchPlansRoomList(for uid: String) -> Observable<[PlansRoom]> {
         Observable<[PlansRoom]>.create { [self] observer in
             fetchPlansRoomsRef()

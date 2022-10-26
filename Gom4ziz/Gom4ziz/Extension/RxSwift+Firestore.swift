@@ -89,4 +89,18 @@ extension Reactive where Base: DocumentReference {
             return Disposables.create()
         }
     }
+
+    func updateDocument(updateQuery: [AnyHashable: Any]) -> Single<Void> {
+        Single.create { single -> Disposable in
+            base.updateData(updateQuery) { error in
+                if let error {
+                    single(.failure(error))
+                    return
+                }
+                single(.success(()))
+            }
+
+            return Disposables.create()
+        }
+    }
 }

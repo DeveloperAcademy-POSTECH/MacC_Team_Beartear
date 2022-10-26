@@ -42,6 +42,7 @@
 		007EA00D2906290B000B8E31 /* DeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */; };
 		007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01029062E1D000B8E31 /* Deeplink.swift */; };
 		007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01229062E4C000B8E31 /* DeeplinkParser.swift */; };
+		00953D162909008C0022D6A4 /* JoinPlansRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00953D152909008C0022D6A4 /* JoinPlansRoomUsecase.swift */; };
 		00A12CED290651980024934C /* DeeplinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12CEC290651980024934C /* DeeplinkParserTests.swift */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
@@ -87,6 +88,7 @@
 		007EA00C2906290B000B8E31 /* DeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkHandler.swift; sourceTree = "<group>"; };
 		007EA01029062E1D000B8E31 /* Deeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deeplink.swift; sourceTree = "<group>"; };
 		007EA01229062E4C000B8E31 /* DeeplinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParser.swift; sourceTree = "<group>"; };
+		00953D152909008C0022D6A4 /* JoinPlansRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPlansRoomUsecase.swift; sourceTree = "<group>"; };
 		00A12CEC290651980024934C /* DeeplinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParserTests.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				000A531E29050DA700CEDACC /* SendInviteUsecase.swift */,
+				00953D152909008C0022D6A4 /* JoinPlansRoomUsecase.swift */,
 			);
 			path = Usecase;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				001B1C7F2900FCC800F5C875 /* UserInfo.swift in Sources */,
+				00953D162909008C0022D6A4 /* JoinPlansRoomUsecase.swift in Sources */,
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
 				F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
