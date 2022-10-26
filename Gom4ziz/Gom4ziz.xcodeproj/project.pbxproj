@@ -97,6 +97,7 @@
 		E63C755F2909166200133C9E /* AppleTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleTestView.swift; sourceTree = "<group>"; };
 		E63C75612909166900133C9E /* AppleTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleTestViewController.swift; sourceTree = "<group>"; };
 		E63C75632909171100133C9E /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
+		E63C75652909415900133C9E /* Gom4ziz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gom4ziz.entitlements; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
 		F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepositoryTests.swift; sourceTree = "<group>"; };
@@ -225,6 +226,7 @@
 		0062EB7A2900222600B0A6AB /* Gom4ziz */ = {
 			isa = PBXGroup;
 			children = (
+				E63C75652909415900133C9E /* Gom4ziz.entitlements */,
 				000A53092904DF8900CEDACC /* Service */,
 				000A53022904D7E900CEDACC /* Secret */,
 				0062EBB0290024FB00B0A6AB /* Data */,
@@ -723,10 +725,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gom4ziz/Gom4ziz.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44RS35G3C5;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 953VJTV7TA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -742,6 +750,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Ziz4gom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = gom4ziz;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -753,10 +762,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Gom4ziz/Gom4ziz.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 953VJTV7TA;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -772,6 +784,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Ziz4gom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = gom4ziz;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
