@@ -48,6 +48,7 @@
 		E63C75622909166900133C9E /* AppleTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75612909166900133C9E /* AppleTestViewController.swift */; };
 		E63C75642909171100133C9E /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75632909171100133C9E /* AppleLoginManager.swift */; };
 		E6F4878B290982AC00037CF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */; };
+		CCBFB77129090E3500173FD7 /* KakaoLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBFB77029090E3500173FD7 /* KakaoLoginViewModel.swift */; };
 		CCF71D1D2907CFED00C66C55 /* KakaoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF71D1C2907CFED00C66C55 /* KakaoLoginView.swift */; };
 		CCF71D1F2907CFF900C66C55 /* KakaoLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF71D1E2907CFF900C66C55 /* KakaoLoginViewController.swift */; };
 		CCF71D212907D02600C66C55 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCF71D202907D02600C66C55 /* RxKakaoSDKAuth */; };
@@ -102,6 +103,7 @@
 		E63C75632909171100133C9E /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		E63C75652909415900133C9E /* Gom4ziz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gom4ziz.entitlements; sourceTree = "<group>"; };
 		E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CCBFB77029090E3500173FD7 /* KakaoLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginViewModel.swift; sourceTree = "<group>"; };
 		CCF71D1C2907CFED00C66C55 /* KakaoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginView.swift; sourceTree = "<group>"; };
 		CCF71D1E2907CFF900C66C55 /* KakaoLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginViewController.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -347,6 +349,7 @@
 			children = (
 				CCF71D1C2907CFED00C66C55 /* KakaoLoginView.swift */,
 				CCF71D1E2907CFF900C66C55 /* KakaoLoginViewController.swift */,
+				CCBFB77029090E3500173FD7 /* KakaoLoginViewModel.swift */,
 			);
 			path = kakaoLoginTest;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
 				F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */,
 				007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */,
+				CCBFB77129090E3500173FD7 /* KakaoLoginViewModel.swift in Sources */,
 				CCF71D1F2907CFF900C66C55 /* KakaoLoginViewController.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
 				007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */,
@@ -757,6 +761,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 953VJTV7TA;
+				DEVELOPMENT_TEAM = J7ZP3WYXRW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -791,6 +796,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 953VJTV7TA;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7ZP3WYXRW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
