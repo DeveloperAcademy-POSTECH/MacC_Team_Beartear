@@ -20,6 +20,7 @@ final class PlansRoomRepositoryTests: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        repository = nil
         try super.tearDownWithError()
     }
 
@@ -41,7 +42,6 @@ final class PlansRoomRepositoryTests: XCTestCase {
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
             }
-            repository = nil
         } catch {
             XCTFail(#function + " \(error.localizedDescription)")
         }
@@ -68,7 +68,6 @@ final class PlansRoomRepositoryTests: XCTestCase {
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
             }
-            repository = nil
         } catch {
             XCTFail(#function + " \(error.localizedDescription)")
         }
@@ -95,7 +94,6 @@ final class PlansRoomRepositoryTests: XCTestCase {
                 XCTAssertFalse(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
             }
-            repository = nil
         } catch {
             XCTFail(#function + " \(error.localizedDescription)")
         }
@@ -132,9 +130,24 @@ final class PlansRoomRepositoryTests: XCTestCase {
                 XCTAssert(plansRooms.isEmpty)
                 XCTAssertEqual(error.localizedDescription, RxFirestoreError.documentIsNotExist.localizedDescription)
             }
-            repository = nil
         } catch {
             XCTFail(#function + " \(error.localizedDescription)")
         }
+    }
+
+    func test_약속방_참가가_성공하는지() throws {
+        // given
+        let testUserInfo: UserInfo = UserInfo(id: UUID().uuidString, name: "TestNickname")
+        // when
+        _ = try repository.addPlansRoom(for: testPlansRoom).toBlocking(timeout: 2).first()
+        _ = try repository.joinPlansRoom(uid: testUserInfo.id, plansRoom: testPlansRoom).toBlocking(timeout: 2).first()
+        // then
+        guard let plansRoom: [PlansRoom] = try repository.fetchPlansRoomList(for: testUserInfo.id).toBlocking(timeout: 2).first() else {
+            XCTFail(#function + " 약속방이 불러와져야함!")
+            return
+        }
+        XCTAssert(!plansRoom.isEmpty)
+        XCTAssert(plansRoom.first!.currentMemberIds.contains(testUserInfo.id))
+        _ = try repository.deletePlansRoom(of: testPlansRoom.id).toBlocking().first()
     }
 }

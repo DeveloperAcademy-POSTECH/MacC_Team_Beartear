@@ -17,6 +17,15 @@ struct PlansRoom: Identifiable, Hashable, Codable {
     let currentMemberIds: [String] // 현재 방에 참여한 유저의 id 배열
 }
 
+// MARK: - API
+extension PlansRoom {
+    func joinPlansRoom(uid: String) -> PlansRoom {
+        var appendedMemberIds: [String] = currentMemberIds
+        appendedMemberIds.append(uid)
+        return PlansRoom(id: id, name: name, date: date, place: place, isEnd: isEnd, currentMemberIds: appendedMemberIds)
+    }
+}
+
 // MARK: - toString
 extension PlansRoom: CustomStringConvertible {
     var description: String {
