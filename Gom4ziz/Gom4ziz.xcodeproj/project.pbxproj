@@ -45,6 +45,9 @@
 		00953D162909008C0022D6A4 /* JoinPlansRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00953D152909008C0022D6A4 /* JoinPlansRoomUsecase.swift */; };
 		00A12CED290651980024934C /* DeeplinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12CEC290651980024934C /* DeeplinkParserTests.swift */; };
 		E68685D1290FAB3100674CC4 /* KeyChainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = E68685D0290FAB3100674CC4 /* KeyChainWrapper */; };
+		E63C75602909166200133C9E /* AppleTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C755F2909166200133C9E /* AppleTestView.swift */; };
+		E63C75622909166900133C9E /* AppleTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75612909166900133C9E /* AppleTestViewController.swift */; };
+		E63C75642909171100133C9E /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75632909171100133C9E /* AppleLoginManager.swift */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
 		F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */; };
@@ -91,6 +94,9 @@
 		007EA01229062E4C000B8E31 /* DeeplinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParser.swift; sourceTree = "<group>"; };
 		00953D152909008C0022D6A4 /* JoinPlansRoomUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPlansRoomUsecase.swift; sourceTree = "<group>"; };
 		00A12CEC290651980024934C /* DeeplinkParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkParserTests.swift; sourceTree = "<group>"; };
+		E63C755F2909166200133C9E /* AppleTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleTestView.swift; sourceTree = "<group>"; };
+		E63C75612909166900133C9E /* AppleTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleTestViewController.swift; sourceTree = "<group>"; };
+		E63C75632909171100133C9E /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
 		F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepositoryTests.swift; sourceTree = "<group>"; };
@@ -173,6 +179,7 @@
 				001B1C7E2900FCC800F5C875 /* UserInfo.swift */,
 				001B1C802900FE5B00F5C875 /* PlansRoom.swift */,
 				001B1C822901049400F5C875 /* MockData.swift */,
+				E63C75632909171100133C9E /* AppleLoginManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -234,6 +241,7 @@
 		0062EBAE290024F500B0A6AB /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				E63C755E2909162600133C9E /* AppleLoginTest */,
 				000A53132904F32500CEDACC /* ShareTest */,
 				F251F35D2903EDD6003B6690 /* PlansRoomList */,
 			);
@@ -314,6 +322,13 @@
 				00A12CEC290651980024934C /* DeeplinkParserTests.swift */,
 			);
 			path = System;
+		E63C755E2909162600133C9E /* AppleLoginTest */ = {
+			isa = PBXGroup;
+			children = (
+				E63C755F2909166200133C9E /* AppleTestView.swift */,
+				E63C75612909166900133C9E /* AppleTestViewController.swift */,
+			);
+			path = AppleLoginTest;
 			sourceTree = "<group>";
 		};
 		F251F35D2903EDD6003B6690 /* PlansRoomList */ = {
@@ -485,6 +500,8 @@
 				00953D162909008C0022D6A4 /* JoinPlansRoomUsecase.swift in Sources */,
 				001B1C832901049400F5C875 /* MockData.swift in Sources */,
 				F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */,
+				E63C75602909166200133C9E /* AppleTestView.swift in Sources */,
+				E63C75642909171100133C9E /* AppleLoginManager.swift in Sources */,
 				002821EF2901884100717E2C /* ProcessInfo.swift in Sources */,
 				007EA00D2906290B000B8E31 /* DeeplinkHandler.swift in Sources */,
 				000A53152904F33800CEDACC /* ShareTestView.swift in Sources */,
@@ -500,6 +517,7 @@
 				007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */,
 				000A53122904F31A00CEDACC /* ShareTestViewController.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,
+				E63C75622909166900133C9E /* AppleTestViewController.swift in Sources */,
 				000A53082904D85700CEDACC /* APIKey.swift in Sources */,
 				002821F329018E7700717E2C /* RxSwift+Firestore.swift in Sources */,
 				000A53172904F38800CEDACC /* SwiftUI+UIKit.swift in Sources */,
@@ -721,7 +739,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4ziz;
+				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Ziz4gom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -751,7 +769,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Gom4ziz;
+				PRODUCT_BUNDLE_IDENTIFIER = team.gom4ziz.Ziz4gom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
