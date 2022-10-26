@@ -8,50 +8,39 @@ import AuthenticationServices
 import UIKit
 
 final class AppleTestView: UIView {
-    
+
     private (set) lazy var appleLoginButton = ASAuthorizationAppleIDButton()
     private (set) lazy var appleLogoutButton: UIButton = {
         var configuration: UIButton.Configuration = . filled()
-        var titleAttr = AttributedString.init("logout")
         let button = UIButton()
+        configuration.title = "로그아웃"
         button.configuration = configuration
         return button
     }()
     private let idLabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .systemBackground
         configureAddSubviews()
         configureConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("No need to implement")
     }
-    
+
     // MARK: - addSubview
-    
+
     private func configureAddSubviews() {
         self.addSubview(appleLoginButton)
     }
-    
+
     private func configureConstraints() {
         appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             appleLoginButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             appleLoginButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        
-        appleLogoutButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            appleLogoutButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            appleLogoutButton.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        
-        idLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            idLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            idLabel.bottomAnchor.constraint(equalTo: appleLoginButton.topAnchor, constant: -10)
         ])
     }
 }

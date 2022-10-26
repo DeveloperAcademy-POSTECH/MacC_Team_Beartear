@@ -9,8 +9,16 @@ import Foundation
 import UIKit
 
 final class AppleTestViewController: UIViewController {
-    
+
+    private lazy var appleLoginManager = AppleLoginManager(vc: self)
+    private let appleTestView = AppleTestView()
+
     override func viewDidLoad() {
-        <#code#>
+        super.viewDidLoad()
     }
+
+    override func loadView() {
+        self.view = appleTestView
+    }
+
 }

@@ -29,7 +29,6 @@
 		002821F329018E7700717E2C /* RxSwift+Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002821F229018E7700717E2C /* RxSwift+Firestore.swift */; };
 		002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 002821F52901932A00717E2C /* FirebaseFirestoreSwift */; };
 		002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002821F729022B2100717E2C /* UserInfoIdCache.swift */; };
-		002821FA2902353400717E2C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 002821F92902353400717E2C /* GoogleService-Info.plist */; };
 		003E5E5C2902D0FA004C597A /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 003E5E5B2902D0FA004C597A /* RxBlocking */; };
 		003E5E5E2902D0FA004C597A /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 003E5E5D2902D0FA004C597A /* RxTest */; };
 		003E5E602902D1A6004C597A /* UserInfoRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */; };
@@ -48,6 +47,7 @@
 		E63C75602909166200133C9E /* AppleTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C755F2909166200133C9E /* AppleTestView.swift */; };
 		E63C75622909166900133C9E /* AppleTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75612909166900133C9E /* AppleTestViewController.swift */; };
 		E63C75642909171100133C9E /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75632909171100133C9E /* AppleLoginManager.swift */; };
+		E6F4878B290982AC00037CF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
 		F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */; };
@@ -78,7 +78,6 @@
 		002821F02901889000717E2C /* UserInfoRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRepository.swift; sourceTree = "<group>"; };
 		002821F229018E7700717E2C /* RxSwift+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RxSwift+Firestore.swift"; sourceTree = "<group>"; };
 		002821F729022B2100717E2C /* UserInfoIdCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoIdCache.swift; sourceTree = "<group>"; };
-		002821F92902353400717E2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		003E5E522902CF89004C597A /* Gom4zizTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Gom4zizTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		003E5E5F2902D1A6004C597A /* UserInfoRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRepositoryTests.swift; sourceTree = "<group>"; };
 		0062EB782900222600B0A6AB /* Gom4ziz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gom4ziz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +97,7 @@
 		E63C75612909166900133C9E /* AppleTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleTestViewController.swift; sourceTree = "<group>"; };
 		E63C75632909171100133C9E /* AppleLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginManager.swift; sourceTree = "<group>"; };
 		E63C75652909415900133C9E /* Gom4ziz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gom4ziz.entitlements; sourceTree = "<group>"; };
+		E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
 		F251F35E290549EF003B6690 /* PlansRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepository.swift; sourceTree = "<group>"; };
 		F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlansRoomRepositoryTests.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 		0062EB6F2900222600B0A6AB = {
 			isa = PBXGroup;
 			children = (
-				002821F92902353400717E2C /* GoogleService-Info.plist */,
+				E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */,
 				0062EBAC290023A600B0A6AB /* .swiftlint.yml */,
 				0062EB7A2900222600B0A6AB /* Gom4ziz */,
 				003E5E532902CF89004C597A /* Gom4zizTests */,
@@ -454,9 +454,9 @@
 			files = (
 				0062EBAD290023A600B0A6AB /* .swiftlint.yml in Resources */,
 				0062EB882900222700B0A6AB /* LaunchScreen.storyboard in Resources */,
-				002821FA2902353400717E2C /* GoogleService-Info.plist in Resources */,
 				0062EB852900222700B0A6AB /* Assets.xcassets in Resources */,
 				0062EB832900222600B0A6AB /* Main.storyboard in Resources */,
+				E6F4878B290982AC00037CF9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,19 +9,19 @@ import CryptoKit
 import FirebaseAuth
 
 protocol AppleLoginManagerDelegate: AnyObject {
-    func appleLoginSuccess() -> Void
-    func appleLoginFail() -> Void
+    func appleLoginSuccess()
+    func appleLoginFail()
 }
 
 final class AppleLoginManager: NSObject {
     private var currentNonce: String?
     weak var viewController: UIViewController?
     weak var delegate: AppleLoginManagerDelegate?
-    
+
     init(vc: UIViewController) {
         self.viewController = vc
     }
-    
+
     func startSignInWithAppleFlow() {
         let nonce = randomNonceString()
         currentNonce = nonce
@@ -29,13 +29,13 @@ final class AppleLoginManager: NSObject {
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
         request.nonce = sha256(nonce)
-        
+
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
-    
+
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
         let charset: [Character] =
@@ -69,7 +69,7 @@ final class AppleLoginManager: NSObject {
 
         return result
     }
-    
+
     private func sha256(_ input: String) -> String {
       let inputData = Data(input.utf8)
       let hashedData = SHA256.hash(data: inputData)
@@ -97,20 +97,20 @@ extension AppleLoginManager: ASAuthorizationControllerDelegate {
                 print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                 return
             }
-            
+
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                       idToken: idTokenString,
                                                             rawNonce: nonce)
-            Auth.auth().signIn(with: credential) { [self] authResult, error in
+            Auth.auth().signIn(with: credential) { [self] _, error in
                 if let error = error {
-                    print ("Error Apple sign in: %@", error)
+                    print("Error Apple sign in: %@", error)
                     return
                 }
                 delegate?.appleLoginSuccess()
             }
         }
     }
-    
+
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         delegate?.appleLoginFail()
     }
@@ -118,7 +118,7 @@ extension AppleLoginManager: ASAuthorizationControllerDelegate {
 
 // MARK: - ASAuthorizationControllerPresentationContextProviding
 
-extension AppleLoginManager: ASAuthorizationControllerPresentationContextProviding  {
+extension AppleLoginManager: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return viewController!.view.window!
     }
