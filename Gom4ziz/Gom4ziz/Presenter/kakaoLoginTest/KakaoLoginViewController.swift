@@ -17,6 +17,7 @@ import RxKakaoSDKUser
 final class KakaoLoginViewController: UIViewController {
     private lazy var testView: KakaoLoginView = KakaoLoginView()
     private let disposeBag: DisposeBag = DisposeBag()
+    private let viewmodel = KakaoLoginViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         isTokenVailed()
@@ -33,7 +34,7 @@ private extension KakaoLoginViewController {
             UserApi.shared.rx.accessTokenInfo()
                 .subscribe(onSuccess: { (_) in
                     print("토큰 유효성 체크 성공(필요 시 토큰 갱신됨)")
-                    self.getUserInfo()
+                    self.viewmodel.getUserInfo()
                 }, onFailure: {error in
                     if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true {
                         print("로그인 필요")
@@ -49,90 +50,50 @@ private extension KakaoLoginViewController {
     func setObserver() {
         testView.loginButton.rx.tap
             .bind {
-                self.loginWithKakao()
+                self.viewmodel.loginWithKakao()
             }
             .disposed(by: disposeBag)
         testView.logoutButton.rx.tap
             .bind {
-                self.logout()
+                self.viewmodel.logout()
             }
             .disposed(by: disposeBag)
         testView.unLinkButton.rx.tap
             .bind {
-                self.unlink()
+                self.viewmodel.unlink()
             }
             .disposed(by: disposeBag)
-    }
-    private func loginWithKakao() {
-        if UserApi.isKakaoTalkLoginAvailable() {
-            UserApi.shared.rx.loginWithKakaoTalk()
-                .subscribe(onNext: { (oauthToken) in
-                    print("loginWithKakaoTalk() success.")
-                    // do something
-                    self.getUserInfo()
-                    _ = oauthToken
-                }, onError: {error in
-                    print(error)
-                })
-                .disposed(by: self.disposeBag)
-        } else {
-            UserApi.shared.rx.loginWithKakaoAccount()
-                .subscribe(onNext: { (oauthToken) in
-                    print("loginWithKakaoAccount() success.")
-                    // do something
-                    self.getUserInfo()
-                    _ = oauthToken
-                }, onError: {error in
-                    print(error)
-                })
-                .disposed(by: self.disposeBag)
-        }
-    }
-    private func logout() {
-        UserApi.shared.rx.logout()
-            .subscribe(onCompleted: {
-                print("logout() success.")
-                self.testView.userName.text = "로그아웃 성공"
-                self.testView.userImageView.isHidden = true
-                self.testView.loginButton.isHidden = false
-                self.testView.logoutButton.isHidden = true
-                self.testView.unLinkButton.isHidden = true
-            }, onError: { error in
-                print(error)
-            })
+        viewmodel.userInfo
+            .map(\.name)
+            .bind(to: testView.userName.rx.text)
             .disposed(by: disposeBag)
-    }
-    private func unlink() {
-        UserApi.shared.rx.unlink()
-            .subscribe(onCompleted: {
-                print("unlink() success.")
-                self.testView.userName.text = "회원 탈퇴 성공"
-                self.testView.userImageView.isHidden = true
-                self.testView.loginButton.isHidden = false
-                self.testView.logoutButton.isHidden = true
-                self.testView.unLinkButton.isHidden = true
-            }, onError: {error in
-                print(error)
-            })
+        viewmodel.userInfo
+            .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .compactMap(\.imageURL)
+            .compactMap { try Data(contentsOf: $0) }
+            .compactMap { UIImage(data: $0) }
+            .observe(on: MainScheduler.instance)
+            .bind(to: self.testView.userImageView.rx.image)
             .disposed(by: disposeBag)
-    }
-    private func getUserInfo() {
-        UserApi.shared.rx.me()
-            .subscribe(onSuccess: { user in
-                print("me() success.")
-                // do something
-                self.testView.loginButton.isHidden = true
-                self.testView.logoutButton.isHidden = false
-                self.testView.unLinkButton.isHidden = false
-                self.testView.userName.text = user.kakaoAccount?.profile?.nickname
-                self.testView.userImageView.isHidden = false
-                if let url = user.kakaoAccount?.profile?.profileImageUrl,
-                   let data = try? Data(contentsOf: url) {
-                    self.testView.userImageView.image = UIImage(data: data)
+        viewmodel.kakaoLoginstatus
+            .subscribe(onNext: { status in
+                switch status {
+                case .logout:
+                        self.testView.loginButton.isHidden = false
+                        self.testView.userImageView.isHidden = true
+                        self.testView.logoutButton.isHidden = true
+                        self.testView.unLinkButton.isHidden = true
+                case .unlink:
+                        self.testView.loginButton.isHidden = false
+                        self.testView.userImageView.isHidden = true
+                        self.testView.logoutButton.isHidden = true
+                        self.testView.unLinkButton.isHidden = true
+                case .login:
+                        self.testView.loginButton.isHidden = true
+                        self.testView.userImageView.isHidden = false
+                        self.testView.logoutButton.isHidden = false
+                        self.testView.unLinkButton.isHidden = false
                 }
-                _ = user
-            }, onFailure: {error in
-                print(error)
             })
             .disposed(by: disposeBag)
     }
