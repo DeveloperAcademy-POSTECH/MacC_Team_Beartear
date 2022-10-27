@@ -12,38 +12,53 @@ class KakaoLoginView: UIView {
         var configuration = UIButton.Configuration.tinted()
         configuration.title = "카카오 로그인"
         let button = UIButton(configuration: configuration)
+        addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     private (set) lazy var logoutButton: UIButton = {
         var configuration = UIButton.Configuration.tinted()
         configuration.title = "카카오 로그아웃"
         let button = UIButton(configuration: configuration)
+        addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     private (set) lazy var unLinkButton: UIButton = {
         var configuration = UIButton.Configuration.tinted()
         configuration.title = "회원 탈퇴"
         let button = UIButton(configuration: configuration)
+        addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
     lazy var userName: UILabel = {
         let label = UILabel(frame: .zero)
         label.font = .preferredFont(forTextStyle: .title3)
         label.textColor = .white
         label.text = "유저 이름 들어갈 자리"
+        addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     lazy var userImageView: UIImageView = {
-            let ImageView = UIImageView()
-            ImageView.backgroundColor = .red
-            ImageView.translatesAutoresizingMaskIntoConstraints = false
-            return ImageView
-        }()
-
+        let ImageView = UIImageView()
+        ImageView.backgroundColor = .red
+        ImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(ImageView)
+        ImageView.translatesAutoresizingMaskIntoConstraints = false
+        return ImageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setUpViews()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("Don`t need to implement")
     }
@@ -52,17 +67,8 @@ private extension KakaoLoginView {
     func setUpViews() {
         setUpAutoLayout()
     }
+    
     func setUpAutoLayout() {
-        addSubview(loginButton)
-        addSubview(userName)
-        addSubview(userImageView)
-        addSubview(logoutButton)
-        addSubview(unLinkButton)
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        userName.translatesAutoresizingMaskIntoConstraints = false
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        logoutButton.translatesAutoresizingMaskIntoConstraints = false
-        unLinkButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             loginButton.topAnchor.constraint(equalTo: topAnchor, constant: 100),
             loginButton.centerXAnchor.constraint(equalTo: centerXAnchor)

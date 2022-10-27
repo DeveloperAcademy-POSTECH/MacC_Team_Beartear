@@ -1,54 +1,57 @@
 //
-//  KakaoLoginViewModel.swift
+//  KakaoLoginManager.swift
 //  Gom4ziz
 //
-//  Created by 이가은 on 2022/10/26.
+//  Created by 이가은 on 2022/10/27.
 //
 
-import UIKit
-import RxSwift
-import KakaoSDKCommon
-import RxKakaoSDKCommon
 import KakaoSDKAuth
-import RxKakaoSDKAuth
+import KakaoSDKCommon
 import KakaoSDKUser
-import RxKakaoSDKUser
 import RxCocoa
+import RxSwift
+import RxKakaoSDKAuth
+import RxKakaoSDKCommon
+import RxKakaoSDKUser
+import UIKit
 
-final class KakaoLoginViewModel {
+struct KakaoLoginManager: LoginManagerProtocol {
     private let disposeBag: DisposeBag = DisposeBag()
     let userInfo: PublishRelay<UserInfo> = .init()
     let kakaoLoginstatus: PublishRelay<KakaoLoginstatus> = .init()
-    enum KakaoLoginstatus {
-        case login
-        case logout
-        case unlink
-    }
-    init() {
-    }
-    func loginWithKakao() {
+    
+    func login() {
         if UserApi.isKakaoTalkLoginAvailable() {
-            UserApi.shared.rx.loginWithKakaoTalk()
-                .subscribe(onNext: { (oauthToken) in
-                    print("loginWithKakaoTalk() success.")
-                    self.getUserInfo()
-                    _ = oauthToken
-                }, onError: {error in
-                    print(error)
-                })
-                .disposed(by: self.disposeBag)
+            loginWithKakaoTalk()
         } else {
-            UserApi.shared.rx.loginWithKakaoAccount()
-                .subscribe(onNext: { (oauthToken) in
-                    print("loginWithKakaoAccount() success.")
-                    self.getUserInfo()
-                    _ = oauthToken
-                }, onError: {error in
-                    print(error)
-                })
-                .disposed(by: self.disposeBag)
+            loginWithKakaoAccount()
         }
     }
+    
+    private func loginWithKakaoTalk() {
+        UserApi.shared.rx.loginWithKakaoTalk()
+            .subscribe(onNext: { (oauthToken) in
+                print("loginWithKakaoTalk() success.")
+                self.getUserInfo()
+                _ = oauthToken
+            }, onError: {error in
+                print(error)
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func loginWithKakaoAccount() {
+        UserApi.shared.rx.loginWithKakaoAccount()
+            .subscribe(onNext: { (oauthToken) in
+                print("loginWithKakaoAccount() success.")
+                self.getUserInfo()
+                _ = oauthToken
+            }, onError: {error in
+                print(error)
+            })
+            .disposed(by: self.disposeBag)
+    }
+    
     func logout() {
         UserApi.shared.rx.logout()
             .subscribe(onCompleted: {
@@ -60,6 +63,7 @@ final class KakaoLoginViewModel {
             })
             .disposed(by: disposeBag)
     }
+    
     func unlink() {
         UserApi.shared.rx.unlink()
             .subscribe(onCompleted: {
@@ -71,6 +75,7 @@ final class KakaoLoginViewModel {
             })
             .disposed(by: disposeBag)
     }
+    
     func getUserInfo() {
         UserApi.shared.rx.me()
             .subscribe(onSuccess: { user in

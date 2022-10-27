@@ -5,10 +5,10 @@
 //  Created by JongHo Park on 2022/10/19.
 //
 
-import UIKit
 import FirebaseAuth
-import RxKakaoSDKAuth
 import KakaoSDKAuth
+import RxKakaoSDKAuth
+import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
