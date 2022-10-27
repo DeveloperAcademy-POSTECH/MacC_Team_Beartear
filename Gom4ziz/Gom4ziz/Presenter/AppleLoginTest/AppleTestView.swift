@@ -17,6 +17,13 @@ final class AppleTestView: UIView {
         button.configuration = configuration
         return button
     }()
+    private (set) lazy var appleWithdrawalButton: UIButton = {
+        var configuration: UIButton.Configuration = . filled()
+        let button = UIButton()
+        configuration.title = "탈퇴"
+        button.configuration = configuration
+        return button
+    }()
     private let idLabel = UILabel()
 
     override init(frame: CGRect) {
@@ -34,6 +41,8 @@ final class AppleTestView: UIView {
 
     private func configureAddSubviews() {
         self.addSubview(appleLoginButton)
+        self.addSubview(appleLogoutButton)
+        self.addSubview(appleWithdrawalButton)
     }
 
     private func configureConstraints() {
@@ -41,6 +50,18 @@ final class AppleTestView: UIView {
         NSLayoutConstraint.activate([
             appleLoginButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             appleLoginButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+
+        appleLogoutButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            appleLogoutButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            appleLogoutButton.topAnchor.constraint(equalTo: appleLoginButton.bottomAnchor, constant: 30)
+        ])
+
+        appleWithdrawalButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            appleWithdrawalButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            appleWithdrawalButton.topAnchor.constraint(equalTo: appleLogoutButton.bottomAnchor, constant: 30)
         ])
     }
 }

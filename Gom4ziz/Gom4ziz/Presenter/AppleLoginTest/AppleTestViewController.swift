@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+import FirebaseAuth
+
 final class AppleTestViewController: UIViewController {
 
     private lazy var appleLoginManager: AppleLoginManager = {
@@ -28,6 +30,8 @@ final class AppleTestViewController: UIViewController {
 
     private func bindingView() {
         appleTestView.appleLoginButton.addTarget(self, action: #selector(tapAppleLoginButton), for: .touchUpInside)
+        appleTestView.appleLogoutButton.addTarget(self, action: #selector(tapAppleLogoutButton), for: .touchUpInside)
+        appleTestView.appleWithdrawalButton.addTarget(self, action: #selector(tapAppleWithdrawalButton), for: .touchUpInside)
     }
 
     // MARK: - @objc function
@@ -35,10 +39,19 @@ final class AppleTestViewController: UIViewController {
     @objc private func tapAppleLoginButton() {
         appleLoginManager.startSignInWithAppleFlow()
     }
+
+    @objc private func tapAppleLogoutButton() {
+        appleLoginManager.signOut()
+    }
+
+    @objc private func tapAppleWithdrawalButton() {
+        appleLoginManager.withDrawal()
+    }
 }
 
 extension AppleTestViewController: AppleLoginManagerDelegate {
-    func appleLoginSuccess() {
+    func appleLoginSuccess(authResult: AuthDataResult?) {
+        // TODO: keychain 연동
         print("success")
     }
 

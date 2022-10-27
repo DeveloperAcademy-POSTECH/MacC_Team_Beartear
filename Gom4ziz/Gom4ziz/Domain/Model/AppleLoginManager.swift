@@ -6,10 +6,11 @@
 //
 import AuthenticationServices
 import CryptoKit
+
 import FirebaseAuth
 
 protocol AppleLoginManagerDelegate: AnyObject {
-    func appleLoginSuccess()
+    func appleLoginSuccess(authResult: AuthDataResult?)
     func appleLoginFail()
 }
 
@@ -34,6 +35,29 @@ final class AppleLoginManager: NSObject {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+
+    // 로그아웃
+    func signOut() {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            // TODO: keychain에서 제거
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+
+    // 탈퇴 (withdrwal)
+    func withDrawal() {
+        let user = Auth.auth().currentUser
+        user?.delete { error in
+          if let error = error {
+            print("Error withdrawal: %@", error)
+          } else {
+              // TODO: keychain에서 제거
+          }
+        }
     }
 
     private func randomNonceString(length: Int = 32) -> String {
@@ -101,12 +125,12 @@ extension AppleLoginManager: ASAuthorizationControllerDelegate {
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                       idToken: idTokenString,
                                                             rawNonce: nonce)
-            Auth.auth().signIn(with: credential) { [self] _, error in
+            Auth.auth().signIn(with: credential) { [self] authResult, error in
                 if let error = error {
                     print("Error Apple sign in: %@", error)
                     return
                 }
-                delegate?.appleLoginSuccess()
+                delegate?.appleLoginSuccess(authResult: authResult)
             }
         }
     }
