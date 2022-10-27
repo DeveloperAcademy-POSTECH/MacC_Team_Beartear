@@ -49,6 +49,9 @@
 		E63C75642909171100133C9E /* AppleLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63C75632909171100133C9E /* AppleLoginManager.swift */; };
 		E6F4878B290982AC00037CF9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */; };
 		CCBFB77129090E3500173FD7 /* KakaoLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBFB77029090E3500173FD7 /* KakaoLoginViewModel.swift */; };
+		CC381332290A6B86009DD5F3 /* LoginManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC381331290A6B86009DD5F3 /* LoginManagerProtocol.swift */; };
+		CC381334290A6B96009DD5F3 /* KakaoLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC381333290A6B96009DD5F3 /* KakaoLoginManager.swift */; };
+		CCBFB77129090E3500173FD7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCBFB77029090E3500173FD7 /* LoginViewModel.swift */; };
 		CCF71D1D2907CFED00C66C55 /* KakaoLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF71D1C2907CFED00C66C55 /* KakaoLoginView.swift */; };
 		CCF71D1F2907CFF900C66C55 /* KakaoLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF71D1E2907CFF900C66C55 /* KakaoLoginViewController.swift */; };
 		CCF71D212907D02600C66C55 /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CCF71D202907D02600C66C55 /* RxKakaoSDKAuth */; };
@@ -104,6 +107,9 @@
 		E63C75652909415900133C9E /* Gom4ziz.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Gom4ziz.entitlements; sourceTree = "<group>"; };
 		E6F4878A290982AC00037CF9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CCBFB77029090E3500173FD7 /* KakaoLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginViewModel.swift; sourceTree = "<group>"; };
+		CC381331290A6B86009DD5F3 /* LoginManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManagerProtocol.swift; sourceTree = "<group>"; };
+		CC381333290A6B96009DD5F3 /* KakaoLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginManager.swift; sourceTree = "<group>"; };
+		CCBFB77029090E3500173FD7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		CCF71D1C2907CFED00C66C55 /* KakaoLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginView.swift; sourceTree = "<group>"; };
 		CCF71D1E2907CFF900C66C55 /* KakaoLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginViewController.swift; sourceTree = "<group>"; };
 		F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlansRoomListViewController.swift; path = Gom4ziz/Presenter/PlansRoomList/PlansRoomListViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -349,7 +355,9 @@
 			children = (
 				CCF71D1C2907CFED00C66C55 /* KakaoLoginView.swift */,
 				CCF71D1E2907CFF900C66C55 /* KakaoLoginViewController.swift */,
-				CCBFB77029090E3500173FD7 /* KakaoLoginViewModel.swift */,
+				CCBFB77029090E3500173FD7 /* LoginViewModel.swift */,
+				CC381333290A6B96009DD5F3 /* KakaoLoginManager.swift */,
+				CC381331290A6B86009DD5F3 /* LoginManagerProtocol.swift */,
 			);
 			path = kakaoLoginTest;
 			sourceTree = "<group>";
@@ -540,10 +548,13 @@
 				F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */,
 				007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */,
 				CCBFB77129090E3500173FD7 /* KakaoLoginViewModel.swift in Sources */,
+				CC381334290A6B96009DD5F3 /* KakaoLoginManager.swift in Sources */,
+				CCBFB77129090E3500173FD7 /* LoginViewModel.swift in Sources */,
 				CCF71D1F2907CFF900C66C55 /* KakaoLoginViewController.swift in Sources */,
 				002821F12901889000717E2C /* UserInfoRepository.swift in Sources */,
 				007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */,
 				000A53122904F31A00CEDACC /* ShareTestViewController.swift in Sources */,
+				CC381332290A6B86009DD5F3 /* LoginManagerProtocol.swift in Sources */,
 				0062EB7E2900222600B0A6AB /* SceneDelegate.swift in Sources */,
 				E63C75622909166900133C9E /* AppleTestViewController.swift in Sources */,
 				000A53082904D85700CEDACC /* APIKey.swift in Sources */,

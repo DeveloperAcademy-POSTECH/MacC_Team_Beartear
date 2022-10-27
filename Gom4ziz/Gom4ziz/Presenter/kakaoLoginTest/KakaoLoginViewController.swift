@@ -5,19 +5,20 @@
 //  Created by 이가은 on 2022/10/24.
 //
 
-import UIKit
-import RxSwift
-import KakaoSDKCommon
-import RxKakaoSDKCommon
 import KakaoSDKAuth
-import RxKakaoSDKAuth
+import KakaoSDKCommon
 import KakaoSDKUser
+import RxCocoa
+import RxSwift
+import RxKakaoSDKAuth
+import RxKakaoSDKCommon
 import RxKakaoSDKUser
+import UIKit
 
 final class KakaoLoginViewController: UIViewController {
     private lazy var testView: KakaoLoginView = KakaoLoginView()
     private let disposeBag: DisposeBag = DisposeBag()
-    private let viewmodel = KakaoLoginViewModel()
+    private let viewmodel = LoginViewModel(loginManager: KakaoLoginManager())
     override func viewDidLoad() {
         super.viewDidLoad()
         isTokenVailed()
@@ -29,6 +30,7 @@ final class KakaoLoginViewController: UIViewController {
 }
 
 private extension KakaoLoginViewController {
+    
     private func isTokenVailed() {
         if AuthApi.hasToken() {
             UserApi.shared.rx.accessTokenInfo()
@@ -47,27 +49,32 @@ private extension KakaoLoginViewController {
             print("로그인 필요")
         }
     }
+    
     func setObserver() {
         testView.loginButton.rx.tap
             .bind {
                 self.viewmodel.loginWithKakao()
             }
             .disposed(by: disposeBag)
+        
         testView.logoutButton.rx.tap
             .bind {
                 self.viewmodel.logout()
             }
             .disposed(by: disposeBag)
+        
         testView.unLinkButton.rx.tap
             .bind {
                 self.viewmodel.unlink()
             }
             .disposed(by: disposeBag)
-        viewmodel.userInfo
+        
+        viewmodel.loginManager.userInfo
             .map(\.name)
             .bind(to: testView.userName.rx.text)
             .disposed(by: disposeBag)
-        viewmodel.userInfo
+        
+        viewmodel.loginManager.userInfo
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .default))
             .compactMap(\.imageURL)
             .compactMap { try Data(contentsOf: $0) }
@@ -75,20 +82,21 @@ private extension KakaoLoginViewController {
             .observe(on: MainScheduler.instance)
             .bind(to: self.testView.userImageView.rx.image)
             .disposed(by: disposeBag)
-        viewmodel.kakaoLoginstatus
+        
+        viewmodel.loginManager.kakaoLoginstatus
             .subscribe(onNext: { status in
                 switch status {
-                case .logout:
+                    case .logout:
                         self.testView.loginButton.isHidden = false
                         self.testView.userImageView.isHidden = true
                         self.testView.logoutButton.isHidden = true
                         self.testView.unLinkButton.isHidden = true
-                case .unlink:
+                    case .unlink:
                         self.testView.loginButton.isHidden = false
                         self.testView.userImageView.isHidden = true
                         self.testView.logoutButton.isHidden = true
                         self.testView.unLinkButton.isHidden = true
-                case .login:
+                    case .login:
                         self.testView.loginButton.isHidden = true
                         self.testView.userImageView.isHidden = false
                         self.testView.logoutButton.isHidden = false
