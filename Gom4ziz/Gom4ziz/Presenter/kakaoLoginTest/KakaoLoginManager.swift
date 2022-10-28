@@ -18,7 +18,7 @@ import UIKit
 struct KakaoLoginManager: LoginManagerProtocol {
     private let disposeBag: DisposeBag = DisposeBag()
     let userInfo: PublishRelay<UserInfo> = .init()
-    let kakaoLoginstatus: PublishRelay<KakaoLoginstatus> = .init()
+    let loginstatus: PublishRelay<Loginstatus> = .init()
     
     func login() {
         if UserApi.isKakaoTalkLoginAvailable() {
@@ -57,7 +57,7 @@ struct KakaoLoginManager: LoginManagerProtocol {
             .subscribe(onCompleted: {
                 print("logout() success.")
                 self.userInfo.accept(UserInfo(id: UUID().uuidString, name: "로그아웃 성공", imageURL: nil))
-                self.kakaoLoginstatus.accept(.logout)
+                self.loginstatus.accept(.logout)
             }, onError: { error in
                 print(error)
             })
@@ -69,7 +69,7 @@ struct KakaoLoginManager: LoginManagerProtocol {
             .subscribe(onCompleted: {
                 print("unlink() success.")
                 self.userInfo.accept(UserInfo(id: UUID().uuidString, name: "회원 탈퇴 성공", imageURL: nil))
-                self.kakaoLoginstatus.accept(.unlink)
+                self.loginstatus.accept(.unlink)
             }, onError: {error in
                 print(error)
             })
@@ -83,7 +83,7 @@ struct KakaoLoginManager: LoginManagerProtocol {
                 if let name = user.kakaoAccount?.profile?.nickname {
                     self.userInfo.accept(UserInfo(id: UUID().uuidString, name: name, imageURL: user.kakaoAccount?.profile?.profileImageUrl))
                 }
-                self.kakaoLoginstatus.accept(.login)
+                self.loginstatus.accept(.login)
                 _ = user
             }, onFailure: {error in
                 print(error)

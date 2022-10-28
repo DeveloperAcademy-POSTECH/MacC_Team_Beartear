@@ -83,7 +83,7 @@ private extension KakaoLoginViewController {
             .bind(to: self.testView.userImageView.rx.image)
             .disposed(by: disposeBag)
         
-        viewmodel.loginManager.kakaoLoginstatus
+        viewmodel.loginManager.loginstatus
             .subscribe(onNext: { status in
                 switch status {
                     case .logout:

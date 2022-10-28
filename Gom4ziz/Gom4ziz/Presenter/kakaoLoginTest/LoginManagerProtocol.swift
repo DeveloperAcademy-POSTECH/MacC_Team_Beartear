@@ -8,7 +8,7 @@
 import Foundation
 import RxRelay
 
-enum KakaoLoginstatus {
+enum Loginstatus {
     case login
     case logout
     case unlink
@@ -20,5 +20,5 @@ protocol LoginManagerProtocol {
     func unlink()
     func getUserInfo()
     var userInfo: PublishRelay<UserInfo> { get }
-    var kakaoLoginstatus: PublishRelay<KakaoLoginstatus> { get }
+    var loginstatus: PublishRelay<Loginstatus> { get }
 }
