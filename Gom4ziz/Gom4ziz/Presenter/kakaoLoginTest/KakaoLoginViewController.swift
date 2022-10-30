@@ -4,6 +4,7 @@
 //
 //  Created by 이가은 on 2022/10/24.
 //
+import UIKit
 
 import KakaoSDKAuth
 import KakaoSDKCommon
@@ -13,7 +14,6 @@ import RxSwift
 import RxKakaoSDKAuth
 import RxKakaoSDKCommon
 import RxKakaoSDKUser
-import UIKit
 
 final class KakaoLoginViewController: UIViewController {
     private lazy var testView: KakaoLoginView = KakaoLoginView()
@@ -31,7 +31,7 @@ final class KakaoLoginViewController: UIViewController {
 
 private extension KakaoLoginViewController {
     
-    private func isTokenVailed() {
+    func isTokenVailed() {
         if AuthApi.hasToken() {
             UserApi.shared.rx.accessTokenInfo()
                 .subscribe(onSuccess: { (_) in
