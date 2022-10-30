@@ -4,6 +4,7 @@
 //
 //  Created by 이가은 on 2022/10/27.
 //
+import UIKit
 
 import KakaoSDKAuth
 import KakaoSDKCommon
@@ -13,7 +14,6 @@ import RxSwift
 import RxKakaoSDKAuth
 import RxKakaoSDKCommon
 import RxKakaoSDKUser
-import UIKit
 
 struct KakaoLoginManager: LoginManagerProtocol {
     private let disposeBag: DisposeBag = DisposeBag()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class KakaoLoginView: UIView {
+final class KakaoLoginView: UIView {
     private (set) lazy var loginButton: UIButton = {
         var configuration = UIButton.Configuration.tinted()
         configuration.title = "카카오 로그인"
