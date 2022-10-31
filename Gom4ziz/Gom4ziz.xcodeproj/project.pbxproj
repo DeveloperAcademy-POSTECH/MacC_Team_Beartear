@@ -44,6 +44,7 @@
 		007EA01329062E4C000B8E31 /* DeeplinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007EA01229062E4C000B8E31 /* DeeplinkParser.swift */; };
 		00953D162909008C0022D6A4 /* JoinPlansRoomUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00953D152909008C0022D6A4 /* JoinPlansRoomUsecase.swift */; };
 		00A12CED290651980024934C /* DeeplinkParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A12CEC290651980024934C /* DeeplinkParserTests.swift */; };
+		E68685D1290FAB3100674CC4 /* KeyChainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = E68685D0290FAB3100674CC4 /* KeyChainWrapper */; };
 		F251F35C2903EDA5003B6690 /* PlansRoomListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35B2903EDA5003B6690 /* PlansRoomListViewController.swift */; };
 		F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F35E290549EF003B6690 /* PlansRoomRepository.swift */; };
 		F251F36329055245003B6690 /* PlansRoomRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F251F36229055245003B6690 /* PlansRoomRepositoryTests.swift */; };
@@ -117,6 +118,7 @@
 				000A53012904D43400CEDACC /* RxKakaoSDKShare in Frameworks */,
 				001B1C8829010C4B00F5C875 /* FirebaseFirestore in Frameworks */,
 				002821F62901932A00717E2C /* FirebaseFirestoreSwift in Frameworks */,
+				E68685D1290FAB3100674CC4 /* KeyChainWrapper in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +372,7 @@
 				002821F52901932A00717E2C /* FirebaseFirestoreSwift */,
 				000A52FE2904D43400CEDACC /* RxKakaoSDKCommon */,
 				000A53002904D43400CEDACC /* RxKakaoSDKShare */,
+				E68685D0290FAB3100674CC4 /* KeyChainWrapper */,
 			);
 			productName = Gom4ziz;
 			productReference = 0062EB782900222600B0A6AB /* Gom4ziz.app */;
@@ -408,6 +411,7 @@
 				001B1C8429010C4B00F5C875 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				001B1CA22901270C00F5C875 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				000A52FD2904D43400CEDACC /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				E68685CF290FAB3000674CC4 /* XCRemoteSwiftPackageReference "KeychainPackage" */,
 			);
 			productRefGroup = 0062EB792900222600B0A6AB /* Products */;
 			projectDirPath = "";
@@ -813,6 +817,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		E68685CF290FAB3000674CC4 /* XCRemoteSwiftPackageReference "KeychainPackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/HoJongE/KeychainPackage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -865,6 +877,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 001B1CA22901270C00F5C875 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxTest;
+		};
+		E68685D0290FAB3100674CC4 /* KeyChainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E68685CF290FAB3000674CC4 /* XCRemoteSwiftPackageReference "KeychainPackage" */;
+			productName = KeyChainWrapper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
