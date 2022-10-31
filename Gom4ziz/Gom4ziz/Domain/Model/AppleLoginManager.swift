@@ -16,11 +16,11 @@ protocol AppleLoginManagerDelegate: AnyObject {
 
 final class AppleLoginManager: NSObject {
     private var currentNonce: String?
-    weak var viewController: UIViewController?
+    private weak var viewController: UIViewController?
     weak var delegate: AppleLoginManagerDelegate?
 
-    init(vc: UIViewController) {
-        self.viewController = vc
+    init(presentingViewController: UIViewController) {
+        self.viewController = presentingViewController
     }
 
     func startSignInWithAppleFlow() {

@@ -5,17 +5,13 @@
 //  Created by sanghyo on 2022/10/26.
 //
 
-import Foundation
 import UIKit
 
 import FirebaseAuth
 
 final class AppleTestViewController: UIViewController {
 
-    private lazy var appleLoginManager: AppleLoginManager = {
-        let manager = AppleLoginManager(vc: self)
-        return manager
-    }()
+    private lazy var appleLoginManager = AppleLoginManager(presentingViewController: self)
     private let appleTestView = AppleTestView()
 
     override func viewDidLoad() {

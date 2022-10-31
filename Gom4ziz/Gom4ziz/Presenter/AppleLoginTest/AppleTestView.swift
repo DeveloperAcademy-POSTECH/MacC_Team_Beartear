@@ -24,7 +24,6 @@ final class AppleTestView: UIView {
         button.configuration = configuration
         return button
     }()
-    private let idLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
