@@ -11,13 +11,13 @@ import RxRelay
 enum Loginstatus {
     case login
     case logout
-    case unlink
+    case withDrawal
 }
 
 protocol LoginManagerProtocol {
     func login()
     func logout()
-    func unlink()
+    func withDrawal()
     func getUserInfo()
     var userInfo: PublishRelay<UserInfo> { get }
     var loginstatus: PublishRelay<Loginstatus> { get }

@@ -25,7 +25,7 @@ final class KakaoLoginViewController: UIViewController {
         setObserver()
     }
     override func loadView() {
-        self.view = testView
+        view = testView
     }
 }
 
@@ -34,9 +34,9 @@ private extension KakaoLoginViewController {
     func isTokenVailed() {
         if AuthApi.hasToken() {
             UserApi.shared.rx.accessTokenInfo()
-                .subscribe(onSuccess: { (_) in
+                .subscribe(onSuccess: { [self] _ in
                     print("토큰 유효성 체크 성공(필요 시 토큰 갱신됨)")
-                    self.viewmodel.getUserInfo()
+                    viewmodel.getUserInfo()
                 }, onFailure: {error in
                     if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true {
                         print("로그인 필요")
@@ -44,7 +44,7 @@ private extension KakaoLoginViewController {
                         print("기타 에러")
                     }
                 })
-                .disposed(by: self.disposeBag)
+                .disposed(by: disposeBag)
         } else {
             print("로그인 필요")
         }
@@ -52,20 +52,20 @@ private extension KakaoLoginViewController {
     
     func setObserver() {
         testView.loginButton.rx.tap
-            .bind {
-                self.viewmodel.loginWithKakao()
+            .bind { [self] _ in
+                viewmodel.loginWithKakao()
             }
             .disposed(by: disposeBag)
         
         testView.logoutButton.rx.tap
-            .bind {
-                self.viewmodel.logout()
+            .bind { [self] _ in
+                viewmodel.logout()
             }
             .disposed(by: disposeBag)
         
         testView.unLinkButton.rx.tap
-            .bind {
-                self.viewmodel.unlink()
+            .bind { [self] _ in
+                viewmodel.withDrawal()
             }
             .disposed(by: disposeBag)
         
@@ -80,27 +80,27 @@ private extension KakaoLoginViewController {
             .compactMap { try Data(contentsOf: $0) }
             .compactMap { UIImage(data: $0) }
             .observe(on: MainScheduler.instance)
-            .bind(to: self.testView.userImageView.rx.image)
+            .bind(to: testView.userImageView.rx.image)
             .disposed(by: disposeBag)
         
         viewmodel.loginManager.loginstatus
-            .subscribe(onNext: { status in
+            .subscribe(onNext: { [self] status in
                 switch status {
                     case .logout:
-                        self.testView.loginButton.isHidden = false
-                        self.testView.userImageView.isHidden = true
-                        self.testView.logoutButton.isHidden = true
-                        self.testView.unLinkButton.isHidden = true
-                    case .unlink:
-                        self.testView.loginButton.isHidden = false
-                        self.testView.userImageView.isHidden = true
-                        self.testView.logoutButton.isHidden = true
-                        self.testView.unLinkButton.isHidden = true
+                        testView.loginButton.isHidden = false
+                        testView.userImageView.isHidden = true
+                        testView.logoutButton.isHidden = true
+                        testView.unLinkButton.isHidden = true
+                    case .withDrawal:
+                        testView.loginButton.isHidden = false
+                        testView.userImageView.isHidden = true
+                        testView.logoutButton.isHidden = true
+                        testView.unLinkButton.isHidden = true
                     case .login:
-                        self.testView.loginButton.isHidden = true
-                        self.testView.userImageView.isHidden = false
-                        self.testView.logoutButton.isHidden = false
-                        self.testView.unLinkButton.isHidden = false
+                        testView.loginButton.isHidden = true
+                        testView.userImageView.isHidden = false
+                        testView.logoutButton.isHidden = false
+                        testView.unLinkButton.isHidden = false
                 }
             })
             .disposed(by: disposeBag)
