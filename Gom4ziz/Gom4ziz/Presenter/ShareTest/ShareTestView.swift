@@ -7,15 +7,13 @@
 
 import UIKit
 
-final class ShareTestView: UIView {
+final class ShareTestView: BaseAutoLayoutUIView {
 
-    private (set) lazy var shareButton: UIButton = {
+    let shareButton: UIButton = {
         var configuration: UIButton.Configuration = .filled()
         configuration.title = "Share to kakaotalk"
         let button: UIButton = .init()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.configuration = configuration
-        addSubview(button)
         return button
     }()
 
@@ -24,7 +22,6 @@ final class ShareTestView: UIView {
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpAutoLayout()
     }
 
     required init?(coder: NSCoder) {
@@ -32,11 +29,21 @@ final class ShareTestView: UIView {
     }
 }
 
-private extension ShareTestView {
-    func setUpAutoLayout() {
+extension ShareTestView {
+
+    func addSubviews() {
+        addSubview(shareButton)
+    }
+
+    func setUpConstraints() {
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             shareButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             shareButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
+    }
+
+    func setUpUI() {
+        backgroundColor = .yellow
     }
 }
