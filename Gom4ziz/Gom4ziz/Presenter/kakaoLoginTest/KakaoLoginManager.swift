@@ -32,44 +32,44 @@ struct KakaoLoginManager: LoginManagerProtocol {
         UserApi.shared.rx.loginWithKakaoTalk()
             .subscribe(onNext: { (oauthToken) in
                 print("loginWithKakaoTalk() success.")
-                self.getUserInfo()
+                getUserInfo()
                 _ = oauthToken
             }, onError: {error in
                 print(error)
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     private func loginWithKakaoAccount() {
         UserApi.shared.rx.loginWithKakaoAccount()
             .subscribe(onNext: { (oauthToken) in
                 print("loginWithKakaoAccount() success.")
-                self.getUserInfo()
+                getUserInfo()
                 _ = oauthToken
             }, onError: {error in
                 print(error)
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: disposeBag)
     }
     
     func logout() {
         UserApi.shared.rx.logout()
             .subscribe(onCompleted: {
                 print("logout() success.")
-                self.userInfo.accept(UserInfo(id: UUID().uuidString, name: "로그아웃 성공", imageURL: nil))
-                self.loginstatus.accept(.logout)
+                userInfo.accept(UserInfo(id: UUID().uuidString, name: "로그아웃 성공", imageURL: nil))
+                loginstatus.accept(.logout)
             }, onError: { error in
                 print(error)
             })
             .disposed(by: disposeBag)
     }
     
-    func unlink() {
+    func withDrawal() {
         UserApi.shared.rx.unlink()
             .subscribe(onCompleted: {
-                print("unlink() success.")
-                self.userInfo.accept(UserInfo(id: UUID().uuidString, name: "회원 탈퇴 성공", imageURL: nil))
-                self.loginstatus.accept(.unlink)
+                print("withDrawal() success.")
+                userInfo.accept(UserInfo(id: UUID().uuidString, name: "회원 탈퇴 성공", imageURL: nil))
+                loginstatus.accept(.withDrawal)
             }, onError: {error in
                 print(error)
             })
@@ -81,10 +81,9 @@ struct KakaoLoginManager: LoginManagerProtocol {
             .subscribe(onSuccess: { user in
                 print("me() success.")
                 if let name = user.kakaoAccount?.profile?.nickname {
-                    self.userInfo.accept(UserInfo(id: UUID().uuidString, name: name, imageURL: user.kakaoAccount?.profile?.profileImageUrl))
+                    userInfo.accept(UserInfo(id: UUID().uuidString, name: name, imageURL: user.kakaoAccount?.profile?.profileImageUrl))
                 }
-                self.loginstatus.accept(.login)
-                _ = user
+                loginstatus.accept(.login)
             }, onFailure: {error in
                 print(error)
             })

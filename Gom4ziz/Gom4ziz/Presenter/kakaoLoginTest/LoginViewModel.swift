@@ -22,8 +22,8 @@ final class LoginViewModel {
         loginManager.logout()
     }
     
-    func unlink() {
-        loginManager.unlink()
+    func withDrawal() {
+        loginManager.withDrawal()
     }
     
     func getUserInfo() {

@@ -350,6 +350,8 @@
 				E63C75612909166900133C9E /* AppleTestViewController.swift */,
 			);
 			path = AppleLoginTest;
+			sourceTree = "<group>";
+		};
 		CCF71D1B2907CFD500C66C55 /* kakaoLoginTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,7 +549,7 @@
 				002821F829022B2100717E2C /* UserInfoIdCache.swift in Sources */,
 				F251F35F290549EF003B6690 /* PlansRoomRepository.swift in Sources */,
 				007EA01129062E1D000B8E31 /* Deeplink.swift in Sources */,
-				CCBFB77129090E3500173FD7 /* KakaoLoginViewModel.swift in Sources */,
+				CCBFB77129090E3500173FD7 /* LoginViewModel.swift in Sources */,
 				CC381334290A6B96009DD5F3 /* KakaoLoginManager.swift in Sources */,
 				CCBFB77129090E3500173FD7 /* LoginViewModel.swift in Sources */,
 				CCF71D1F2907CFF900C66C55 /* KakaoLoginViewController.swift in Sources */,
@@ -764,7 +766,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Gom4ziz/Gom4ziz.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 44RS35G3C5;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -773,6 +775,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 953VJTV7TA;
 				DEVELOPMENT_TEAM = J7ZP3WYXRW;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -808,8 +811,9 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 953VJTV7TA;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = J7ZP3WYXRW;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Gom4ziz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
