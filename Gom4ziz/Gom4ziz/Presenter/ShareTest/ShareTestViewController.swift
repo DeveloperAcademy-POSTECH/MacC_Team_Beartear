@@ -9,7 +9,7 @@ import UIKit
 
 import RxSwift
 
-final class ShareTestViewController: UIViewController {
+final class ShareTestViewController: BaseRxViewController {
 
     private lazy var shareTestView: ShareTestView = ShareTestView()
     private let disposeBag: DisposeBag = .init()
@@ -17,7 +17,6 @@ final class ShareTestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpObserver()
     }
 
     override func loadView() {
@@ -25,8 +24,8 @@ final class ShareTestViewController: UIViewController {
     }
 }
 
-private extension ShareTestViewController {
-    func setUpObserver() {
+extension ShareTestViewController {
+    func setUpObservers() {
         shareTestView.shareButton
             .rx
             .tap
