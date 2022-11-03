@@ -22,5 +22,8 @@ jobs:
     # shell 이용해서 하나의 command 수행
     - name: Test Xcode build 🛠
       run: |
-        echo -n $APIKEY | base64 --decode > Gom4ziz/Gom4ziz/Secret/APIKey.swift
-        xcodebuild clean test -project Gom4ziz/Gom4ziz.xcodeproj -scheme Gom4zizTests -destination "platform=iOS Simulator,name=iPhone 13,OS=latest"
+        echo -n $APIKEY | base64 --decode > Gom4ziz/Source/Secret/APIKey.swift
+    - uses: tuist/tuist-action@0.13.0
+      with:
+        command: 'test'
+        arguments: 'Gom4ziz-Test'
