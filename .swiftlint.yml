@@ -1,7 +1,9 @@
 disabled_rules:
   - identifier_name
   - trailing_whitespace
-
+  - trailing_comma
+  - trailing_newline
+  - switch_case_alignment
 excluded:
 
 line_length:
