@@ -25,5 +25,9 @@ jobs:
         echo -n $APIKEY | base64 --decode > Gom4ziz/Source/Secret/APIKey.swift
     - uses: tuist/tuist-action@0.13.0
       with:
+        command: 'generate'
+        arguments: ''
+    - uses: tuist/tuist-action@0.13.0
+      with:
         command: 'test'
         arguments: 'Gom4ziz-Test'
