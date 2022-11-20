@@ -2,34 +2,84 @@
 //  MockData.swift
 //  Gom4ziz
 //
-//  Created by JongHo Park on 2022/10/20.
+//  Created by JongHo Park on 2022/11/21.
 //
 
 #if DEBUG
-import Foundation
-
-extension UserInfo {
-    static let mockData: UserInfo = UserInfo(id: "123", name: "상효보이")
-    static let mockDataList: [UserInfo] = [
-        UserInfo(id: "123", name: "상효보이"),
-        UserInfo(id: "456", name: "호종이"),
-        UserInfo(id: "789", name: "에코"),
-        UserInfo(id: "101112", name: "리버"),
-        UserInfo(id: "131415", name: "이솝"),
-        UserInfo(id: "123124125412", name: "쑤")
-    ]
+extension User {
+    var mockData: User {
+        User(id: "mock", lastArtworkId: 5)
+    }
 }
 
-extension PlansRoom {
-    static let mockData: PlansRoom = PlansRoom(id: "1111", name: "통영 가즈아", date: nil, place: "통영", isEnd: false, currentMemberIds: ["123", "456"])
-    static let mockDataList: [PlansRoom] = [
-        PlansRoom(id: UUID().uuidString, name: "통영 가즈아", date: nil, place: "통영", isEnd: false, currentMemberIds: ["123", "456"]),
-        PlansRoom(id: UUID().uuidString, name: "대구 가즈아", date: nil, place: "통영", isEnd: true, currentMemberIds: ["123", "456"]),
-        PlansRoom(id: UUID().uuidString, name: "부산 가즈아", date: nil, place: "통영", isEnd: false, currentMemberIds: ["123", "456"]),
-        PlansRoom(id: UUID().uuidString, name: "서울 가지말자", date: nil, place: nil, isEnd: true, currentMemberIds: ["123", "456"]),
-        PlansRoom(id: UUID().uuidString, name: "울릉도 가지말자", date: nil, place: "울릉도", isEnd: false, currentMemberIds: ["123", "456"]),
-        PlansRoom(id: UUID().uuidString, name: "유럽 가즈아", date: nil, place: "유럽", isEnd: true, currentMemberIds: ["123", "456"]),
-        PlansRoom(id: UUID().uuidString, name: "바르벳 가즈아", date: nil, place: "포항", isEnd: false, currentMemberIds: ["123", "456"])
-    ]
+extension Artwork {
+    var mockData: Artwork {
+        Artwork(id: 1,
+                imageUrl: "",
+                question: "당신에게 있어서 방주란 무엇인가요?",
+                title: "작은 방주",
+                artist: "최우람")
+    }
+
+    var mockDatas: [Artwork] {
+        [
+            Artwork(id: 1,
+                    imageUrl: "",
+                    question: "당신에게 있어서 방주란 무엇인가요?",
+                    title: "작은 방주",
+                    artist: "최우람"),
+            Artwork(id: 2,
+                    imageUrl: "",
+                    question: "당신에게 있어서 개발이란 무엇인가요?",
+                    title: "내돈내산 키보드",
+                    artist: "개발자"),
+            Artwork(id: 3,
+                    imageUrl: "",
+                    question: "당신에게 있어서 디자인이란 무엇인가요?",
+                    title: "실력이 미친 디자이너",
+                    artist: "이솝"),
+            Artwork(id: 4,
+                    imageUrl: "",
+                    question: "당신에게 있어서 운동이란 무엇인가요?",
+                    title: "운동에 미친 남자",
+                    artist: "성수핫보이"),
+            Artwork(id: 5,
+                    imageUrl: "",
+                    question: "당신에게 있어서 아카데미란 무엇인가요?",
+                    title: "아카데미",
+                    artist: "레이몬드")
+        ]
+    }
+}
+
+extension ArtworkReview {
+    var mockData: ArtworkReview {
+        ArtworkReview(id: "mock",
+                      questionAnswer: "저에게 있어 운동이란 마약과도 같죠",
+                      review: "정말 운동에 미친 사람이구나",
+                      timeStamp: Date(),
+                      uid: "mock")
+    }
+}
+
+extension ArtworkDescription {
+    var mockData: ArtworkDescription {
+        ArtworkDescription(id: 1,
+                           content: """
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+                           운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
+""")
+    }
 }
 #endif

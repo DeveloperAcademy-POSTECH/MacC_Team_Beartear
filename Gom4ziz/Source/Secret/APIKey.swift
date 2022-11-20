@@ -8,7 +8,5 @@
 import Foundation
 
 enum APIKey {
-    enum Kakao {
-        static let REST: String = "db7ab4b6fbff78a04382557691cfc06f"
-    }
+    
 }
