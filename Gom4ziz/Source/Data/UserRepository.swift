@@ -4,14 +4,11 @@
 //
 //  Created by 이가은 on 2022/11/21.
 //
-
-import Foundation
-
 import FirebaseFirestore
 import RxSwift
 
 protocol UserRepository {
-    func addUser(for user: User) -> Single<Void>
+    func addUser(for userId: String) -> Single<Void>
 }
 
 final class FirebaseUserRepository {
@@ -23,8 +20,9 @@ final class FirebaseUserRepository {
 
 // MARK: - UserRepository protocol extension
 extension FirebaseUserRepository: UserRepository {
-    func addUser(for user: User) -> Single<Void> {
-        fetchUserRef(of: user.id)
+    func addUser(for userId: String) -> Single<Void> {
+        let user = User(id: userId, lastArtworkId: 0)
+        return getUserRef(of: user.id)
             .rx
             .setData(user)
     }
@@ -32,8 +30,12 @@ extension FirebaseUserRepository: UserRepository {
 
 // MARK: - private extension
 private extension FirebaseUserRepository {
-    private func fetchUserRef(of userId: String) -> DocumentReference {
+    private func getUserRef(of userId: String) -> DocumentReference {
         db.collection(CollectionName.user)
             .document(userId)
     }
+    #warning("후에 UseCase쪽으로 해당 함수 이동시키기")
+//    private func getDeviceUUID() -> String {
+//        return UIDevice.current.identifierForVendor!.uuidString
+//    }
 }
