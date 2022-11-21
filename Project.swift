@@ -56,15 +56,11 @@ let appTarget: Target = Project.target(name: "Gom4ziz",
                                        scripts: [.pre(script: swiftlint, name: "SwiftLint")],
                                        dependencies: [.package(product: "FirebaseAuth"),
                                                       .package(product: "FirebaseFirestore"),
-                                                      .package(product: "KeyChainWrapper"),
                                                       .package(product: "FirebaseFirestoreSwift"),
                                                       .package(product: "RxSwift"),
                                                       .package(product: "RxRelay"),
-                                                      .package(product: "RxCocoa"),
-                                                      .package(product: "RxKakaoSDKAuth"),
-                                                      .package(product: "RxKakaoSDKCommon"),
-                                                      .package(product: "RxKakaoSDKShare"),
-                                                      .package(product: "RxKakaoSDKUser")],
+                                                      .package(product: "RxCocoa")
+                                                      ],
                                        additionalFiles: [".swiftlint.yml"])
 
 let testTarget: Target = Project.target(name: "Gom4zizTests",
@@ -96,9 +92,7 @@ let project = Project(
     options: .options(automaticSchemesOptions: .disabled),
     packages: [
         .remote(url: "https://github.com/firebase/firebase-ios-sdk", requirement: .upToNextMajor(from: "9.0.0")),
-        .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.0.0")),
-        .remote(url: "https://github.com/kakao/kakao-ios-sdk-rx", requirement: .branch("master")),
-        .remote(url: "https://github.com/HoJongE/KeychainPackage.git", requirement: .upToNextMajor(from: "1.0.0"))
+        .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.0.0"))
     ],
     settings: settings,
     targets: [

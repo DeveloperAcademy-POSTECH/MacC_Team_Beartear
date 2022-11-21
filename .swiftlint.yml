@@ -4,6 +4,7 @@ disabled_rules:
   - trailing_comma
   - trailing_newline
   - switch_case_alignment
+  - shorthand_operator
 excluded:
 
 line_length:

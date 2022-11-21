@@ -6,6 +6,8 @@
 //
 
 #if DEBUG
+import Foundation
+
 extension User {
     var mockData: User {
         User(id: "mock", lastArtworkId: 5)
