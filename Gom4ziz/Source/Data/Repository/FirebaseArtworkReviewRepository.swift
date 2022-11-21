@@ -17,10 +17,8 @@ protocol ArtworkReviewRepository {
 }
 
 final class FirebaseArtworkReviewRepository {
-    static let shared: ArtworkReviewRepository = FirebaseArtworkReviewRepository()
+    static let shared: FirebaseArtworkReviewRepository = FirebaseArtworkReviewRepository()
     private let db: Firestore = Firestore.firestore()
-    
-    private init() { }
 }
 
 extension FirebaseArtworkReviewRepository: ArtworkReviewRepository {
@@ -32,7 +30,8 @@ extension FirebaseArtworkReviewRepository: ArtworkReviewRepository {
     }
 
     func addArtworkReview(of artworkId: Int, _ artworkReview: ArtworkReview) -> Single<Void> {
-        db.rx
+        db
+            .rx
             .runTransaction { [self] (transaction, errorPointer) -> Void? in
                 do {
                     // artworkReview를 추가한다.
@@ -53,14 +52,18 @@ extension FirebaseArtworkReviewRepository: ArtworkReviewRepository {
     }
 }
 
-private extension FirebaseArtworkReviewRepository {
+extension FirebaseArtworkReviewRepository {
     func getArtworkReviewRef(of artworkId: Int, _ userId: String) -> DocumentReference {
-        db.collection(CollectionName.artwork).document("\(artworkId)")
-            .collection(CollectionName.artworkReview).document(userId)
+        db
+            .collection(CollectionName.artwork)
+            .document("\(artworkId)")
+            .collection(CollectionName.artworkReview)
+            .document(userId)
     }
 
     func getUserRef(of uid: String) -> DocumentReference {
-        db.collection(CollectionName.user)
+        db
+            .collection(CollectionName.user)
             .document(uid)
     }
 }
