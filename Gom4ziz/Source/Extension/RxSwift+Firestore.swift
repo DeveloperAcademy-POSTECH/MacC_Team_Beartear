@@ -104,3 +104,19 @@ extension Reactive where Base: DocumentReference {
         }
     }
 }
+
+extension Reactive where Base: Firestore {
+    func runTransaction(updateBlock: @escaping (Transaction, NSErrorPointer) -> Any?) -> Single<Void> {
+        Single.create { single -> Disposable in
+            base.runTransaction(updateBlock) { _, error in
+                if let error {
+                    single(.failure(error))
+                    return
+                }
+                single(.success(()))
+            }
+
+            return Disposables.create()
+        }
+    }
+}
