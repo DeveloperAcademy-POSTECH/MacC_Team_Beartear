@@ -9,7 +9,7 @@
 import Foundation
 
 extension User {
-    var mockData: User {
+    static var mockData: User {
         User(id: "mock", lastArtworkId: 5)
     }
 }
