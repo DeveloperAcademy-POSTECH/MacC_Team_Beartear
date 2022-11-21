@@ -19,9 +19,7 @@ final class FirebaseArtworkRepository: ArtworkRepository {
     static let shared: ArtworkRepository = FirebaseArtworkRepository()
     private let db: Firestore = Firestore.firestore()
     private let collectionName: String = CollectionName.artwork
-    
-    private init() { }
-    
+        
     func requestArtwork(of artworkId: String) -> Observable<Artwork> {
         getArtworkRef(of: artworkId)
             .rx
@@ -29,8 +27,10 @@ final class FirebaseArtworkRepository: ArtworkRepository {
     }
 }
 
-private extension FirebaseArtworkRepository {
+extension FirebaseArtworkRepository {
     func getArtworkRef(of artworkId: String) -> DocumentReference {
-        db.collection(collectionName).document(artworkId)
+        db
+            .collection(collectionName)
+            .document(artworkId)
     }
 }
