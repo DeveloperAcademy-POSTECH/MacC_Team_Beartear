@@ -9,7 +9,7 @@
 import Foundation
 
 extension User {
-    var mockData: User {
+    static var mockData: User {
         User(id: "mock", lastArtworkId: 5)
     }
 }
@@ -55,7 +55,7 @@ extension Artwork {
 }
 
 extension ArtworkReview {
-    var mockData: ArtworkReview {
+    static var mockData: ArtworkReview {
         ArtworkReview(id: "mock",
                       questionAnswer: "저에게 있어 운동이란 마약과도 같죠",
                       review: "정말 운동에 미친 사람이구나",
@@ -65,7 +65,7 @@ extension ArtworkReview {
 }
 
 extension ArtworkDescription {
-    var mockData: ArtworkDescription {
+    static var mockData: ArtworkDescription {
         ArtworkDescription(id: 1,
                            content: """
                            운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?운동에 미친 사람은 어떤 사람일까?
