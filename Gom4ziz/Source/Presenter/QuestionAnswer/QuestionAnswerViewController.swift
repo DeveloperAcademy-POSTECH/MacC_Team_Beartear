@@ -31,6 +31,10 @@ final class QuestionAnswerViewController: UIViewController {
         self.view = questionAnswerView
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        focusOnTextView()
+    }
 }
 
 // MARK: - Private API
@@ -42,6 +46,11 @@ private extension QuestionAnswerViewController {
 
     func disableNextButton() {
         nextButton.isEnabled = false
+    }
+
+    func focusOnTextView() {
+        _ = questionAnswerView.answerInputTextView
+            .becomeFirstResponder()
     }
 
     func setUpObservers() {
