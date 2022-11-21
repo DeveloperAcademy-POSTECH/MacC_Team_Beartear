@@ -12,7 +12,7 @@ import RxSwift
 import RxRelay
 
 protocol ArtworkReviewRepository {
-    func fetchArtworkReview(of artworkId: Int, _ artworkReviewId: String) -> Observable<ArtworkReview>
+    func fetchArtworkReview(of artworkId: Int, _ userId: String) -> Observable<ArtworkReview>
 }
 
 final class FirebaseArtworkReviewRepository {
@@ -23,16 +23,16 @@ final class FirebaseArtworkReviewRepository {
 }
 
 extension FirebaseArtworkReviewRepository: ArtworkReviewRepository {
-    func fetchArtworkReview(of artworkId: Int, _ artworkReviewId: String) -> Observable<ArtworkReview> {
-        getArtworkReviewRef(of: artworkId, artworkReviewId)
+    func fetchArtworkReview(of artworkId: Int, _ userId: String) -> Observable<ArtworkReview> {
+        getArtworkReviewRef(of: artworkId, userId)
             .rx
             .decodable(as: ArtworkReview.self)
     }
 }
 
 private extension FirebaseArtworkReviewRepository {
-    func getArtworkReviewRef(of artworkId: Int, _ artworkReviewId: String) -> DocumentReference {
+    func getArtworkReviewRef(of artworkId: Int, _ userId: String) -> DocumentReference {
         db.collection(CollectionName.artwork).document("\(artworkId)")
-            .collection(CollectionName.artworkReview).document(artworkReviewId)
+            .collection(CollectionName.artworkReview).document(userId)
     }
 }
