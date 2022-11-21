@@ -4,25 +4,9 @@
 //
 //  Created by JongHo Park on 2022/11/20.
 //
-import UIKit
-
 struct User: Codable, Identifiable {
     let id: String
     let lastArtworkId: Int
-    
-    init(lastArtworkId: Int) {
-        self.id = User.getDeviceUUID()
-        self.lastArtworkId = lastArtworkId
-    }
-    
-    init(id: String, lastArtworkId: Int) {
-        self.id = id
-        self.lastArtworkId = lastArtworkId
-    }
-    
-    static func getDeviceUUID() -> String {
-        return UIDevice.current.identifierForVendor!.uuidString
-    }
 }
 
 extension User: CustomStringConvertible {
@@ -36,5 +20,3 @@ extension User: Equatable {
         lhs.id == rhs.id && lhs.lastArtworkId == rhs.lastArtworkId
     }
 }
-
-
