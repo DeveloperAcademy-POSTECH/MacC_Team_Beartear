@@ -15,7 +15,7 @@ extension User {
 }
 
 extension Artwork {
-    var mockData: Artwork {
+    static var mockData: Artwork {
         Artwork(id: 1,
                 imageUrl: "",
                 question: "당신에게 있어서 방주란 무엇인가요?",
@@ -55,7 +55,7 @@ extension Artwork {
 }
 
 extension ArtworkReview {
-    var mockData: ArtworkReview {
+    static var mockData: ArtworkReview {
         ArtworkReview(id: "mock",
                       questionAnswer: "저에게 있어 운동이란 마약과도 같죠",
                       review: "정말 운동에 미친 사람이구나",
