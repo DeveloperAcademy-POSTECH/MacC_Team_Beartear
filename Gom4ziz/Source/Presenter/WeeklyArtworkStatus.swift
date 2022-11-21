@@ -9,7 +9,7 @@ import Foundation
 
 enum WeeklyArtworkStatus {
     case notRequested
-    case loading(last: Artwork?)
+    case loading
     case loaded(Artwork)
     case noMoreData
     case failed(Error)
@@ -20,8 +20,8 @@ extension WeeklyArtworkStatus: CustomStringConvertible {
         switch self {
         case .notRequested:
             return "아직 요청되지 않음"
-        case .loading(let last):
-            return "로딩중임. 이전 데이터 \(String(describing: last))"
+        case .loading:
+            return "로딩중임"
         case .loaded(let data):
             return "\(data) 로드 완료"
         case .noMoreData:
