@@ -20,9 +20,9 @@ final class QuestionViewModel {
         self.requestArtworkUsecase = requestArtworkUsecase
     }
     
-    func requestArtwork(_ userLastArtworkId: Int) {
+    func requestArtwork(_ artworkId: Int) {
         artwork.onNext(.loading)
-        requestArtworkUsecase.requestNextArtwork(userLastArtworkId)
+        requestArtworkUsecase.requestNextArtwork(artworkId)
             .subscribe(onNext: { [weak self] in
                 let loadedStatus = WeeklyArtworkStatus.loaded($0)
                 self?.artwork.onNext(loadedStatus)

@@ -16,8 +16,7 @@ final class RequestArtworkUsecase {
         self.artworkRepository = artworkRepository
     }
     
-    func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork> {
-        let nextArtworkId = userLastArtworkId + 1
-        return artworkRepository.requestArtwork(of: nextArtworkId)
+    func requestNextArtwork(_ artworkId: Int) -> Observable<Artwork> {
+        return artworkRepository.requestArtwork(of: artworkId)
     }
 }
