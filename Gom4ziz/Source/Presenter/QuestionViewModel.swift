@@ -13,12 +13,17 @@ import RxSwift
 final class QuestionViewModel {
 
     private let requestNextArtworkUsecase: RequestNextArtworkUsecase
+    private let timeDiffHandler: TimeDiffHandler
     private let disposeBag: DisposeBag = .init()
     
-    let artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
+    private(set) var artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
+    private(set) var remainingTime: PublishRelay<String> = .init()
     
-    init(requestNextQuestionUsecase: RequestNextArtworkUsecase) {
+    init(requestNextQuestionUsecase: RequestNextArtworkUsecase,
+         timeDiffHandler: TimeDiffHandler = TimeDiffHandler(
+            dateComponentsSet: [.day, .hour, .minute, .second])) {
         self.requestNextArtworkUsecase = requestNextQuestionUsecase
+        self.timeDiffHandler = timeDiffHandler
     }
     
     func requestArtwork(_ userLastArtworkId: Int) {
@@ -47,6 +52,26 @@ private extension QuestionViewModel {
             return failedStatus
         }
         return .noMoreData
+    }
+    
+    //구현에 고민 필요, 깔끔하게 바꿀 필요성 보임
+    func formatDateComponentsToTextString(dateComponents: DateComponents) -> String {
+        let day = dateComponents.day
+        let hour = dateComponents.hour
+        let minute = dateComponents.minute
+        let second = dateComponents.second
+        
+        if let day, day > 0 {
+            return "\(day)일"
+        } else if let hour, hour > 0 {
+            return "\(hour)시간"
+        } else if let minute, minute > 0 {
+            return "\(minute)분"
+        } else if let second, second > 0 {
+            return "1분"
+        } else {
+            return ""
+        }
     }
 }
 
