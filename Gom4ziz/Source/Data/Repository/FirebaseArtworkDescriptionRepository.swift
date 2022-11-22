@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 
 protocol ArtworkDescriptionRepository {
-    func fetchArtworkDescription(of artworkId: Int, _ artworkDescriptionId: String) -> Observable<ArtworkDescription>
+    func fetchArtworkDescription(of artworkId: Int) -> Observable<ArtworkDescription>
 }
 
 final class FirebaseArtworkDescriptionRepository {
@@ -24,8 +24,8 @@ final class FirebaseArtworkDescriptionRepository {
 
 extension FirebaseArtworkDescriptionRepository: ArtworkDescriptionRepository {
     
-    func fetchArtworkDescription(of artworkId: Int, _ artworkDescriptionId: String) -> Observable<ArtworkDescription> {
-        getArtworkDescripionRef(of: artworkId, artworkDescriptionId)
+    func fetchArtworkDescription(of artworkId: Int) -> Observable<ArtworkDescription> {
+        getArtworkDescripionRef(of: artworkId)
             .rx
             .decodable(as: ArtworkDescription.self)
     }
@@ -34,12 +34,12 @@ extension FirebaseArtworkDescriptionRepository: ArtworkDescriptionRepository {
 
 extension FirebaseArtworkDescriptionRepository {
     
-    func getArtworkDescripionRef(of artworkId: Int, _ artworkDescriptionId: String) -> DocumentReference {
+    func getArtworkDescripionRef(of artworkId: Int) -> DocumentReference {
         db
             .collection(CollectionName.artwork)
             .document("\(artworkId)")
             .collection(CollectionName.artworkDescription)
-            .document(artworkDescriptionId)
+            .document("\(artworkId)")
     }
     
 }
