@@ -11,24 +11,30 @@ import RxCocoa
 import RxSwift
 
 final class QuestionViewModel {
-    private let requestArtworkUsecase: RequestArtworkUsecase
+
+    private let requestNextArtworkUsecase: RequestNextArtworkUsecase
     private let disposeBag: DisposeBag = .init()
     
-    let artwork: BehaviorSubject<WeeklyArtworkStatus> = .init(value: .notRequested)
+    let artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
     
-    init(requestArtworkUsecase: RequestArtworkUsecase) {
-        self.requestArtworkUsecase = requestArtworkUsecase
+    init(requestNextQuestionUsecase: RequestNextArtworkUsecase) {
+        self.requestNextArtworkUsecase = requestNextQuestionUsecase
     }
     
-    func requestArtwork(_ artworkId: Int) {
-        artwork.onNext(.loading)
-        requestArtworkUsecase.requestNextArtwork(artworkId)
+    func requestArtwork(_ userLastArtworkId: Int) {
+        artwork.accept(.loading)
+        requestNextArtworkUsecase.requestNextArtwork(userLastArtworkId)
             .subscribe(onNext: { [weak self] in
-                let loadedStatus = WeeklyArtworkStatus.loaded($0)
-                self?.artwork.onNext(loadedStatus)
+                if $0 == Artwork.empty {
+                    self?.artwork.accept(.noMoreData)
+                } else {
+                    let loadedStatus = WeeklyArtworkStatus.loaded($0)
+                    self?.artwork.accept(loadedStatus)
+                }
             },
-                       onError: { error in
-                // TODO: error의 종류에 따라 다른 처리, 해당 document가 없다는 에러일 경우 .noMoreData 방출 처리
+                       onError: { [weak self] error in
+                let failedStatus = WeeklyArtworkStatus.failed(error)
+                self?.artwork.accept(failedStatus)
             })
             .disposed(by: disposeBag)
     }
