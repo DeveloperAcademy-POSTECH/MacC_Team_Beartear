@@ -30,31 +30,9 @@ extension FirebaseArtworkRepository: ArtworkRepository {
     }
 
     func fetchReviewedArtworkList(of artworkId: Int) -> RxSwift.Observable<[Artwork]> {
-        Observable<[Artwork]>.create { [self] observer in
-            getReviewedArtworkListRef(of: artworkId)
-                .getDocuments { snapshot, error in
-                    do {
-                        guard error == nil else {
-                            observer.onError(error!)
-                            return
-                        }
-                        guard let snapshot = snapshot else {
-                            observer.onError(RxFirestoreError.documentIsNotExist)
-                            return
-                        }
-                        var temp: [Artwork] = []
-                        for document in snapshot.documents {
-                            let data = try document.data(as: Artwork.self)
-                            temp.append(data)
-                        }
-                        observer.onNext(temp)
-                        observer.onCompleted()
-                    } catch {
-                        observer.onError(error)
-                    }
-                }
-            return Disposables.create()
-        }
+        getReviewedArtworkListRef(of: artworkId)
+            .rx
+            .decodable(as: [Artwork].self)
     }
 }
 
