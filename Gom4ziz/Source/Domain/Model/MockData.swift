@@ -84,4 +84,14 @@ extension ArtworkDescription {
 """)
     }
 }
+
+extension Highlight {
+    static var mockData: [Highlight] {
+        [
+            Highlight(start: 1, end: 10),
+            Highlight(start: 22, end: 30),
+            Highlight(start: 35, end: 38)
+        ]
+    }
+}
 #endif
