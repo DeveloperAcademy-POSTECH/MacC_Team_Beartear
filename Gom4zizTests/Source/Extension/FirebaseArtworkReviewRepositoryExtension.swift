@@ -5,7 +5,7 @@
 //  Created by JongHo Park on 2022/11/21.
 //
 
-@testable import Gom4ziz
+import Gom4ziz
 
 import RxSwift
 
