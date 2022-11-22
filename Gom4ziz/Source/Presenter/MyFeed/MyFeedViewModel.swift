@@ -12,7 +12,7 @@ import RxSwift
 
 final class MyFeedViewModel {
     private let fetchArtworkReviewUseCase: FetchArtworkReviewUseCase
-    let artworkReview: BehaviorRelay<Loadable<ArtworkReview>> = .init(value: .isLoading(last: nil))
+    let artworkReview: BehaviorRelay<Loadable<ArtworkReview>> = .init(value: .notRequested)
     private let disposeBag: DisposeBag = .init()
     
     init(fetchArtworkReviewUseCase: FetchArtworkReviewUseCase) {
@@ -20,6 +20,7 @@ final class MyFeedViewModel {
     }
     
     func fetchArtworkReview(of artworkId: Int, _ userId: String) {
+        artworkReview.accept(.isLoading(last: nil))
         fetchArtworkReviewUseCase.fetchArtwokReview(of: artworkId, userId)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] in
