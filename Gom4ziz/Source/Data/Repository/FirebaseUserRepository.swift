@@ -1,5 +1,5 @@
 //
-//  UserRepository.swift
+//  FirebaseUserRepository.swift
 //  Gom4ziz
 //
 //  Created by 이가은 on 2022/11/21.
@@ -9,6 +9,7 @@ import RxSwift
 
 protocol UserRepository {
     func addUser(for userId: String) -> Single<Void>
+    func fetchUser(for userId: String) -> Observable<User>
 }
 
 final class FirebaseUserRepository {
@@ -25,6 +26,11 @@ extension FirebaseUserRepository: UserRepository {
         return getUserRef(of: user.id)
             .rx
             .setData(user)
+    }
+    func fetchUser(for userId: String) -> Observable<User> {
+        return getUserRef(of: userId)
+            .rx
+            .decodable(as: User.self)
     }
 }
 
