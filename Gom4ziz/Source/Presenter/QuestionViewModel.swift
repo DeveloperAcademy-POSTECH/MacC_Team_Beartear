@@ -25,17 +25,28 @@ final class QuestionViewModel {
         artwork.accept(.loading)
         requestNextArtworkUsecase.requestNextArtwork(userLastArtworkId)
             .subscribe(onNext: { [weak self] in
-                if $0 == Artwork.empty {
-                    self?.artwork.accept(.noMoreData)
-                } else {
-                    let loadedStatus = WeeklyArtworkStatus.loaded($0)
-                    self?.artwork.accept(loadedStatus)
-                }
+                let loadedStatus = WeeklyArtworkStatus.loaded($0)
+                self?.artwork.accept(loadedStatus)
             },
                        onError: { [weak self] error in
-                let failedStatus = WeeklyArtworkStatus.failed(error)
-                self?.artwork.accept(failedStatus)
+                guard let status = self?.getArtworkStatus(error) else { return }
+                self?.artwork.accept(status)
             })
             .disposed(by: disposeBag)
     }
 }
+
+private extension QuestionViewModel {
+    
+    func getArtworkStatus(_ error: Error) -> WeeklyArtworkStatus? {
+        let failedStatus = WeeklyArtworkStatus.failed(error)
+        guard case let .failed(error) = failedStatus else {
+            return nil
+        }
+        guard let error = error as? RequestError, error == .noMoreDataError else {
+            return failedStatus
+        }
+        return .noMoreData
+    }
+}
+
