@@ -15,6 +15,15 @@ struct Artwork: Codable, Identifiable {
     let artist: String
 }
 
+//empty state artwork
+extension Artwork {
+    static let empty = Artwork(id: -1,
+                               imageUrl: "",
+                               question: "",
+                               title: "",
+                               artist: "")
+}
+
 extension Artwork: CustomStringConvertible {
     var description: String {
         "작품 이름: \(title) 작가: \(artist) 질문: \(question)"
