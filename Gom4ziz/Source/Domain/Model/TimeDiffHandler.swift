@@ -15,4 +15,3 @@ struct TimeDiffHandler {
         return Calendar.current.dateComponents(dateComponentsSet, from: comparingDate, to: comparedDate)
     }
 }
-
