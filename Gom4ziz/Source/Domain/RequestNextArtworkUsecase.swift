@@ -24,7 +24,7 @@ final class RequestNextArtworkUsecase {
         let allocatedArtworkNum = 100
         let nextArtworkId = userLastArtworkId + 1
         if isNoMoreArtworkToSee(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
-            return Observable.just(Artwork.empty)
+            return Observable.error(RequestError.noMoreDataError)
         }
 
         return artworkRepository.requestArtwork(of: nextArtworkId)
