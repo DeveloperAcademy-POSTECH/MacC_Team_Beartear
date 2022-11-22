@@ -18,7 +18,7 @@ protocol ArtworkDescriptionRepository {
 
 final class FirebaseArtworkDescriptionRepository {
     
-    static let shared: FirebaseArtworkReviewRepository = .init()
+    static let shared: FirebaseArtworkDescriptionRepository = .init()
     private let db: Firestore = Firestore.firestore()
     
 }
