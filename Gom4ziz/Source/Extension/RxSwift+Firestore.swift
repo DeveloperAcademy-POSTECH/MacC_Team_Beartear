@@ -105,6 +105,47 @@ extension Reactive where Base: DocumentReference {
     }
 }
 
+extension Reactive where Base: CollectionReference {
+    /// get collection snapshot with given collection reference
+    /// - Parameter source: FirestoreSource
+    /// - Returns: Observable of collection snapshot
+    func collection(source: FirestoreSource = .default) -> Observable<QuerySnapshot> {
+        Observable.create { observer in
+            base.getDocuments(source: source) { snapshot, error in
+                guard error == nil else {
+                    observer.onError(error!)
+                    return
+                }
+                guard let snapshot else {
+                    observer.onError(RxFirestoreError.documentIsNotExist)
+                    return
+                }
+                
+                observer.onNext(snapshot)
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+    
+    /// get decodable type value with given document reference
+    /// - Parameters:
+    ///   - as: decodable type
+    ///   - source: FirestoreSource
+    /// - Returns: Observable of decodable type
+    func decodable<T: Decodable>(as: T.Type, source: FirestoreSource = .default) -> Observable<[T]> {
+        collection(source: source)
+            .map { snapshot in
+                var temp: [T] = []
+                for document in snapshot.documents {
+                    let data = try document.data(as: T.self)
+                    temp.append(data)
+                }
+                return temp
+            }
+    }
+}
+
 extension Reactive where Base: Firestore {
     func runTransaction(updateBlock: @escaping (Transaction, NSErrorPointer) -> Any?) -> Single<Void> {
         Single.create { single -> Disposable in
