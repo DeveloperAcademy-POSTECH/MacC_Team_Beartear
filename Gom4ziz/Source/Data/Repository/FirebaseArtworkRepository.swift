@@ -18,7 +18,6 @@ protocol ArtworkRepository {
 final class FirebaseArtworkRepository {
     static let shared: ArtworkRepository = FirebaseArtworkRepository()
     private let db: Firestore = Firestore.firestore()
-    private let collectionName: String = CollectionName.artwork
 }
 
 // MARK: - ArtworkRepository protocol extension
@@ -40,13 +39,13 @@ extension FirebaseArtworkRepository: ArtworkRepository {
 extension FirebaseArtworkRepository {
     func getArtworkRef(of artworkId: Int) -> DocumentReference {
         db
-            .collection(collectionName)
+            .collection(CollectionName.artwork)
             .document("\(artworkId)")
     }
     
     func getReviewedArtworkListRef(of artworkId: Int) -> Query {
         db
-            .collection(collectionName)
+            .collection(CollectionName.artwork)
             .whereField("id", isLessThanOrEqualTo: artworkId)
     }
 }
