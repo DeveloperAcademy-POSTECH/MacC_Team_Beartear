@@ -13,7 +13,6 @@ import RxSwift
 
 protocol ArtworkDescriptionRepository {
     func fetchArtworkDescription(of artworkId: Int, _ artworkDescriptionId: String) -> Observable<ArtworkDescription>
-    func addArtworkDescription(of artworkId: Int, _ artworkDescription: ArtworkDescription) -> Single<Void>
 }
 
 final class FirebaseArtworkDescriptionRepository {
@@ -31,12 +30,6 @@ extension FirebaseArtworkDescriptionRepository: ArtworkDescriptionRepository {
             .decodable(as: ArtworkDescription.self)
     }
     
-    func addArtworkDescription(of artworkId: Int, _ artworkDescription: ArtworkDescription) -> Single<Void> {
-        addArtworkDescriptionRef(of: artworkId)
-            .rx
-            .setData(artworkDescription)
-    }
-    
 }
 
 extension FirebaseArtworkDescriptionRepository {
@@ -47,12 +40,6 @@ extension FirebaseArtworkDescriptionRepository {
             .document("\(artworkId)")
             .collection(CollectionName.artworkDescription)
             .document(artworkDescriptionId)
-    }
-    
-    func addArtworkDescriptionRef(of artworkId: Int) -> DocumentReference {
-        db
-            .collection(CollectionName.artwork)
-            .document("\(artworkId)")
     }
     
 }
