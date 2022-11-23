@@ -21,7 +21,7 @@ final class RequestNextArtworkUsecase {
         // TODO: 유저에게 할당된 작품의 범위 이상을 요청하는 경우에 대한 실패처리
         // 일단 할당된 작품 범위의 값(allocatedArtworkNum)을 임의로 할당해준다
 
-        let allocatedArtworkNum = 100
+        let allocatedArtworkNum = getAllocatedArtworkNum(with: User.mockData)
         let nextArtworkId = userLastArtworkId + 1
         if isNoMoreArtworkToSee(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
             return Observable.error(RequestError.noMoreDataError)
@@ -32,5 +32,10 @@ final class RequestNextArtworkUsecase {
     
     private func isNoMoreArtworkToSee(nextArtworkId: Int, allocatedArtworkNum: Int) -> Bool {
         nextArtworkId > allocatedArtworkNum
+    }
+    
+    private func getAllocatedArtworkNum(with user: User) -> Int {
+        let userFirstLoginedDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: String(user.firstLoginedDate))!
+        return 100
     }
 }

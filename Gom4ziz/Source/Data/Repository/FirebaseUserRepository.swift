@@ -24,7 +24,7 @@ extension FirebaseUserRepository: UserRepository {
     func addUser(for userId: String) -> Single<Void> {
         let user = User(id: userId,
                         lastArtworkId: 0,
-                        firstLoginedDate: Date().formattedInt!)
+                        firstLoginedDate: Date().yyyyMMddHHmmFormattedInt!)
         return getUserRef(of: user.id)
             .rx
             .setData(user)

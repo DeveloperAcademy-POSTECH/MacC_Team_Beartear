@@ -9,11 +9,20 @@ import Foundation
 
 extension Date {
     
-    var formattedString: String {
-        DateFormatter.yyyyMMddFormatter.string(from: self)
+    var yyyyMMddHHmmFormattedString: String {
+        DateFormatter.yyyyMMddHHmmFormatter.string(from: self)
     }
     
-    var formattedInt: Int? {
-        Int(formattedString)
+    var yyyyMMddHHmmFormattedInt: Int? {
+        Int(yyyyMMddHHmmFormattedString)
     }
+    
+    var weekday: Int? {
+        Calendar.current.dateComponents([.weekday], from: self).weekday
+    }
+}
+
+enum IndexOfWeekday: Int {
+    case mon = 1
+    case tue, wed, thu, fri, sat, sun
 }
