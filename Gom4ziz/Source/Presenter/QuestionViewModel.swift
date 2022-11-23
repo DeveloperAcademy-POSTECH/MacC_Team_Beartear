@@ -89,7 +89,5 @@ private extension QuestionViewModel {
             return ""
         }
     }
-    // 남은 질문 처리해야하는지 vs 다음 질문 기다려야하는지 판별 / true, false 상태 나타내는 relay 사용
-    // 오늘 기준 토요일, 일요일 구하는 함수
 }
 
