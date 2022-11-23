@@ -6,7 +6,7 @@ disabled_rules:
   - switch_case_alignment
   - shorthand_operator
 excluded:
-
+  - Gom4ziz/Source/Presenter/Component/AsyncImageView.swift
 line_length:
     warning: 240
     error: 300
