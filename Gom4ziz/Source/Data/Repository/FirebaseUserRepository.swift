@@ -40,8 +40,4 @@ private extension FirebaseUserRepository {
         db.collection(CollectionName.user)
             .document(userId)
     }
-    #warning("후에 UseCase쪽으로 해당 함수 이동시키기")
-//    private func getDeviceUUID() -> String {
-//        return UIDevice.current.identifierForVendor!.uuidString
-//    }
 }
