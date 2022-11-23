@@ -12,7 +12,7 @@ extension User {
     static var mockData: User {
         User(id: "mock",
              lastArtworkId: 5,
-             firstLoginedDate: Date().formattedInt!)
+             firstLoginedDate: Date().yyyyMMddHHmmFormattedInt!)
     }
 }
 
