@@ -12,6 +12,12 @@ struct Highlight: Codable {
     let end: Int
 }
 
+extension Highlight {
+    var range: NSRange {
+        NSRange(location: start, length: end - start)
+    }
+}
+
 extension Highlight: CustomStringConvertible {
     var description: String {
         "하이라이트 시작 인덱스: \(start) 마지막 인덱스: \(end)"
