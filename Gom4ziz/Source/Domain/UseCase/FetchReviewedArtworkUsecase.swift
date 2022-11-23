@@ -11,7 +11,7 @@ import RxSwift
 
 /// DB에서 리뷰된 Artwork를 불러오는 Usecase
 protocol FetchReviewedArtworkUsecase {
-    func requestReviewedArtworkList(of artworkId: Int) -> Observable<[Artwork]>
+    func requestReviewedArtworkList(before artworkId: Int) -> Observable<[Artwork]>
 }
 
 struct RealFetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase {
@@ -21,7 +21,7 @@ struct RealFetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase {
         self.artworkRepository = artworkRepository
     }
     
-    func requestReviewedArtworkList(of artworkId: Int) -> Observable<[Artwork]> {
-        artworkRepository.fetchReviewedArtworkList(of: artworkId)
+    func requestReviewedArtworkList(before artworkId: Int) -> Observable<[Artwork]> {
+        artworkRepository.fetchReviewedArtworkList(before: artworkId)
     }
 }

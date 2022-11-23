@@ -147,10 +147,10 @@ extension Reactive where Base: CollectionReference {
 }
 
 extension Reactive where Base: Query {
-    /// get collection filtered by  isLessThanOrEqualTo snapshot with given collection reference
+    /// get documents snapshot with given document reference
     /// - Parameter source: FirestoreSource
-    /// - Returns: Observable of collection snapshot
-    func whereField(source: FirestoreSource = .default) -> Observable<QuerySnapshot> {
+    /// - Returns: Observable of documents snapshot
+    func documents(source: FirestoreSource = .default) -> Observable<QuerySnapshot> {
         Observable.create { observer in
             base.getDocuments(source: source) { snapshot, error in
                     guard error == nil else {
@@ -174,7 +174,7 @@ extension Reactive where Base: Query {
     ///   - source: FirestoreSource
     /// - Returns: Observable of decodable type
     func decodable<T: Decodable>(as: [T].Type, source: FirestoreSource = .default) -> Observable<[T]> {
-        whereField(source: source)
+        documents(source: source)
             .map { snapshot in
                 var temp: [T] = []
                 for document in snapshot.documents {
