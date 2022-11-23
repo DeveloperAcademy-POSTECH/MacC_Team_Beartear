@@ -10,7 +10,7 @@ import UIKit
 extension UIImageView {
 
     func loadImage(url: URL, option: NetworkImageCacheManager.Option = .useCache, completion: ((Error?) -> Void)? = nil) {
-        NetworkImageCacheManager.shared.loadImage(url: url) { image, error in
+        NetworkImageCacheManager.shared.loadImage(url: url, option: option) { image, error in
             DispatchQueue.main.async {
                 guard error == nil, let image else {
                     completion?(error)

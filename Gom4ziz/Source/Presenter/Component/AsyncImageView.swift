@@ -12,14 +12,20 @@ final class AsyncImageView: UIImageView {
     private let url: String
     private var errorIndicator: UIButton?
     private let progressView: UIView
+    private let exposure: Double?
+    private let contrast: Double?
 
     init(
         url string: String,
         progressView: UIView = UIActivityIndicatorView(style: .large),
-        contentMode: ContentMode = .scaleAspectFill
+        contentMode: ContentMode = .scaleAspectFill,
+        exposure: Double? = nil,
+        contrast: Double? = nil
     ) {
         self.url = string
+        self.exposure = exposure
         self.progressView = progressView
+        self.contrast = contrast
         super.init(frame: .zero)
         self.contentMode = contentMode
         self.isUserInteractionEnabled = true
@@ -67,6 +73,7 @@ private extension AsyncImageView {
         startLoading()
         loadImage(url: url) { [weak self] error in
             self?.progressView.removeFromSuperview()
+            self?.filterImage()
             guard error == nil else {
                 self?.addErrorIndicator(error!)
                 return
@@ -78,6 +85,13 @@ private extension AsyncImageView {
         addIndicator()
         errorIndicator?.removeFromSuperview()
         errorIndicator = nil
+    }
+
+    func filterImage() {
+        guard contrast != nil || exposure != nil else {
+            return
+        }
+        self.image = image?.setFilter(contrast: contrast, exposure: exposure)
     }
 }
 

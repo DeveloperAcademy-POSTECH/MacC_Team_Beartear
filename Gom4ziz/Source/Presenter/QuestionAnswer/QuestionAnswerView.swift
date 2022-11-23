@@ -14,12 +14,13 @@ final class QuestionAnswerView: BaseAutoLayoutUIView {
 
     private let divider: UIView = UIView()
     private let artwork: Artwork
-    private let questionLabel: UILabel = UILabel()
+    private let questionView: QuestionView
     private let disposeBag: DisposeBag = .init()
-    let answerInputTextView: PlaceholderTextView = .init(placeholder: "내용을 입력하세요.")
+    let answerInputTextView: PlaceholderTextView = .init(placeholder: "내용을 입력하세요")
 
     init(artwork: Artwork) {
         self.artwork = artwork
+        self.questionView = QuestionView(artwork: artwork)
         super.init(frame: .zero)
         self.backgroundColor = .white
     }
@@ -34,55 +35,42 @@ extension QuestionAnswerView {
 
     func addSubviews() {
         addSubview(divider)
-        addSubview(questionLabel)
+        addSubview(questionView)
         addSubview(answerInputTextView)
     }
 
     func setUpConstraints() {
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionView.translatesAutoresizingMaskIntoConstraints = false
+        questionView.setContentHuggingPriority(.defaultLow, for: .vertical)
         NSLayoutConstraint.activate([
-            questionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
-            questionLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16),
-            questionLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16),
-            questionLabel.heightAnchor.constraint(equalToConstant: 160)
+            questionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12),
+            questionView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16),
+            questionView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16)
         ])
         divider.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            divider.leftAnchor.constraint(equalTo: questionLabel.leftAnchor),
-            divider.rightAnchor.constraint(equalTo: questionLabel.rightAnchor),
-            divider.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 20),
+            divider.leftAnchor.constraint(equalTo: questionView.leftAnchor),
+            divider.rightAnchor.constraint(equalTo: questionView.rightAnchor),
+            divider.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 20),
             divider.heightAnchor.constraint(equalToConstant: 2),
         ])
         answerInputTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            answerInputTextView.leftAnchor.constraint(equalTo: questionLabel.leftAnchor),
-            answerInputTextView.rightAnchor.constraint(equalTo: questionLabel.rightAnchor),
+            answerInputTextView.leftAnchor.constraint(equalTo: questionView.leftAnchor),
+            answerInputTextView.rightAnchor.constraint(equalTo: questionView.rightAnchor),
             answerInputTextView.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 20),
-            answerInputTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 20)
+            answerInputTextView.bottomAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor, constant: -16)
         ])
     }
 
     func setUpUI() {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(sender:))))
-        setUpQuestionLabel()
         setUpDivider()
     }
 
 }
 
 private extension QuestionAnswerView {
-
-    func setUpQuestionLabel() {
-        questionLabel.textColor = .white
-        questionLabel.font = .systemFont(ofSize: 16, weight: .bold)
-        questionLabel.backgroundColor = .blackFont
-        questionLabel.numberOfLines = 0
-        questionLabel.lineBreakMode = .byWordWrapping
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.26
-        paragraphStyle.alignment = .center
-        questionLabel.attributedText = NSMutableAttributedString(string: "# \(artwork.id)\n\(artwork.question)", attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-    }
 
     func setUpDivider() {
         divider.backgroundColor = .black

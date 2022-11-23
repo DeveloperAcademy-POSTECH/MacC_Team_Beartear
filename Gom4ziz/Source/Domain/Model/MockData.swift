@@ -18,9 +18,9 @@ extension User {
 
 extension Artwork {
     static var mockData: Artwork {
-        Artwork(id: 1,
-                imageUrl: "",
-                question: "당신에게 있어서 방주란 무엇인가요?",
+        Artwork(id: 13,
+                imageUrl: "https://firebasestorage.googleapis.com/v0/b/gom4ziz.appspot.com/o/Rectangle393.png?alt=media&token=ae36097f-221b-4722-a145-068f1aaeca51",
+                question: "현대 사회에서 동물과 인류는 어떻게 공존과 공생을 할 수 있을까요?",
                 title: "작은 방주",
                 artist: "최우람")
     }
