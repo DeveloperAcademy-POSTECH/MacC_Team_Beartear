@@ -20,6 +20,10 @@ extension Date {
     var weekday: Int? {
         Calendar.current.dateComponents([.weekday], from: self).weekday
     }
+    
+    func isLaterDate(than date: Date) -> Bool {
+        return self.timeIntervalSince(date) >= 0.0 ? true : false
+    }
 }
 
 enum IndexOfWeekday: Int {

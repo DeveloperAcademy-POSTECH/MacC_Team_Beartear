@@ -14,6 +14,7 @@ final class QuestionViewModel {
 
     private let requestNextArtworkUsecase: RequestNextArtworkUsecase
     private let timeDiffHandler: TimeDiffHandler
+    private let dateHelper: DateHelper = .init()
     private let disposeBag: DisposeBag = .init()
     
     private(set) var artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
@@ -46,7 +47,9 @@ final class QuestionViewModel {
             .interval(.seconds(60),
                       scheduler: MainScheduler.asyncInstance)
             .map { [weak self] _ in
-                (self?.timeDiffHandler.getDateComponentsDiff(from: Date(), to: date))!
+                let today = Date()
+                let comparedDate = self?.getNextQuestionDate(from: today)
+                return (self?.timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate!))!
             }
             .map { [weak self] in
                 (self?.formatDateComponentsToTextString(dateComponents: $0))!
@@ -87,6 +90,21 @@ private extension QuestionViewModel {
             return "1분"
         } else {
             return ""
+        }
+    }
+    
+    func getNextQuestionDate(from today: Date) -> Date {
+        
+        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmm: "1400")
+        let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmm: "1400")
+        
+        if !today.isLaterDate(than: thisWeekSaturdayQuestionTime) {
+            return thisWeekSaturdayQuestionTime
+        } else if !today.isLaterDate(than: thisWeekSundayQuestionTime) {
+            return thisWeekSundayQuestionTime
+        } else {
+            let nextWeekSaturdayQuestionTime = dateHelper.dateAfter(days: 7, from: thisWeekSaturdayQuestionTime)
+            return nextWeekSaturdayQuestionTime
         }
     }
 }
