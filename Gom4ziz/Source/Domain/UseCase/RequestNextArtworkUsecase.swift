@@ -9,7 +9,11 @@ import Foundation
 
 import RxSwift
 
-final class RequestNextArtworkUsecase {
+protocol RequestNextArtworkUsecase {
+    func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork>
+}
+
+final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
 
     private let artworkRepository: ArtworkRepository
     private let dateHelper: DateHelper = .init()
@@ -37,8 +41,8 @@ final class RequestNextArtworkUsecase {
     
     private func getAllocatedArtworkNum(with user: User) -> Int {
         let userFirstLoginedDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: String(user.firstLoginedDate))!
-        let today = Date()
-        let weekDays = countWeekBetweenDays(from: userFirstLoginedDate, to: today)
+        let today = Date.koreanNowDate
+        let weekDays = dateHelper.countWeekBetweenDays(from: userFirstLoginedDate, to: today)
         if weekDays == 0 {
             return abs(getAllocatedQuestionNum(with: today) - 2)
         } else {
@@ -48,30 +52,13 @@ final class RequestNextArtworkUsecase {
         }
     }
     
-    private func countWeekBetweenDays(from firstDate: Date, to today: Date) -> Int {
-        
-        let saturdayInFirstDateWeek = dateHelper.makeDateInSameWeek(with: firstDate, to: .sat, HHmm: "1400")
-        let saturdayInTodayWeek = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmm: "1400")
-        
-        // 두 날짜가 같은 week에 속하는 경우
-        if case .orderedSame = saturdayInFirstDateWeek.compare(saturdayInTodayWeek) {
-            return 0
-        } else {
-            let diffDays = Calendar.current.dateComponents([.day], from: firstDate, to: today).day!
-            let firstWeekRemainDays = 7 - firstDate.weekday!
-            let lastWeekPassedDays = today.weekday!
-            
-            return (diffDays - (firstWeekRemainDays + lastWeekPassedDays)) / 7
-        }
-    }
-    
     private func getAllocatedQuestionNum(with date: Date) -> Int {
-        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sat, HHmm: "1400")
         let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sun, HHmm: "1400")
+        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sat, HHmm: "1400")
         
-        if !date.isLaterDate(than: thisWeekSaturdayQuestionTime) {
+        if !date.isLaterDate(than: thisWeekSundayQuestionTime) {
             return 2
-        } else if !date.isLaterDate(than: thisWeekSundayQuestionTime) {
+        } else if !date.isLaterDate(than: thisWeekSaturdayQuestionTime) {
             return 1
         } else {
             return 0
