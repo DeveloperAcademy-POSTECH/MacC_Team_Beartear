@@ -24,9 +24,21 @@ extension Date {
     func isLaterDate(than date: Date) -> Bool {
         return self.timeIntervalSince(date) >= 0.0 ? true : false
     }
+    
+    var convertedKoreanDate: Date {
+        let hourToSeconds = 3600
+        let hourDiffFromGreenwichToKorea = 9
+        let greenwichKoreaDiffSeconds = TimeInterval(hourToSeconds * hourDiffFromGreenwichToKorea)
+
+        return self.addingTimeInterval(greenwichKoreaDiffSeconds)
+    }
+    
+    static var koreanNowDate: Date {
+        Date(timeIntervalSinceNow: 3600 * 9)
+    }
 }
 
 enum IndexOfWeekday: Int {
-    case mon = 1
-    case tue, wed, thu, fri, sat, sun
+    case sun = 1
+    case mon, tue, wed, thu, fri, sat
 }
