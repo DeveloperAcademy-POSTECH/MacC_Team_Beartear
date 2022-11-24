@@ -22,7 +22,7 @@ extension Artwork {
                 title: "작은 방주",
                 artist: "최우람")
     }
-
+    
     static var mockDatas: [Artwork] {
         [
             Artwork(id: 1,
@@ -57,9 +57,8 @@ extension Artwork {
 extension ArtworkReview {
     static var mockData: ArtworkReview {
         ArtworkReview(id: "mock",
-                      questionAnswer: "저에게 있어 운동이란 마약과도 같죠",
                       review: "정말 운동에 미친 사람이구나",
-                      timeStamp: Date(),
+                      timeStamp: 20220903122333,
                       uid: "mock")
     }
 }
@@ -67,13 +66,21 @@ extension ArtworkReview {
 extension ArtworkDescription {
     static var mockData: ArtworkDescription {
         ArtworkDescription(id: 1,
-                           content: .lorenIpsum
-                            )
+                           content: .lorenIpsum)
+    }
+}
+
+extension QuestionAnswer {
+    static var mockData: QuestionAnswer {
+        QuestionAnswer(id: "mock",
+                       questionAnswer: "정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나?",
+                       timeStamp: 20220903122333,
+                       uid: "mock")
     }
 }
 
 extension String {
-
+    
     /// 개발용 긴 문장
     static var lorenIpsum: String {
         """
