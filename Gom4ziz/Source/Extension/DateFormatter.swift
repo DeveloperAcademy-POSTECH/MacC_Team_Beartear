@@ -8,15 +8,17 @@
 import Foundation
 
 extension DateFormatter {
-    static let yyyyMMddHHmmFormatter: DateFormatter = {
+    static let yyyyMMddHHmmssFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMddHHmm"
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         return dateFormatter
     }()
     
     static let yyyyMMddFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd"
+        dateFormatter.timeZone = TimeZone(abbreviation: "KST")
         return dateFormatter
     }()
 }

@@ -24,9 +24,6 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
     }
     
     func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork> {
-        // TODO: 유저에게 할당된 작품의 범위 이상을 요청하는 경우에 대한 실패처리
-        // 일단 할당된 작품 범위의 값(allocatedArtworkNum)을 임의로 할당해준다
-
         let allocatedArtworkNum = getAllocatedArtworkNum(with: User.mockData)
         let nextArtworkId = userLastArtworkId + 1
         if isNoMoreArtworkToSee(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
@@ -41,7 +38,7 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
     }
     
     func getAllocatedArtworkNum(with user: User) -> Int {
-        let userFirstLoginedDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: String(user.firstLoginedDate))!
+        let userFirstLoginedDate = DateFormatter.yyyyMMddHHmmssFormatter.date(from: String(user.firstLoginedDate))!
         let today = Date()
         let weekDaysCount = dateHelper.countWeekBetweenDays(from: userFirstLoginedDate, to: today)
         let firstWeekAllocatedQuestion = getThisWeekArtworkNum(after: userFirstLoginedDate)
@@ -58,8 +55,8 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
     }
     
     func getThisWeekArtworkNum(after date: Date) -> Int {
-        let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sun, HHmm: "1400")
-        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sat, HHmm: "1400")
+        let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sun, HHmmss: "140000")
+        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sat, HHmmss: "140000")
         
         if date.isEarlierDate(than: thisWeekSundayQuestionTime) {
             return weeklyArtworksCount

@@ -42,6 +42,7 @@ final class QuestionViewModel {
             .disposed(by: disposeBag)
     }
     
+    // TODO: interval로 인해 요구 기능치고는 너무 많은 소모가 있을 것으로 예상되어 observable stream을 다루는 함수가 아닌 그냥 체크 함수 사용할까 고민
     func checkRemainingTime(to date: Date) -> Disposable {
         return Observable<Int>
             .interval(.seconds(60),
@@ -95,8 +96,8 @@ private extension QuestionViewModel {
     
     func getNextQuestionDate(from today: Date) -> Date {
         
-        let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmm: "1400")
-        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmm: "1400")
+        let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmmss: "140000")
+        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmmss: "140000")
         
         if today.isEarlierDate(than: thisWeekSundayQuestionTime) {
             return thisWeekSundayQuestionTime
