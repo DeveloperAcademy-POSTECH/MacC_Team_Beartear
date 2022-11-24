@@ -46,7 +46,7 @@ struct DateHelper {
         if case .orderedSame = saturdayInFirstDateWeek.compare(saturdayInTodayWeek) {
             return 0
         } else {
-            let diffDays = Calendar.current.dateComponents([.day], from: firstDate, to: today).day!
+            let diffDays = Calendar.current.dateComponents([.day], from: makeDate(with: firstDate, HHmm: "0000"), to: makeDate(with: today, HHmm: "0000")).day!
             let firstWeekRemainDays = weekdays - firstDate.weekday!
             let lastWeekPassedDays = today.weekday!
             

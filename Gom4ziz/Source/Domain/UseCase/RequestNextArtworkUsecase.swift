@@ -15,6 +15,7 @@ protocol RequestNextArtworkUsecase {
 
 final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
 
+    private let weeklyArtworksCount: Int = 2
     private let artworkRepository: ArtworkRepository
     private let dateHelper: DateHelper = .init()
     
@@ -39,29 +40,33 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
         nextArtworkId > allocatedArtworkNum
     }
     
-    private func getAllocatedArtworkNum(with user: User) -> Int {
+    func getAllocatedArtworkNum(with user: User) -> Int {
         let userFirstLoginedDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: String(user.firstLoginedDate))!
-        let today = Date.koreanNowDate
-        let weekDays = dateHelper.countWeekBetweenDays(from: userFirstLoginedDate, to: today)
-        if weekDays == 0 {
-            return abs(getAllocatedQuestionNum(with: today) - 2)
+        let today = Date()
+        let weekDaysCount = dateHelper.countWeekBetweenDays(from: userFirstLoginedDate, to: today)
+        let firstWeekAllocatedQuestion = getThisWeekArtworkNum(after: userFirstLoginedDate)
+        if weekDaysCount == 0 {
+            if userFirstLoginedDate.isInSameWeek(with: today) {
+                return firstWeekAllocatedQuestion - getThisWeekArtworkNum(after: today)
+            } else {
+                return firstWeekAllocatedQuestion + weeklyArtworksCount - getThisWeekArtworkNum(after: today)
+            }
         } else {
-            let firstWeekAllocatedQuestion = getAllocatedQuestionNum(with: userFirstLoginedDate)
-            let lastWeekAllocatedQuestion = abs(getAllocatedQuestionNum(with: today) - 2)
-            return firstWeekAllocatedQuestion + weekDays * 2 + lastWeekAllocatedQuestion
+            let lastWeekAllocatedQuestion = weeklyArtworksCount - getThisWeekArtworkNum(after: today)
+            return firstWeekAllocatedQuestion + weekDaysCount * weeklyArtworksCount + lastWeekAllocatedQuestion
         }
     }
     
-    private func getAllocatedQuestionNum(with date: Date) -> Int {
+    func getThisWeekArtworkNum(after date: Date) -> Int {
         let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sun, HHmm: "1400")
         let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sat, HHmm: "1400")
         
-        if !date.isLaterDate(than: thisWeekSundayQuestionTime) {
-            return 2
-        } else if !date.isLaterDate(than: thisWeekSaturdayQuestionTime) {
-            return 1
+        if date.isEarlierDate(than: thisWeekSundayQuestionTime) {
+            return weeklyArtworksCount
+        } else if date.isEarlierDate(than: thisWeekSaturdayQuestionTime) {
+            return weeklyArtworksCount - 1
         } else {
-            return 0
+            return weeklyArtworksCount - 2
         }
     }
 }

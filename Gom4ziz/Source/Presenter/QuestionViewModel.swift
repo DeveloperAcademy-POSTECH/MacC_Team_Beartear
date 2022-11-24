@@ -47,7 +47,7 @@ final class QuestionViewModel {
             .interval(.seconds(60),
                       scheduler: MainScheduler.asyncInstance)
             .map { [weak self] _ in
-                let today = Date.koreanNowDate
+                let today = Date()
                 let comparedDate = self?.getNextQuestionDate(from: today)
                 return (self?.timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate!))!
             }
@@ -98,9 +98,9 @@ private extension QuestionViewModel {
         let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmm: "1400")
         let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmm: "1400")
         
-        if !today.isLaterDate(than: thisWeekSundayQuestionTime) {
+        if today.isEarlierDate(than: thisWeekSundayQuestionTime) {
             return thisWeekSundayQuestionTime
-        } else if !today.isLaterDate(than: thisWeekSaturdayQuestionTime) {
+        } else if today.isEarlierDate(than: thisWeekSaturdayQuestionTime) {
             return thisWeekSaturdayQuestionTime
         } else {
             let nextWeekSundayQuestionTime = dateHelper.dateAfter(days: 7, from: thisWeekSundayQuestionTime)
