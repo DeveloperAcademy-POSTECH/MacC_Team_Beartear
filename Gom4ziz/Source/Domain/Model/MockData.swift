@@ -56,8 +56,7 @@ extension Artwork {
 
 extension ArtworkReview {
     static var mockData: ArtworkReview {
-        ArtworkReview(id: "mock",
-                      review: "정말 운동에 미친 사람이구나",
+        ArtworkReview(review: "정말 운동에 미친 사람이구나",
                       timeStamp: 20220903122333,
                       uid: "mock")
     }
@@ -72,8 +71,7 @@ extension ArtworkDescription {
 
 extension QuestionAnswer {
     static var mockData: QuestionAnswer {
-        QuestionAnswer(id: "mock",
-                       questionAnswer: "정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나?",
+        QuestionAnswer(questionAnswer: "정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나? 정말 개발에 미친 사람이구나?",
                        timeStamp: 20220903122333,
                        uid: "mock")
     }

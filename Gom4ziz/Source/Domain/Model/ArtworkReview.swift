@@ -8,7 +8,9 @@
 import Foundation
 
 struct ArtworkReview: Codable, Identifiable {
-    let id: String
+    var id: String {
+        return uid
+    }
     let review: String
     let timeStamp: Int
     let uid: String
@@ -22,7 +24,6 @@ extension ArtworkReview: CustomStringConvertible {
 
 extension ArtworkReview: Equatable {
     static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.id == rhs.id &&
         lhs.review == rhs.review &&
         lhs.timeStamp == rhs.timeStamp &&
         lhs.uid == rhs.uid

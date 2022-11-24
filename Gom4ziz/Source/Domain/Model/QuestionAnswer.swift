@@ -8,7 +8,9 @@
 import Foundation
 
 struct QuestionAnswer: Codable, Identifiable {
-    var id: String
+    var id: String {
+        return uid
+    }
     let questionAnswer: String
     let timeStamp: Int
     let uid: String
