@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class NetworkImageCacheManager {
+public final class NetworkImageManager {
 
     enum Option: Equatable {
         case useCache
@@ -22,14 +22,18 @@ public final class NetworkImageCacheManager {
         }
     }
 
-    public static let shared: NetworkImageCacheManager = NetworkImageCacheManager()
+    public static let shared: NetworkImageManager = NetworkImageManager()
     private let session: URLSession = URLSession(configuration: .ephemeral)
     private init() { }
 
-    func loadImage(url: URL, option: Option = .useCache, completion: @escaping (UIImage?, Error?) -> Void) {
+    func loadImage(url: URL,
+                   option: Option = .useCache,
+                   filterOptions: [ImageFilterOption],
+                   completion: @escaping (UIImage?, Error?) -> Void) {
         // 디스크 캐시에 image 데이터가 있으면, 바로 함수를 종료한다.
 
-        if option == .useCache, let image = loadFromDisk(url: url.absoluteString) {
+        if option == .useCache, let image = loadFromDisk(url: url.absoluteString)?.setFilters(filterOptions: filterOptions) {
+
             completion(image, nil)
             return
         }
@@ -45,7 +49,7 @@ public final class NetworkImageCacheManager {
                 return
             }
 
-            guard let image = UIImage(data: data) else {
+            guard let image = UIImage(data: data)?.setFilters(filterOptions: filterOptions) else {
                 completion(nil, URLError(.badServerResponse))
                 return
             }
@@ -55,16 +59,19 @@ public final class NetworkImageCacheManager {
         }.resume()
     }
 
-    func loadImage(url string: String, option: Option = .useCache, completion: @escaping (UIImage?, Error?) -> Void) {
+    func loadImage(url string: String,
+                   option: Option = .useCache,
+                   filterOptions: [ImageFilterOption],
+                   completion: @escaping (UIImage?, Error?) -> Void) {
         guard let url: URL = URL(string: string) else {
             completion(nil, URLError(.badURL))
             return
         }
-        loadImage(url: url, option: option, completion: completion)
+        loadImage(url: url, option: option, filterOptions: filterOptions, completion: completion)
     }
 }
 
-private extension NetworkImageCacheManager {
+private extension NetworkImageManager {
 
     func loadFromDisk(url string: String) -> UIImage? {
         guard let cachePath = FileManager.cachePath else {
