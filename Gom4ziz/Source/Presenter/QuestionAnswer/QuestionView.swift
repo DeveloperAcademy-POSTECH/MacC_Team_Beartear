@@ -21,8 +21,10 @@ final class QuestionView: BaseAutoLayoutUIView {
         questionImageView = AsyncImageView(
             url: artwork.imageUrl,
             contentMode: .scaleAspectFill,
-            exposure: 0.3,
-            contrast: 0.95)
+            filterOptions: [
+                .contrast(1.2),
+                .exposure(0.3)
+            ])
         super.init(frame: .zero)
     }
 

@@ -13,17 +13,14 @@ import RxSwift
 final class QuestionAnswerViewController: UIViewController {
 
     private let questionAnswerView: QuestionAnswerView
-    private lazy var nextButton: UIBarButtonItem = {
-        let button: UIBarButtonItem = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(onNextButtonClick(sender: )))
-        button.tintColor = .black
-        return button
-    }()
+    private let nextButton: UIBarButtonItem
     private let viewModel: QuestionAnswerViewModel
     private let disposeBag: DisposeBag = .init()
 
     init(artwork: Artwork) {
         self.questionAnswerView = QuestionAnswerView(artwork: artwork)
         self.viewModel = QuestionAnswerViewModel(of: artwork)
+        self.nextButton = UIBarButtonItem(title: "다음")
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -59,7 +56,8 @@ private extension QuestionAnswerViewController {
 
     func focusOnTextView() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
-            _ = questionAnswerView.answerInputTextView
+            _ = questionAnswerView
+                .answerInputTextView
                 .becomeFirstResponder()
         }
     }
@@ -79,6 +77,7 @@ private extension QuestionAnswerViewController {
             })
             .disposed(by: disposeBag)
     }
+
 }
 
 // MARK: - Navigation Bar 설정 부분
@@ -88,11 +87,18 @@ private extension QuestionAnswerViewController {
         let numberOfArtwork: Int = viewModel.artwork.id
         navigationItem.title = "\(numberOfArtwork)번째 티라미수"
         navigationItem.rightBarButtonItem = nextButton
+        setUpNextButton()
     }
 
-    @objc func onNextButtonClick(sender: UIBarButtonItem) {
-        viewModel.myAnswer = questionAnswerView.answerInputTextView.text
-        navigationController?.pushViewController(QuestionAnswerViewController(artwork: .mockData), animated: true)
+    func setUpNextButton() {
+        nextButton.tintColor = .black
+        nextButton
+            .rx
+            .tap
+            .bind { _ in
+
+            }
+            .disposed(by: disposeBag)
     }
 }
 
