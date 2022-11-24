@@ -49,7 +49,7 @@ final class QuestionViewModel {
                       scheduler: MainScheduler.asyncInstance)
             .map { [weak self] _ in
                 let today = Date()
-                let comparedDate = self?.getNextQuestionDate(from: today)
+                let comparedDate = self?.getNextArtworkDate(from: today)
                 return (self?.timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate!))!
             }
             .map { [weak self] in
@@ -94,18 +94,18 @@ private extension QuestionViewModel {
         }
     }
     
-    func getNextQuestionDate(from today: Date) -> Date {
+    func getNextArtworkDate(from today: Date) -> Date {
         
-        let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmmss: "140000")
-        let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmmss: "140000")
+        let thisWeekSundayArtworkTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmmss: "140000")
+        let thisWeekSaturdayArtworkTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmmss: "140000")
         
-        if today.isEarlierDate(than: thisWeekSundayQuestionTime) {
-            return thisWeekSundayQuestionTime
-        } else if today.isEarlierDate(than: thisWeekSaturdayQuestionTime) {
-            return thisWeekSaturdayQuestionTime
+        if today.isEarlierDate(than: thisWeekSundayArtworkTime) {
+            return thisWeekSundayArtworkTime
+        } else if today.isEarlierDate(than: thisWeekSaturdayArtworkTime) {
+            return thisWeekSaturdayArtworkTime
         } else {
-            let nextWeekSundayQuestionTime = dateHelper.dateAfter(days: 7, from: thisWeekSundayQuestionTime)
-            return nextWeekSundayQuestionTime
+            let nextWeekSundayArtworkTime = dateHelper.dateAfter(days: 7, from: thisWeekSundayArtworkTime)
+            return nextWeekSundayArtworkTime
         }
     }
 }

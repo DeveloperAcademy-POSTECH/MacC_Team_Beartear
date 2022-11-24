@@ -30,7 +30,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         
         // when
         if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getThisWeekArtworkNum(after: sundayMorningDate)
+            num = usecase.getThisWeekArtworkCount(after: sundayMorningDate)
         }
         
         // then
@@ -45,7 +45,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         
         // when
         if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getThisWeekArtworkNum(after: mondayMorningDate)
+            num = usecase.getThisWeekArtworkCount(after: mondayMorningDate)
         }
         
         // then
@@ -60,7 +60,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         
         // when
         if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getThisWeekArtworkNum(after: saturdayEveningDate)
+            num = usecase.getThisWeekArtworkCount(after: saturdayEveningDate)
         }
         
         // then
@@ -76,7 +76,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         
         // when
         if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getAllocatedArtworkNum(with: user)
+            num = usecase.getAllocatedArtworkCount(with: user)
         }
         
         // then
@@ -91,7 +91,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         
         // when
         if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getAllocatedArtworkNum(with: user)
+            num = usecase.getAllocatedArtworkCount(with: user)
         }
         
         // then
@@ -106,7 +106,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         
         // when
         if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getAllocatedArtworkNum(with: user)
+            num = usecase.getAllocatedArtworkCount(with: user)
         }
         
         // then

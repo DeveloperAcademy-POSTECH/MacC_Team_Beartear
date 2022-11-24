@@ -30,14 +30,14 @@ struct DateHelper {
         return DateFormatter.yyyyMMddHHmmssFormatter.date(from: dateAndHour)!
     }
     
-    private func makeDateInSameWeek(with comparingDate: Date, to comparedWeekday: IndexOfWeekday, HHmmss: String) -> Date {
+    func makeDateInSameWeek(with comparingDate: Date, to comparedWeekday: IndexOfWeekday, HHmmss: String) -> Date {
         let distanceToDay = getDistanceBetweenDays(from: comparingDate, to: comparedWeekday)
         let sameWeekParticularDate = dateAfter(days: distanceToDay, from: comparingDate)
         let sameWeekParticularDateParticularTime = makeDate(with: sameWeekParticularDate, HHmmss: HHmmss)
         return sameWeekParticularDateParticularTime
     }
     
-    private func countWeekBetweenDays(from firstDate: Date, to today: Date) -> Int {
+    func countWeekBetweenDays(from firstDate: Date, to today: Date) -> Int {
         
         let saturdayInFirstDateWeek = makeDateInSameWeek(with: firstDate, to: .sat, HHmmss: "140000")
         let saturdayInTodayWeek = makeDateInSameWeek(with: today, to: .sat, HHmmss: "140000")

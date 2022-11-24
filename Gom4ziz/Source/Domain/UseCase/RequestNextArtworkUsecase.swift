@@ -24,7 +24,7 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
     }
     
     func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork> {
-        let allocatedArtworkNum = getAllocatedArtworkNum(with: User.mockData)
+        let allocatedArtworkNum = getAllocatedArtworkCount(with: User.mockData)
         let nextArtworkId = userLastArtworkId + 1
         if isNoMoreArtworkToSee(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
             return Observable.error(RequestError.noMoreDataError)
@@ -37,24 +37,24 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
         nextArtworkId > allocatedArtworkNum
     }
     
-    func getAllocatedArtworkNum(with user: User) -> Int {
+    func getAllocatedArtworkCount(with user: User) -> Int {
         let userFirstLoginedDate = DateFormatter.yyyyMMddHHmmssFormatter.date(from: String(user.firstLoginedDate))!
         let today = Date()
         let weekDaysCount = dateHelper.countWeekBetweenDays(from: userFirstLoginedDate, to: today)
-        let firstWeekAllocatedQuestion = getThisWeekArtworkNum(after: userFirstLoginedDate)
+        let firstWeekAllocatedArtworkCount = getThisWeekArtworkCount(after: userFirstLoginedDate)
         if weekDaysCount == 0 {
             if userFirstLoginedDate.isInSameWeek(with: today) {
-                return firstWeekAllocatedQuestion - getThisWeekArtworkNum(after: today)
+                return firstWeekAllocatedArtworkCount - getThisWeekArtworkCount(after: today)
             } else {
-                return firstWeekAllocatedQuestion + weeklyArtworksCount - getThisWeekArtworkNum(after: today)
+                return firstWeekAllocatedArtworkCount + weeklyArtworksCount - getThisWeekArtworkCount(after: today)
             }
         } else {
-            let lastWeekAllocatedQuestion = weeklyArtworksCount - getThisWeekArtworkNum(after: today)
-            return firstWeekAllocatedQuestion + weekDaysCount * weeklyArtworksCount + lastWeekAllocatedQuestion
+            let lastWeekAllocatedArtworkCount = weeklyArtworksCount - getThisWeekArtworkCount(after: today)
+            return firstWeekAllocatedArtworkCount + weekDaysCount * weeklyArtworksCount + lastWeekAllocatedArtworkCount
         }
     }
     
-    func getThisWeekArtworkNum(after date: Date) -> Int {
+    func getThisWeekArtworkCount(after date: Date) -> Int {
         let thisWeekSundayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sun, HHmmss: "140000")
         let thisWeekSaturdayQuestionTime = dateHelper.makeDateInSameWeek(with: date, to: .sat, HHmmss: "140000")
         
