@@ -22,15 +22,15 @@ extension Date {
     }
     
     func isEarlierDate(than date: Date) -> Bool {
-        return self.timeIntervalSince(date) >= 0.0 ? false : true
+        self.timeIntervalSince(date) >= 0.0 ? false : true
     }
     
     func isInSameYear(with date: Date) -> Bool {
-        return Calendar.current.isDate(self, equalTo: date, toGranularity: .year)
+        Calendar.current.isDate(self, equalTo: date, toGranularity: .year)
     }
     
     func isInSameWeek(with date: Date) -> Bool {
-        return Calendar.current.isDate(self, equalTo: date, toGranularity: .weekOfYear) && isInSameYear(with: date)
+        Calendar.current.isDate(self, equalTo: date, toGranularity: .weekOfYear) && isInSameYear(with: date)
     }
 }
 
