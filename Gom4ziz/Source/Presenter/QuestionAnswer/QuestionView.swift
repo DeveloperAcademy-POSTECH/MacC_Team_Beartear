@@ -30,6 +30,10 @@ final class QuestionView: BaseAutoLayoutUIView {
         fatalError()
     }
 
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: 100, height: 200)
+    }
+
 }
 
 extension QuestionView {
@@ -37,7 +41,9 @@ extension QuestionView {
     func addSubviews() {
         addSubview(questionImageView)
         addSubview(infoContainer)
-        infoContainer.addSubviews(questionNumberLabel, questionLabel, whiteDivider)
+        infoContainer.addSubview(questionNumberLabel)
+        infoContainer.addSubview(questionLabel)
+        infoContainer.addSubview(whiteDivider)
     }
 
     func setUpConstraints() {
@@ -73,6 +79,8 @@ private extension QuestionView {
 
     func setUpQuestionNumberLabelConstraints() {
         questionNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionNumberLabel.setContentHuggingPriority(.required, for: .vertical)
+        questionNumberLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
             questionNumberLabel.centerXAnchor.constraint(equalTo: infoContainer.centerXAnchor),
             questionNumberLabel.bottomAnchor.constraint(equalTo: whiteDivider.topAnchor, constant: -5),
@@ -82,6 +90,8 @@ private extension QuestionView {
     }
     func setUpQuestionLabelConstraints() {
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionLabel.setContentHuggingPriority(.required, for: .vertical)
+        questionLabel.setContentCompressionResistancePriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
             questionLabel.leftAnchor.constraint(equalTo: infoContainer.leftAnchor, constant: 16),
             questionLabel.rightAnchor.constraint(equalTo: infoContainer.rightAnchor, constant: -16),
@@ -90,7 +100,6 @@ private extension QuestionView {
     }
     func setUpQuestionImageViewConstraints() {
         questionImageView.translatesAutoresizingMaskIntoConstraints = false
-        questionImageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         NSLayoutConstraint.activate([
             questionImageView.topAnchor.constraint(equalTo: infoContainer.topAnchor),
             questionImageView.bottomAnchor.constraint(equalTo: infoContainer.bottomAnchor),
@@ -133,7 +142,7 @@ private extension QuestionView {
     }
 
     func setUpQuestionImageView() {
-        
+        questionImageView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
     }
 
     func setUpWhiteDivider() {

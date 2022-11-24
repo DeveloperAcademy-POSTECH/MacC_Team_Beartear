@@ -12,15 +12,24 @@ import RxSwift
 
 final class QuestionAnswerViewController: UIViewController {
 
-    private let questionAnswerView: QuestionAnswerView = QuestionAnswerView(artwork: Artwork.mockData)
-
+    private let questionAnswerView: QuestionAnswerView
     private lazy var nextButton: UIBarButtonItem = {
         let button: UIBarButtonItem = UIBarButtonItem(title: "다음", style: .plain, target: self, action: #selector(onNextButtonClick(sender: )))
         button.tintColor = .black
         return button
     }()
-
+    private let viewModel: QuestionAnswerViewModel
     private let disposeBag: DisposeBag = .init()
+
+    init(artwork: Artwork) {
+        self.questionAnswerView = QuestionAnswerView(artwork: artwork)
+        self.viewModel = QuestionAnswerViewModel(of: artwork)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
 
     override func viewDidLoad() {
         setUpNavigationBar()
@@ -49,8 +58,10 @@ private extension QuestionAnswerViewController {
     }
 
     func focusOnTextView() {
-        _ = questionAnswerView.answerInputTextView
-            .becomeFirstResponder()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+            _ = questionAnswerView.answerInputTextView
+                .becomeFirstResponder()
+        }
     }
 
     func setUpObservers() {
@@ -74,12 +85,14 @@ private extension QuestionAnswerViewController {
 private extension QuestionAnswerViewController {
 
     func setUpNavigationBar() {
-        navigationItem.title = "작가의 질문"
+        let numberOfArtwork: Int = viewModel.artwork.id
+        navigationItem.title = "\(numberOfArtwork)번째 티라미수"
         navigationItem.rightBarButtonItem = nextButton
     }
 
     @objc func onNextButtonClick(sender: UIBarButtonItem) {
-
+        viewModel.myAnswer = questionAnswerView.answerInputTextView.text
+        navigationController?.pushViewController(QuestionAnswerViewController(artwork: .mockData), animated: true)
     }
 }
 
@@ -87,7 +100,7 @@ private extension QuestionAnswerViewController {
 import SwiftUI
 struct QuestionAnswerViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        UINavigationController(rootViewController: QuestionAnswerViewController())
+        UINavigationController(rootViewController: QuestionAnswerViewController(artwork: Artwork.mockData))
             .toPreview()
     }
 }
