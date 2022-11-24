@@ -24,8 +24,8 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
     
     func test_이번주_일요일_아침기준_이번주에_받게될_남은_작품은_2개() throws {
         // given
-        let sundayMorning = "202211201100"
-        let sundayMorningDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: sundayMorning)!
+        let sundayMorning = "20221120110000"
+        let sundayMorningDate = DateFormatter.yyyyMMddHHmmssFormatter.date(from: sundayMorning)!
         var num = -1
         
         // when
@@ -39,8 +39,8 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
     
     func test_이번주_월요일_아침기준_이번주에_받게될_남은_작품은_1개() throws {
         // given
-        let mondayMorning = "202211211100"
-        let mondayMorningDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: mondayMorning)!
+        let mondayMorning = "20221121110000"
+        let mondayMorningDate = DateFormatter.yyyyMMddHHmmssFormatter.date(from: mondayMorning)!
         var num = -1
         
         // when
@@ -54,8 +54,8 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
     
     func test_이번주_토요일_저녁기준_이번주에_받게될_남은_작품은_0개() throws {
         // given
-        let saturdayEvening = "202211261730"
-        let saturdayEveningDate = DateFormatter.yyyyMMddHHmmFormatter.date(from: saturdayEvening)!
+        let saturdayEvening = "20221126173000"
+        let saturdayEveningDate = DateFormatter.yyyyMMddHHmmssFormatter.date(from: saturdayEvening)!
         var num = -1
         
         // when
@@ -68,9 +68,10 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
     }
 
 
-    func test_이번주_월요일_유저가_가입_할당된_작품은_0개() throws {
+    func test_이번주_일요일_유저가_가입_할당된_작품은_0개() throws {
         // given
-        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: 202211211200)
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 4 + oneHourSeconds * 3)
+        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt!)
         var num = -1
         
         // when
@@ -84,7 +85,8 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
     
     func test_저번주_금요일_유저가_가입_할당된_작품은_2개() throws {
         // given
-        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: 202211181200)
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 6)
+        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt!)
         var num = -1
         
         // when
@@ -98,7 +100,8 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
     
     func test_저번주_월요일_유저가_가입_할당된_작품은_2개() throws {
         // given
-        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: 202211141200)
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 10)
+        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt!)
         var num = -1
         
         // when
@@ -109,18 +112,4 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         // then
         XCTAssertEqual(2, num)
     }
-    
-    
-    
-//    func test_() throws {
-//        // given
-//        // when
-//        // then
-//    }
-//
-//    func test_() throws {
-//        // given
-//        // when
-//        // then
-//    }
 }

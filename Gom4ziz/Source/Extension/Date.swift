@@ -9,12 +9,12 @@ import Foundation
 
 extension Date {
     
-    var yyyyMMddHHmmFormattedString: String {
-        DateFormatter.yyyyMMddHHmmFormatter.string(from: self)
+    var yyyyMMddHHmmssFormattedString: String {
+        DateFormatter.yyyyMMddHHmmssFormatter.string(from: self)
     }
     
-    var yyyyMMddHHmmFormattedInt: Int? {
-        Int(yyyyMMddHHmmFormattedString)
+    var yyyyMMddHHmmssFormattedInt: Int? {
+        Int(yyyyMMddHHmmssFormattedString)
     }
     
     var weekday: Int? {
@@ -25,20 +25,12 @@ extension Date {
         return self.timeIntervalSince(date) >= 0.0 ? false : true
     }
     
+    func isInSameYear(with date: Date) -> Bool {
+        return Calendar.current.isDate(self, equalTo: date, toGranularity: .year)
+    }
+    
     func isInSameWeek(with date: Date) -> Bool {
-        return Calendar.current.isDate(self, equalTo: date, toGranularity: .weekOfYear)
-    }
-    
-    var convertedKoreanDate: Date {
-        let hourToSeconds = 3600
-        let hourDiffFromGreenwichToKorea = 9
-        let greenwichKoreaDiffSeconds = TimeInterval(hourToSeconds * hourDiffFromGreenwichToKorea)
-
-        return self.addingTimeInterval(greenwichKoreaDiffSeconds)
-    }
-    
-    static var koreanNowDate: Date {
-        Date(timeIntervalSinceNow: 3600 * 9)
+        return Calendar.current.isDate(self, equalTo: date, toGranularity: .weekOfYear) && isInSameYear(with: date)
     }
 }
 

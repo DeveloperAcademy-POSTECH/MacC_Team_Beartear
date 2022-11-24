@@ -9,7 +9,7 @@ import Foundation
 struct User: Codable, Identifiable {
     let id: String
     let lastArtworkId: Int
-    let firstLoginedDate: Int
+    let firstLoginedDate: Int // yyyyMMddHHmmss
 }
 
 extension User: CustomStringConvertible {

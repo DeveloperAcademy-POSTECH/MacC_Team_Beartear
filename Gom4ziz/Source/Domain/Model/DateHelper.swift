@@ -23,30 +23,30 @@ struct DateHelper {
         return Calendar.current.date(byAdding: .day, value: days, to: comparedDate)!
     }
     
-    // 특정 날짜의 원하는 시간 Date 만들어주는 함수, 오후 2시 -> 1400
-    private func makeDate(with date: Date, HHmm: String) -> Date {
+    // 특정 날짜의 원하는 시간 Date 만들어주는 함수, 오후 2시 -> 140000
+    private func makeDate(with date: Date, HHmmss: String) -> Date {
         let dateString = DateFormatter.yyyyMMddFormatter.string(from: date)
-        let dateAndHour = dateString + HHmm
-        return DateFormatter.yyyyMMddHHmmFormatter.date(from: dateAndHour)!
+        let dateAndHour = dateString + HHmmss
+        return DateFormatter.yyyyMMddHHmmssFormatter.date(from: dateAndHour)!
     }
     
-    func makeDateInSameWeek(with comparingDate: Date, to comparedWeekday: IndexOfWeekday, HHmm: String) -> Date {
+    func makeDateInSameWeek(with comparingDate: Date, to comparedWeekday: IndexOfWeekday, HHmmss: String) -> Date {
         let distanceToDay = getDistanceBetweenDays(from: comparingDate, to: comparedWeekday)
         let sameWeekParticularDate = dateAfter(days: distanceToDay, from: comparingDate)
-        let sameWeekParticularDateParticularTime = makeDate(with: sameWeekParticularDate, HHmm: HHmm)
+        let sameWeekParticularDateParticularTime = makeDate(with: sameWeekParticularDate, HHmmss: HHmmss)
         return sameWeekParticularDateParticularTime
     }
     
     func countWeekBetweenDays(from firstDate: Date, to today: Date) -> Int {
         
-        let saturdayInFirstDateWeek = makeDateInSameWeek(with: firstDate, to: .sat, HHmm: "1400")
-        let saturdayInTodayWeek = makeDateInSameWeek(with: today, to: .sat, HHmm: "1400")
+        let saturdayInFirstDateWeek = makeDateInSameWeek(with: firstDate, to: .sat, HHmmss: "140000")
+        let saturdayInTodayWeek = makeDateInSameWeek(with: today, to: .sat, HHmmss: "140000")
         
-        // 두 날짜가 같은 week에 속하는 경우
+        // 두 날짜가 같은 날짜인 경우를 기준으로 분기처리
         if case .orderedSame = saturdayInFirstDateWeek.compare(saturdayInTodayWeek) {
             return 0
         } else {
-            let diffDays = Calendar.current.dateComponents([.day], from: makeDate(with: firstDate, HHmm: "0000"), to: makeDate(with: today, HHmm: "0000")).day!
+            let diffDays = Calendar.current.dateComponents([.day], from: makeDate(with: firstDate, HHmmss: "000000"), to: makeDate(with: today, HHmmss: "000000")).day!
             let firstWeekRemainDays = weekdays - firstDate.weekday!
             let lastWeekPassedDays = today.weekday!
             
