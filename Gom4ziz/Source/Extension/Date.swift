@@ -21,8 +21,12 @@ extension Date {
         Calendar.current.dateComponents([.weekday], from: self).weekday
     }
     
-    func isLaterDate(than date: Date) -> Bool {
-        return self.timeIntervalSince(date) >= 0.0 ? true : false
+    func isEarlierDate(than date: Date) -> Bool {
+        return self.timeIntervalSince(date) >= 0.0 ? false : true
+    }
+    
+    func isInSameWeek(with date: Date) -> Bool {
+        return Calendar.current.isDate(self, equalTo: date, toGranularity: .weekOfYear)
     }
     
     var convertedKoreanDate: Date {
