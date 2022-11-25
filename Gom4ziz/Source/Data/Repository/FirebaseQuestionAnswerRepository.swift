@@ -24,17 +24,17 @@ extension FirebaseQuestionAnswerRepository: QuestionAnswerRepository {
     func fetchQuestionAnswerList(for userId: String, before artworkId: Int) -> Observable<[QuestionAnswer]> {
         var questionAnswerObservableList: [Observable<QuestionAnswer>] = []
         for i in 1...artworkId {
-            questionAnswerObservableList.append(getQuestionAnswerListRef(for: userId, before: i)
+            questionAnswerObservableList.append(getQuestionAnswerRef(for: userId, before: i)
                 .rx
                 .decodable(as: QuestionAnswer.self))
         }
-        return Observable.zip(questionAnswerObservableList) { $0 }
+        return Observable.zip(questionAnswerObservableList)
     }
 }
 
 // MARK: - private extension
 extension FirebaseQuestionAnswerRepository {
-    private func getQuestionAnswerListRef(for userId: String, before artworkId: Int) -> DocumentReference {
+    private func getQuestionAnswerRef(for userId: String, before artworkId: Int) -> DocumentReference {
         db
             .collection(CollectionName.artwork)
             .document(String(artworkId))
