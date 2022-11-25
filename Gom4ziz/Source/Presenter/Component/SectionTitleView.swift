@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SectionTitleView: UIView {
+final class SectionTitleView: BaseAutoLayoutUIView {
     
     let title: String
     
@@ -40,10 +40,6 @@ final class SectionTitleView: UIView {
     init(title: String) {
         self.title = title
         super.init(frame: .zero)
-        
-        addSubviews()
-        setUpConstraints()
-        setUpUI()
     }
     
     required init?(coder: NSCoder) {
@@ -52,7 +48,8 @@ final class SectionTitleView: UIView {
     
 }
 
-private extension SectionTitleView {
+extension SectionTitleView {
+    
     func addSubviews() {
         self.addSubview(sectionTitleStackView)
     }
@@ -76,4 +73,5 @@ private extension SectionTitleView {
     func setUpUI() {
         self.backgroundColor = .white
     }
+    
 }
