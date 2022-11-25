@@ -12,7 +12,7 @@ import RxSwift
 
 final class MyFeedViewController: UIViewController {
     
-    private let myFeedView: MyFeedView = .init(artwork: .mockData, artworkDescription: .mockData, artworkReview: .mockData, highlights: [])
+    private let myFeedView: MyFeedView = .init(artwork: .mockData, artworkDescription: .mockData, artworkReview: .mockData, questionAnswer: .mockData, highlights: [])
     private let viewModel: MyFeedViewModel = MyFeedViewModel(fetchArtworkReviewUseCase: RealFetchArtworkReviewUseCase(),
                                                              fetchArtworkDescriptionUseCase: RealFetchArtworkDescriptionUseCase(),
                                                              fetchHighlightUseCase: RealFetchHighlightUseCase())

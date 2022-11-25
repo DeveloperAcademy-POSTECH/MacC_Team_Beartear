@@ -7,10 +7,6 @@
 
 import Foundation
 
-enum RequestError: Error {
-    case noMoreDataError
-}
-
 enum WeeklyArtworkStatus {
     case notRequested
     case loading

@@ -1,0 +1,23 @@
+//
+//  OnBoardingViewController.swift
+//  Gom4ziz
+//
+//  Created by sanghyo on 2022/11/25.
+//
+
+import UIKit
+
+final class OnBoardingViewController: UIViewController {
+    
+}
+
+#if DEBUG
+import SwiftUI
+struct OnBoardingViewControllerPreview: PreviewProvider {
+    static var previews: some View {
+        UINavigationController(rootViewController: OnBoardingViewController())
+            .toPreview()
+    }
+}
+#endif
+

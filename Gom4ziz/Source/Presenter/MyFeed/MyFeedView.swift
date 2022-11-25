@@ -12,6 +12,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     private let artwork: Artwork
     private let artworkDescription: ArtworkDescription
     private let artworkReview: ArtworkReview
+    private let questionAnswer: QuestionAnswer
     private let highlights: [Highlight]
     
     // MARK: - UI Component
@@ -36,7 +37,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var questionAnswerLabel: UILabel = {
         let label = UILabel()
-        label.text = artworkReview.questionAnswer
+        label.text = questionAnswer.questionAnswer
         label.numberOfLines = 0
         label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +89,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artwork.artist
         label.numberOfLines = 0
-        label.textStyle(.Body2, .gray3)
+        label.textStyle(.Body2, .gray4)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -179,10 +180,12 @@ final class MyFeedView: BaseAutoLayoutUIView {
     init(artwork: Artwork,
          artworkDescription: ArtworkDescription,
          artworkReview: ArtworkReview,
+         questionAnswer: QuestionAnswer,
          highlights: [Highlight]) {
         self.artwork = artwork
         self.artworkDescription = artworkDescription
         self.artworkReview = artworkReview
+        self.questionAnswer = questionAnswer
         self.highlights = highlights
         super.init(frame: .zero)
         self.backgroundColor = .white
@@ -243,7 +246,7 @@ extension MyFeedView {
 import SwiftUI
 struct MyFeedViewPreview: PreviewProvider {
     static var previews: some View {
-        MyFeedView(artwork: .mockData, artworkDescription: .mockData, artworkReview: .mockData, highlights: []).toPreview()
+        MyFeedView(artwork: .mockData, artworkDescription: .mockData, artworkReview: .mockData, questionAnswer: .mockData, highlights: []).toPreview()
     }
 }
 #endif
