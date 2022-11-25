@@ -16,6 +16,10 @@ enum CollectionName {
     static var artwork: String {
         ProcessInfo().isRunningTests ? "TestArtworks": "Artworks"
     }
+    
+    static var questionAnswer: String {
+        ProcessInfo().isRunningTests ? "TestQuestionAnswers": "QuestionAnswers"
+    }
 
     static var artworkDescription: String {
         ProcessInfo().isRunningTests ? "TestArtworkDescriptions": "ArtworkDescriptions"
