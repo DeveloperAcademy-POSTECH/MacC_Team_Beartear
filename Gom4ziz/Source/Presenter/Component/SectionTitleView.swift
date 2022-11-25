@@ -14,7 +14,7 @@ final class SectionTitleView: UIView {
     private lazy var sectionTitleLabel: UILabel = {
         let label = UILabel()
         label.text = title
-        label.textStyle(.textStyle(size: 15, type: .sectionHeader), .blackFont)
+        label.textStyle(.Headline2, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

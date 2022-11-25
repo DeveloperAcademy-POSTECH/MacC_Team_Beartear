@@ -29,7 +29,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artwork.question
         label.numberOfLines = 0
-        label.textStyle(.textStyle(size: 24, type: .title), .blackFont)
+        label.textStyle(.Display2, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,7 +38,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artworkReview.questionAnswer
         label.numberOfLines = 0
-        label.textStyle(.textStyle(size: 17, type: .secondary), .blackFont)
+        label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -79,7 +79,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artwork.title
         label.numberOfLines = 0
-        label.textStyle(.textStyle(size: 20, type: .title), .blackFont)
+        label.textStyle(.Title, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -88,7 +88,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artwork.artist
         label.numberOfLines = 0
-        label.textStyle(.textStyle(size: 15, type: .description), .gray3)
+        label.textStyle(.Body2, .gray3)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -123,7 +123,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artworkDescription.content
         label.numberOfLines = 0
-        label.textStyle(.textStyle(size: 18, type: .primary), .blackFont)
+        label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -147,7 +147,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         let label = UILabel()
         label.text = artworkReview.review
         label.numberOfLines = 0
-        label.textStyle(.textStyle(size: 18, type: .primary), .blackFont)
+        label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -216,7 +216,9 @@ extension MyFeedView {
 
             feedStackView.topAnchor.constraint(equalTo: myFeedStackView.topAnchor, constant: 12),
             feedStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
-            feedStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
+            feedStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16), // 이거 왜 안먹죠? ㅜㅜ
+            feedSectionTitleView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
+            questionStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
             
             artworkStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor),
             artworkStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor),

@@ -12,37 +12,11 @@ enum TextStyle {
 }
 
 extension UILabel {
-    func textStyle(_ style: TextStyle, _ color: UIColor) {
-        if case .textStyle(let size, let type) = style {
-            let (lineheight, fontWeight) = type.toValue
-            self.setLineSpacing(lineSpacing: lineheight)
-            
-            switch size {
-            case 14:
-                self.font = .systemFont(ofSize: 14, weight: fontWeight)
-                self.textColor = color
-            case 15:
-                self.font = .systemFont(ofSize: 15, weight: fontWeight)
-                self.textColor = color
-            case 16:
-                self.font = .systemFont(ofSize: 16, weight: fontWeight)
-                self.textColor = color
-            case 17:
-                self.font = .systemFont(ofSize: 17, weight: fontWeight)
-                self.textColor = color
-            case 18:
-                self.font = .systemFont(ofSize: 18, weight: fontWeight)
-                self.textColor = color
-            case 20:
-                self.font = .systemFont(ofSize: 20, weight: fontWeight)
-                self.textColor = color
-            case 24:
-                self.font = .systemFont(ofSize: 24, weight: fontWeight)
-                self.textColor = color
-            default:
-                break
-            }
-        }
+    func textStyle(_ typography: Typohgraphy, _ color: UIColor) {
+        let (fontSize, lineheight, fontWeight) = typography.toValue
+        self.font = .systemFont(ofSize: fontSize, weight: fontWeight)
+        self.setLineSpacing(lineSpacing: lineheight)
+        self.textColor = color
     }
     
     func setLineSpacing(kernValue: Double = 0.0,
