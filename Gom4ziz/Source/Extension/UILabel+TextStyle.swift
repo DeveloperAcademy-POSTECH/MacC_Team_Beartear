@@ -7,10 +7,6 @@
 
 import UIKit
 
-enum TextStyle {
-    case textStyle(size: CGFloat, type: Typohgraphy)
-}
-
 extension UILabel {
     func textStyle(_ typography: Typohgraphy, _ color: UIColor) {
         let (fontSize, lineheight, fontWeight) = typography.toValue
