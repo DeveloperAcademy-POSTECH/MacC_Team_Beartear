@@ -8,29 +8,35 @@
 import UIKit
 
 enum Typohgraphy {
-    case title
-    case sectionHeader
-    case navigationHeader
-    case primary
-    case secondary
-    case description
+    case Display1
+    case Display2
+    case Display3
+    case Title
+    case Headline1
+    case Headline2
+    case SubHeadline
+    case Body1
+    case Body2
+    case Caption
+    case NavigationTitle
+    case NavigationButton
 }
 
 extension Typohgraphy {
-    var toValue: (CGFloat, UIFont.Weight) {
+    var toValue: (CGFloat, CGFloat, UIFont.Weight) {
         switch self {
-        case .title:
-            return (1.5, .bold)
-        case .sectionHeader:
-            return (1.5, .heavy)
-        case .navigationHeader:
-            return (1.5, .semibold)
-        case .primary:
-            return (1.8, .light)
-        case .secondary:
-            return (1.5, .light)
-        case .description:
-            return (1.5, .regular)
+        case .Display1: return (28, 1.5, .bold)
+        case .Display2: return (24, 1.5, .bold)
+        case .Display3: return (22, 1.5, .bold)
+        case .Title: return (20, 1.2, .bold)
+        case .Headline1: return (17, 1.4, .bold)
+        case .Headline2: return (16, 1.2, .heavy)
+        case .SubHeadline: return (16, 1.2, .medium)
+        case .Body1: return (18, 1.8, .light)
+        case .Body2: return (14, 1.5, .light)
+        case .Caption: return (14, 1.5, .bold)
+        case .NavigationTitle: return (16, 1.5, .semibold)
+        case .NavigationButton: return (16, 1.5, .regular)
         }
     }
 }
