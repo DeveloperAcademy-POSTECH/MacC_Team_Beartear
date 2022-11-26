@@ -48,7 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
-private extension SceneDelegate {
+extension SceneDelegate {
     
     /// 윈도우의 루트 뷰컨을 바꾸는 함수
     /// - Parameter controller: 바꿀 뷰컨트롤러
