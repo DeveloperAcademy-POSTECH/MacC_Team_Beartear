@@ -12,4 +12,9 @@ extension NSLayoutConstraint {
         self.priority = UILayoutPriority(priority)
         return self
     }
+
+    func withPriority(_ priority: UILayoutPriority) -> NSLayoutConstraint {
+        self.priority = priority
+        return self
+    }
 }
