@@ -35,6 +35,22 @@ extension SceneDelegate {
 
         changeRootViewController(vc)
     }
+
+    // 작품 소개 modal을 테스트할 수 있는 코드입니다.
+    func testArtworkIntroductionModal() {
+        let vc = UIViewController()
+        let modal = ArtworkIntroductionModal(artwork: .mockData, descrption: .mockData)
+        vc.view.addSubview(modal)
+        let safeArea = vc.view.safeAreaLayoutGuide
+        modal.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            modal.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            modal.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor),
+            modal.leftAnchor.constraint(equalTo: safeArea.leftAnchor),
+            modal.rightAnchor.constraint(equalTo: safeArea.rightAnchor),
+        ])
+        changeRootViewController(vc)
+    }
 }
 #endif
 

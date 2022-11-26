@@ -77,7 +77,7 @@ private extension PlaceholderTextView {
     }
 
     func setUpTextView() {
-        layer.borderColor = UIColor.borderGray.cgColor
+        layer.borderColor = UIColor.gray2.cgColor
         layer.borderWidth = 1
         font = .systemFont(ofSize: 16, weight: .medium)
         textContainerInset = .init(top: 12, left: 7, bottom: 0, right: 0)

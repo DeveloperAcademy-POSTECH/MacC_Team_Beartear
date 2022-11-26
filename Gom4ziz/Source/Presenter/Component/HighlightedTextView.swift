@@ -25,6 +25,7 @@ final class HighlightedTextView: BaseAutoLayoutUIView {
     private let toggleButton: UILabel = UILabel()
     private let deleteButton: BubbleButton = BubbleButton(text: "삭제")
     private let isEditable: Bool
+    var onToggled: (() -> Void)?
 
     /// 하이라이트 칠 수 있는 텍스트 뷰입니다.
     /// - Parameters:
@@ -85,8 +86,8 @@ extension HighlightedTextView {
         if isExpandable {
             toggleButton.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
-                toggleButton.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 4),
-                toggleButton.topAnchor.constraint(equalTo: textView.bottomAnchor),
+                toggleButton.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
+                toggleButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 4),
                 toggleButton.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
         }
@@ -259,12 +260,10 @@ private extension HighlightedTextView {
             textView.textContainer.maximumNumberOfLines = 0
             textView.invalidateIntrinsicContentSize()
         }
-        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 1) { [self] in
-            layoutIfNeeded()
-        }
         hideDeleteButton()
         hideAddButton()
         isExpanded.toggle()
+        onToggled?()
     }
 }
 
@@ -297,6 +296,8 @@ private extension HighlightedTextView {
         textView.isSelectable = isEditable
         textView.delegate = self
         textView.backgroundColor = .clear
+        textView.textContainer.lineFragmentPadding = 0
+        textView.textContainerInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         textView.linkTextAttributes = [
             .backgroundColor: highlightColor,
             .foregroundColor: highlightTextColor
@@ -332,7 +333,7 @@ import SwiftUI
 struct HighlightedTextViewPreview: PreviewProvider {
     static var previews: some View {
         
-        HighlightedTextView(text: String(String.lorenIpsum.dropLast(600)))
+        HighlightedTextView(text: String(String.lorenIpsum))
             .toPreview()
             .padding()
             .previewDisplayName("다 되는 텍스트뷰")
