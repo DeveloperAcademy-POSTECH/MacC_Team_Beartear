@@ -67,7 +67,6 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         XCTAssertEqual(0, num)
     }
 
-
     func test_이번주_일요일_유저가_가입_할당된_작품은_0개() throws {
         // given
         let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 4 + oneHourSeconds * 3)

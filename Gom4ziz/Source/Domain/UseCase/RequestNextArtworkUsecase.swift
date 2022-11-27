@@ -27,7 +27,7 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
         let allocatedArtworkNum = getAllocatedArtworkCount(with: User.mockData)
         let nextArtworkId = userLastArtworkId + 1
         if isNoMoreArtworkToSee(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
-            return Observable.error(RequestError.noMoreDataError)
+            return Observable.error(ArtworkRequestError.noMoreDataError)
         }
 
         return artworkRepository.requestArtwork(of: nextArtworkId)

@@ -68,7 +68,7 @@ private extension QuestionViewModel {
         guard case let .failed(error) = failedStatus else {
             return nil
         }
-        guard let error = error as? RequestError, error == .noMoreDataError else {
+        guard let error = error as? ArtworkRequestError, error == .noMoreDataError else {
             return failedStatus
         }
         return .noMoreData

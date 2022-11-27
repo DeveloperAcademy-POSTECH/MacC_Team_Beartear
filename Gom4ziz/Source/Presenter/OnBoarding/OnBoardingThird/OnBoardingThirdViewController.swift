@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class OnBoardingThirdViewController : UIViewController {
+final class OnBoardingThirdViewController: UIViewController {
     
 }
 
@@ -20,5 +20,3 @@ struct OnBoardingThirdViewControllerPreview: PreviewProvider {
     }
 }
 #endif
-
-
