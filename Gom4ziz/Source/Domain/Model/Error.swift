@@ -7,8 +7,10 @@
 
 import Foundation
 
-enum RequestError: Error {
+enum ArtworkRequestError: Error {
     case noMoreDataError
-    case notRegisteredUser
 }
 
+enum UserRequestError: Error {
+    case notRegisteredUser
+}

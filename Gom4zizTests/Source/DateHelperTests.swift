@@ -13,50 +13,50 @@ final class DateHelperTests: XCTestCase {
     private let oneDaySeconds: Double = 3600 * 24
     
     func test_오늘과_다다음주_화요일_사이에_한개의_주가있다() throws {
-        //given
+        // given
         let today = Date()
         let nextNextTuesday = Date(timeIntervalSinceNow: oneDaySeconds * 12)
         
-        //when
+        // when
         let weekDays = dateHelper.countWeekBetweenDays(from: today, to: nextNextTuesday)
         
-        //then
+        // then
         XCTAssertEqual(weekDays, 1)
     }
     
     func test_오늘과_다음주_화요일_사이에_0개의_주가있다() throws {
-        //given
+        // given
         let today = Date()
         let nextTuesday = Date(timeIntervalSinceNow: oneDaySeconds * 5)
         
-        //when
+        // when
         let weekDays = dateHelper.countWeekBetweenDays(from: today, to: nextTuesday)
         
-        //then
+        // then
         XCTAssertEqual(weekDays, 0)
     }
     
     func test_오늘과_내일_사이에_0개의_주가있다() throws {
-        //given
+        // given
         let today = Date()
         let tomorrow = Date(timeIntervalSinceNow: oneDaySeconds * 1)
         
-        //when
+        // when
         let weekDays = dateHelper.countWeekBetweenDays(from: today, to: tomorrow)
         
-        //then
+        // then
         XCTAssertEqual(weekDays, 0)
     }
     
     func test_오늘과_다다음주_일요일_사이에_1개의_주가있다() throws {
-        //given
+        // given
         let today = Date()
         let nextSunday = Date(timeIntervalSinceNow: oneDaySeconds * 10)
         
-        //when
+        // when
         let weekDays = dateHelper.countWeekBetweenDays(from: today, to: nextSunday)
         
-        //then
+        // then
         XCTAssertEqual(weekDays, 1)
     }
 }

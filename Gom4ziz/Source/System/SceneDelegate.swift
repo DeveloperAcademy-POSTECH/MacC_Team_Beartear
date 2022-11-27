@@ -14,8 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private let disposeBag: DisposeBag = .init()
     private let userViewModel: UserViewModel = UserViewModel.shared
-    private let mainViewController = MainViewController()
-    private let onBoardingViewController = OnBoardingViewController()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene  else {
@@ -29,16 +27,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         userViewModel.fetchUser()
         userViewModel.userObservable
             .subscribe(
-                onNext: {
+                onNext: { [weak self] in
+                    guard let self else { return }
                     switch $0 {
                     case .loaded:
-                        self.changeRootViewController(self.mainViewController)
+                        self.changeRootViewController(MainViewController())
                     case .isLoading:
                         // loading 화면
                         print("loading")
                     case .failed(let error):
-                        if let error = error as? RequestError, error == .notRegisteredUser {
-                            self.changeRootViewController(self.onBoardingViewController)
+                        if let error = error as? UserRequestError, error == .notRegisteredUser {
+                            self.changeRootViewController(OnBoardingViewController())
                         } else {
                             // error 화면
                         }
