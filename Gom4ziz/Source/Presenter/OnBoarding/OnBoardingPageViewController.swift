@@ -10,10 +10,11 @@ import UIKit
 final class OnBoardingPageViewController: UIPageViewController {
     
     private let pageViewControllerList: [UIViewController]
-    
+    private let onBoardingViewModel: OnBoardingViewModel = OnBoardingViewModel.shared
+
     init(viewControllerList: [UIViewController]) {
+        self.pageViewControllerList = viewControllerList
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        pageViewControllerList = viewControllerList
     }
     
     required init?(coder: NSCoder) {
@@ -31,6 +32,47 @@ extension OnBoardingPageViewController {
     func initPageViewController() {
         guard let firstPage = pageViewControllerList.first else { return }
         setViewControllers([firstPage], direction: .forward, animated: true)
+        self.dataSource = self
+        self.delegate = self
+    }
+}
+
+// MARK: - Delegate & Datasource
+
+extension OnBoardingPageViewController: UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        guard let nowViewController = pageViewController.viewControllers?.first else { return }
+        guard let previousViewController = previousViewControllers.first else { return }
+        guard let previousIndex = pageViewControllerList.firstIndex(of: previousViewController) else { return }
+        guard let currentIndex = pageViewControllerList.firstIndex(of: nowViewController) else { return }
+
+        if completed {
+            if previousIndex < currentIndex {
+                onBoardingViewModel
+                    .addPageIdx()
+            } else {
+                onBoardingViewModel
+                    .minusPageIdx()
+            }
+        }
+    }
+}
+
+extension OnBoardingPageViewController: UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else { return nil }
+        let previousIndex = viewControllerIndex - 1
+        guard previousIndex >= 0 else { return nil }
+        
+        return pageViewControllerList[previousIndex]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: viewController) else { return nil }
+        let afterIndex = viewControllerIndex + 1
+        guard afterIndex < pageViewControllerList.count else { return nil }
+        
+        return pageViewControllerList[afterIndex]
     }
 }
 

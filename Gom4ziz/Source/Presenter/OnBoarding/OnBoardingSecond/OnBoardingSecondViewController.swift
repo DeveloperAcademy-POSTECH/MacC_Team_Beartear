@@ -9,6 +9,9 @@ import UIKit
 
 final class OnBoardingSecondViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
 
 #if DEBUG
