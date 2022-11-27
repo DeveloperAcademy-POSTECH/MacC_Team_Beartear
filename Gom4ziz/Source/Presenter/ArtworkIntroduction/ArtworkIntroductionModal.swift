@@ -189,8 +189,7 @@ private extension ArtworkIntroductionModal {
 
     func setUpArtistLabel() {
         artistLabel.text = artwork.artist
-        // TODO: Gray3 으로 변경해야함
-        artistLabel.textStyle(.Body2, .gray2)
+        artistLabel.textStyle(.Body2, .gray3)
     }
 
     func setUpKeyboardObserver() {

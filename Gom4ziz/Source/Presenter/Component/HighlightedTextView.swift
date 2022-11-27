@@ -289,7 +289,6 @@ private extension HighlightedTextView {
     }
 
     func setUpTextView() {
-        textView.font = .systemFont(ofSize: 18, weight: .light)
         textView.text = text
         textView.isEditable = false
         textView.isScrollEnabled = false
@@ -298,6 +297,7 @@ private extension HighlightedTextView {
         textView.backgroundColor = .clear
         textView.textContainer.lineFragmentPadding = 0
         textView.textContainerInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        textView.textStyle(.Body1, .gray4)
         textView.linkTextAttributes = [
             .backgroundColor: highlightColor,
             .foregroundColor: highlightTextColor
