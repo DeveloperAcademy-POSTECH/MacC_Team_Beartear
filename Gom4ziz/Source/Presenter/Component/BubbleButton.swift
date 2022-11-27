@@ -38,7 +38,9 @@ private extension BubbleButton {
 
     func setUpUI(text: String) {
         var configuration: Configuration = .filled()
-        configuration.title = text
+        var attributedString: AttributedString = AttributedString(stringLiteral: text)
+        attributedString.font = .systemFont(ofSize: 16, weight: .regular)
+        configuration.attributedTitle = attributedString
         configuration.background.backgroundColor = .gray4
         self.configuration = configuration
     }

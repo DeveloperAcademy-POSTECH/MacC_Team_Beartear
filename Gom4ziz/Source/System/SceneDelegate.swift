@@ -51,10 +51,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let url = URLContexts.first?.url else {
-            return
-        }
-        print(URLContexts)
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -130,8 +130,8 @@ private extension QuestionView {
 
     func setUpQuestionNumberLabel() {
         questionNumberLabel.text = "\(artwork.id)번째 티라미술"
-        questionNumberLabel.font = .systemFont(ofSize: 14, weight: .bold)
         questionNumberLabel.textColor = .white
+        questionNumberLabel.textStyle(.Caption, .white)
     }
 
     func setUpQuestionLabel() {
@@ -140,7 +140,7 @@ private extension QuestionView {
         questionLabel.textColor = .white
         questionLabel.numberOfLines = 0
         questionLabel.lineBreakMode = .byWordWrapping
-        questionLabel.font = .systemFont(ofSize: 22, weight: .bold)
+        questionLabel.textStyle(.Display3, lineHeightMultiple: 1.26, alignment: .center, .white)
     }
 
     func setUpQuestionImageView() {

@@ -66,7 +66,7 @@ private extension PlaceholderTextView {
     func setUpConstraints() {
         placeholder.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            placeholder.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            placeholder.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             placeholder.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
         ])
     }
@@ -79,13 +79,13 @@ private extension PlaceholderTextView {
     func setUpTextView() {
         layer.borderColor = UIColor.gray2.cgColor
         layer.borderWidth = 1
-        font = .systemFont(ofSize: 16, weight: .medium)
-        textContainerInset = .init(top: 12, left: 7, bottom: 0, right: 0)
+        textContainerInset = .init(top: 0, left: 8, bottom: 0, right: 0)
+        textStyle(.Body1, .gray4)
     }
 
     func setUpPlaceholder() {
         placeholder.textColor = .gray
-        placeholder.font = .systemFont(ofSize: 16, weight: .medium)
+        placeholder.textStyle(.Body1, .gray3)
     }
 
 }
@@ -111,7 +111,7 @@ struct PlaceholderTextViewPreview: PreviewProvider {
         Group {
             PlaceholderTextView(
                 placeholder: "플레이스홀더입니다.",
-                text: "텍스트입니다."
+                text: "플레이스홀더아닙니다."
             )
             .toPreview()
             .padding()

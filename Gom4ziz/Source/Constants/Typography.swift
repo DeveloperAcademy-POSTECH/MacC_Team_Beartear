@@ -23,7 +23,7 @@ enum Typohgraphy {
 }
 
 extension Typohgraphy {
-    var toValue: (CGFloat, CGFloat, UIFont.Weight) {
+    var toValue: (fontSize: CGFloat, lineHieightMultiple: CGFloat, UIFont.Weight) {
         switch self {
         case .Display1: return (28, 1.5, .bold)
         case .Display2: return (24, 1.5, .bold)
@@ -32,7 +32,7 @@ extension Typohgraphy {
         case .Headline1: return (17, 1.4, .bold)
         case .Headline2: return (16, 1.2, .heavy)
         case .SubHeadline: return (16, 1.2, .medium)
-        case .Body1: return (18, 1.8, .light)
+        case .Body1: return (18, 1.5, .light)
         case .Body2: return (14, 1.5, .light)
         case .Caption: return (14, 1.5, .bold)
         case .NavigationTitle: return (16, 1.5, .semibold)
