@@ -19,7 +19,7 @@ final class OnBoardingButton: UIButton {
     }
 }
 
-private extension OnBoardingButton {
+extension OnBoardingButton {
     
     func setUpUI(text: String) {
         var configuration = UIButton.Configuration.filled()

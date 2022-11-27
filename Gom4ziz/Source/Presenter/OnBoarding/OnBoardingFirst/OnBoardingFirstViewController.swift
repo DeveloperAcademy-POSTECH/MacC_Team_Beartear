@@ -9,6 +9,9 @@ import UIKit
 
 final class OnBoardingFirstViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
 
 #if DEBUG

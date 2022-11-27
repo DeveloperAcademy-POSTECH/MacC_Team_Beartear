@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+
 final class OnBoardingViewController: UIViewController {
     
     private let pageViewControllerList = [
@@ -14,26 +16,49 @@ final class OnBoardingViewController: UIViewController {
         OnBoardingSecondViewController(),
         OnBoardingThirdViewController()
     ]
+    private let onBoardingViewModel: OnBoardingViewModel = OnBoardingViewModel.shared
     private lazy var pageViewController = OnBoardingPageViewController(viewControllerList: pageViewControllerList)
     private let onBoardingButton = OnBoardingButton(text: "다음으로")
+    private let disposeBag: DisposeBag = .init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
         setUpConstraints()
-        initPageViewController()
+        setObservers()
     }
 }
 
 private extension OnBoardingViewController {
     
     func setObservers() {
+        onBoardingViewModel
+            .currentPageIdx
+            .map {
+                return $0 == self.pageViewControllerList.count - 1 ? "시작하기" : "다음으로"
+            }
+            .subscribe(onNext: { [weak self] in
+                self?.onBoardingButton.setUpUI(text: $0)
+            })
+            .disposed(by: disposeBag)
         
+        onBoardingButton
+            .rx
+            .tap
+            .bind {
+                self.goNextPage()
+            }
+            .disposed(by: disposeBag)
     }
     
-    func initPageViewController() {
-        pageViewController.delegate = self
-        pageViewController.dataSource = self
+    func goNextPage() {
+        let currentIdx = onBoardingViewModel.currentPageIdx.value
+        guard let currentViewController = pageViewController.viewControllers?[0] else { return }
+        guard let nextPage = pageViewController.dataSource?.pageViewController(pageViewController, viewControllerAfter: currentViewController) else { return }
+        pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
+        onBoardingViewModel
+            .currentPageIdx
+            .accept(currentIdx + 1)
     }
 }
 
@@ -65,8 +90,8 @@ private extension OnBoardingViewController {
         NSLayoutConstraint.activate([
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: onBoardingButton.topAnchor)
+            pageViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            pageViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         
     }
@@ -79,30 +104,6 @@ private extension OnBoardingViewController {
             onBoardingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             onBoardingButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-    }
-}
-
-// MARK: - Delegate & Datasource
-
-extension OnBoardingViewController: UIPageViewControllerDelegate {
-    
-}
-
-extension OnBoardingViewController: UIPageViewControllerDataSource {
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: pageViewController) else { return nil }
-        let previousIndex = viewControllerIndex - 1
-        guard previousIndex >= 0 else { return nil }
-        
-        return pageViewControllerList[previousIndex]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let viewControllerIndex = pageViewControllerList.firstIndex(of: pageViewController) else { return nil }
-        let afterIndex = viewControllerIndex + 1
-        guard afterIndex < pageViewControllerList.count else { return nil }
-        
-        return pageViewControllerList[afterIndex]
     }
 }
 
