@@ -12,10 +12,9 @@ import RxSwift
 
 final class QuestionAnswerView: BaseAutoLayoutUIView {
 
-    private let divider: UIView = UIView()
     private let artwork: Artwork
     private let questionView: QuestionView
-    private let myThinkLabel: UILabel = UILabel()
+    private let myThinkLabel: SectionTitleView = SectionTitleView(title: "나의 생각")
     private let disposeBag: DisposeBag = .init()
     let answerInputTextView: PlaceholderTextView = .init(placeholder: "내용을 입력하세요")
 
@@ -35,7 +34,6 @@ final class QuestionAnswerView: BaseAutoLayoutUIView {
 extension QuestionAnswerView {
 
     func addSubviews() {
-        addSubview(divider)
         addSubview(questionView)
         addSubview(myThinkLabel)
         addSubview(answerInputTextView)
@@ -53,44 +51,26 @@ extension QuestionAnswerView {
         myThinkLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             myThinkLabel.leftAnchor.constraint(equalTo: questionView.leftAnchor),
-            myThinkLabel.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 20)
-        ])
-
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            divider.leftAnchor.constraint(equalTo: questionView.leftAnchor),
-            divider.rightAnchor.constraint(equalTo: questionView.rightAnchor),
-            divider.topAnchor.constraint(equalTo: myThinkLabel.bottomAnchor, constant: 8),
-            divider.heightAnchor.constraint(equalToConstant: 2),
+            myThinkLabel.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 20),
+            myThinkLabel.rightAnchor.constraint(equalTo: questionView.rightAnchor)
         ])
 
         answerInputTextView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             answerInputTextView.leftAnchor.constraint(equalTo: questionView.leftAnchor),
             answerInputTextView.rightAnchor.constraint(equalTo: questionView.rightAnchor),
-            answerInputTextView.topAnchor.constraint(equalTo: divider.bottomAnchor, constant: 20),
+            answerInputTextView.topAnchor.constraint(equalTo: myThinkLabel.bottomAnchor, constant: 20),
             answerInputTextView.bottomAnchor.constraint(equalTo: keyboardLayoutGuide.topAnchor, constant: -16)
         ])
     }
 
     func setUpUI() {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(sender:))))
-        setUpDivider()
-        setUpMyThinkLabel()
     }
 
 }
 
 private extension QuestionAnswerView {
-
-    func setUpDivider() {
-        divider.backgroundColor = .black
-    }
-
-    func setUpMyThinkLabel() {
-        myThinkLabel.text = "나의 생각"
-        myThinkLabel.font = .systemFont(ofSize: 15, weight: .black)
-    }
 
     /// 유저가 화면을 탭할 경우, 키보드를 숨깁니다.
     /// - Parameter sender: 제스쳐 식별기
