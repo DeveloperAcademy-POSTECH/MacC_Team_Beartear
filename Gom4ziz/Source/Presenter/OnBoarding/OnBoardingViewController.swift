@@ -91,7 +91,7 @@ private extension OnBoardingViewController {
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            pageViewController.view.bottomAnchor.constraint(equalTo: onBoardingButton.topAnchor)
         ])
         
     }
@@ -116,4 +116,3 @@ struct OnBoardingViewControllerPreview: PreviewProvider {
     }
 }
 #endif
-
