@@ -11,6 +11,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private let artwork: Artwork
     private let artworkDescription: ArtworkDescription
+    private let questionAnswer: QuestionAnswer
     private let artworkReview: ArtworkReview
     private let questionAnswer: QuestionAnswer
     private let highlights: [Highlight]
@@ -120,18 +121,11 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var artworkDesciptionSectionTitleView: SectionTitleView = .init(title: "작품 소개")
     
-    private lazy var artworkDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text = artworkDescription.content
-        label.numberOfLines = 0
-        label.textStyle(.Body1, .blackFont)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: artworkDescription.content, highlights: highlights, isEditable: false, isExpandable: false)
     
     private lazy var artworkDescriptionStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [artworkDesciptionSectionTitleView,
-                                                       artworkDescriptionLabel])
+                                                       highlightTextView])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -179,11 +173,13 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     init(artwork: Artwork,
          artworkDescription: ArtworkDescription,
+         questionAnswer: QuestionAnswer,
          artworkReview: ArtworkReview,
          questionAnswer: QuestionAnswer,
          highlights: [Highlight]) {
         self.artwork = artwork
         self.artworkDescription = artworkDescription
+        self.questionAnswer = questionAnswer
         self.artworkReview = artworkReview
         self.questionAnswer = questionAnswer
         self.highlights = highlights
@@ -211,10 +207,10 @@ extension MyFeedView {
             scrollView.leftAnchor.constraint(equalTo: leftAnchor),
             scrollView.rightAnchor.constraint(equalTo: rightAnchor),
             
-            myFeedStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            myFeedStackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            myFeedStackView.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor),
-            myFeedStackView.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor),
+            myFeedStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            myFeedStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            myFeedStackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+            myFeedStackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
             myFeedStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 
             feedStackView.topAnchor.constraint(equalTo: myFeedStackView.topAnchor, constant: 12),
@@ -226,7 +222,7 @@ extension MyFeedView {
             artworkStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor),
             artworkStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor),
             artworkImageView.widthAnchor.constraint(equalTo: myFeedStackView.widthAnchor),
-           
+
             artworkDescriptionStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
             artworkDescriptionStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
             

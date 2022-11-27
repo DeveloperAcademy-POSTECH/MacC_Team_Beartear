@@ -90,6 +90,8 @@ extension HighlightedTextView {
                 toggleButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 4),
                 toggleButton.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
+        } else {
+            NSLayoutConstraint.activate([textView.bottomAnchor.constraint(equalTo: bottomAnchor)])
         }
     }
 
@@ -343,7 +345,7 @@ struct HighlightedTextViewPreview: PreviewProvider {
             .padding()
             .previewDisplayName("확장 안되는 텍스트뷰")
 
-        HighlightedTextView(text: String(String.lorenIpsum.dropLast(600)), isEditable: false)
+        HighlightedTextView(text: String(String.lorenIpsum.dropLast(600)), highlights: Highlight.mockData, isEditable: false)
             .toPreview()
             .padding()
             .previewDisplayName("편집 안되는 텍스트뷰")

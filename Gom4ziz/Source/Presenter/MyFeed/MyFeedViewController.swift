@@ -19,11 +19,15 @@ final class MyFeedViewController: UIViewController {
     private let disposebag: DisposeBag = .init()
     
     override func loadView() {
-        super.loadView()
+        self.view = myFeedView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSLayoutConstraint.activate([
+            
+        ])
     }
     
     override func viewDidAppear(_ animated: Bool) {
