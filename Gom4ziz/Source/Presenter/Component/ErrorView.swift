@@ -9,9 +9,11 @@ import UIKit
 
 final class ErrorView: BaseAutoLayoutUIView {
     
-    enum ButtonSize: CGFloat {
-        case width = 154
-        case height = 48
+    private enum Size {
+        static let messageStackViewSpcing: CGFloat = 4
+        static let errorStackViewSpcing: CGFloat = 20
+        static let buttonWidth: CGFloat = 154
+        static let buttonHeight: CGFloat = 48
     }
     
     private let message: ErrorViewMessage
@@ -46,7 +48,7 @@ final class ErrorView: BaseAutoLayoutUIView {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 4
+        stackView.spacing = Size.messageStackViewSpcing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -70,7 +72,7 @@ final class ErrorView: BaseAutoLayoutUIView {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = Size.errorStackViewSpcing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -98,8 +100,8 @@ extension ErrorView {
             errorStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             errorStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             
-            retryButton.widthAnchor.constraint(equalToConstant: ButtonSize.width.rawValue),
-            retryButton.heightAnchor.constraint(equalToConstant: ButtonSize.height.rawValue)
+            retryButton.widthAnchor.constraint(equalToConstant: Size.buttonWidth),
+            retryButton.heightAnchor.constraint(equalToConstant: Size.buttonHeight)
         ])
     }
     
