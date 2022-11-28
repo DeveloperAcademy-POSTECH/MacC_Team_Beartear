@@ -23,10 +23,10 @@ enum Typohgraphy {
 }
 
 extension Typohgraphy {
-    var toValue: (fontSize: CGFloat, lineHieightMultiple: CGFloat, UIFont.Weight) {
+    var toValue: (fontSize: CGFloat, lineHeightMultiple: CGFloat, UIFont.Weight) {
         switch self {
         case .Display1: return (28, 1.5, .bold)
-        case .Display2: return (24, 1.5, .bold)
+        case .Display2: return (24, 1.2, .bold)
         case .Display3: return (22, 1.5, .bold)
         case .Title: return (20, 1.2, .bold)
         case .Headline1: return (17, 1.4, .bold)
