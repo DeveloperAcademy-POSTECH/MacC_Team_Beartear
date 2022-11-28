@@ -13,7 +13,6 @@ final class MyFeedView: BaseAutoLayoutUIView {
     private let artworkDescription: ArtworkDescription
     private let questionAnswer: QuestionAnswer
     private let artworkReview: ArtworkReview
-    private let questionAnswer: QuestionAnswer
     private let highlights: [Highlight]
     
     // MARK: - UI Component
@@ -175,13 +174,11 @@ final class MyFeedView: BaseAutoLayoutUIView {
          artworkDescription: ArtworkDescription,
          questionAnswer: QuestionAnswer,
          artworkReview: ArtworkReview,
-         questionAnswer: QuestionAnswer,
          highlights: [Highlight]) {
         self.artwork = artwork
         self.artworkDescription = artworkDescription
         self.questionAnswer = questionAnswer
         self.artworkReview = artworkReview
-        self.questionAnswer = questionAnswer
         self.highlights = highlights
         super.init(frame: .zero)
         self.backgroundColor = .white
@@ -242,7 +239,7 @@ extension MyFeedView {
 import SwiftUI
 struct MyFeedViewPreview: PreviewProvider {
     static var previews: some View {
-        MyFeedView(artwork: .mockData, artworkDescription: .mockData, artworkReview: .mockData, questionAnswer: .mockData, highlights: []).toPreview()
+        MyFeedView(artwork: .mockData, artworkDescription: .mockData, questionAnswer: .mockData, artworkReview: .mockData, highlights: []).toPreview()
     }
 }
 #endif
