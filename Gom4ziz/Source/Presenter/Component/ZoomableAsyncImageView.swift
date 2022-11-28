@@ -31,10 +31,10 @@ final class ZoomableAsyncImageView: UIScrollView {
     private func setUpUI() {
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-        minimumZoomScale = 0.5
-        maximumZoomScale = 2
-        alwaysBounceVertical = false
-        alwaysBounceHorizontal = false
+        minimumZoomScale = 1
+        maximumZoomScale = 3
+        alwaysBounceVertical = true
+        alwaysBounceHorizontal = true
         delegate = self
     }
 
@@ -50,6 +50,14 @@ final class ZoomableAsyncImageView: UIScrollView {
 extension ZoomableAsyncImageView: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         self.asyncImageView
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if zoomScale > 3 {
+            zoomScale = 3
+        } else if zoomScale < 1 {
+            zoomScale = 1
+        }
     }
 }
 

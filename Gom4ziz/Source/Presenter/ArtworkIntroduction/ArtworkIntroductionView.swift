@@ -9,14 +9,14 @@ import UIKit
 
 final class ArtworkIntroductionView: BaseAutoLayoutUIView {
 
-    private let artworkImage: AsyncImageView
+    private let artworkImage: ZoomableAsyncImageView
     private let artworkModal: ArtworkIntroductionModal
 
     init(
         _ artwork: Artwork,
         _ artworkDescription: ArtworkDescription
     ) {
-        artworkImage = AsyncImageView(url: artwork.imageUrl, contentMode: .scaleAspectFill)
+        artworkImage = ZoomableAsyncImageView(url: artwork.imageUrl, contentMode: .scaleAspectFill)
         artworkModal = ArtworkIntroductionModal(artwork: artwork, descrption: artworkDescription)
         super.init(frame: .zero)
     }
