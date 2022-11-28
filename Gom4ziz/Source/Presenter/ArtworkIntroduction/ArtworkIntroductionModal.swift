@@ -35,6 +35,7 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
         self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content)
         super.init(frame: .zero)
         setUpPanGestureRecognizer()
+        scrollView.delegate = self
     }
 
     required init?(coder: NSCoder) {
@@ -169,6 +170,18 @@ private extension ArtworkIntroductionModal {
             myReviewTextView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             myReviewTextView.heightAnchor.constraint(equalToConstant: 140)
         ])
+    }
+}
+
+// MARK: - ScrollView Delegate
+extension ArtworkIntroductionModal: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 만약 scrollView를 위쪽으로 계속 스크롤하면, 모달을 닫는다!
+        guard scrollView.contentOffset.y < -100 else {
+            return
+        }
+        hideModal()
     }
 }
 
