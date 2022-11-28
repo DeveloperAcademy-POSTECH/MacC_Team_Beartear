@@ -99,7 +99,7 @@ private extension ArtworkIntroductionModal {
         NSLayoutConstraint.activate([
             modalIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
             modalIndicator.widthAnchor.constraint(equalTo: widthAnchor),
-            modalIndicator.heightAnchor.constraint(equalToConstant: 20),
+            modalIndicator.heightAnchor.constraint(equalToConstant: 40),
             modalIndicator.topAnchor.constraint(equalTo: topAnchor)
         ])
     }
@@ -107,7 +107,7 @@ private extension ArtworkIntroductionModal {
     func setUpScrollViewConstraints() {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: modalIndicator.bottomAnchor, constant: 8).withPriority(.required),
+            scrollView.topAnchor.constraint(equalTo: modalIndicator.bottomAnchor),
             scrollView.leftAnchor.constraint(equalTo: leftAnchor),
             scrollView.rightAnchor.constraint(equalTo: rightAnchor),
             scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -118,7 +118,7 @@ private extension ArtworkIntroductionModal {
     func setUpArtworkNameLabelConstraints() {
         artworkNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            artworkNameLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
+            artworkNameLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             artworkNameLabel.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor)
         ])
     }
@@ -261,7 +261,7 @@ private extension ArtworkIntroductionModal {
 private extension ArtworkIntroductionModal {
 
     func setUpPanGestureRecognizer() {
-        modalIndicator.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onDrag(gestureRecognizer: ))))
+        addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onDrag(gestureRecognizer: ))))
     }
 
     @objc func onDrag(gestureRecognizer: UIPanGestureRecognizer) {
