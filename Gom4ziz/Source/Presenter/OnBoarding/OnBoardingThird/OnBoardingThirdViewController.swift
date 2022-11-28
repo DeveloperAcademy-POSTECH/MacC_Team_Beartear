@@ -7,8 +7,12 @@
 
 import UIKit
 
-final class OnBoardingThirdViewController : UIViewController {
+final class OnBoardingThirdViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .blue
+    }
 }
 
 #if DEBUG
@@ -20,5 +24,3 @@ struct OnBoardingThirdViewControllerPreview: PreviewProvider {
     }
 }
 #endif
-
-
