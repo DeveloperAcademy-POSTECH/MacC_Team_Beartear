@@ -7,11 +7,10 @@
 
 import Foundation
 
-import RxCocoa
+import RxRelay
 
 final class OnBoardingViewModel {
-    
-    static let shared: OnBoardingViewModel = .init()
+
     let currentPageIdx: BehaviorRelay<Int> = .init(value: 0)
     
     func addPageIdx() {

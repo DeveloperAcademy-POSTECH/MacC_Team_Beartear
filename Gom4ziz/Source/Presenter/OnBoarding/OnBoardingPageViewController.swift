@@ -10,10 +10,11 @@ import UIKit
 final class OnBoardingPageViewController: UIPageViewController {
     
     private let pageViewControllerList: [UIViewController]
-    private let onBoardingViewModel: OnBoardingViewModel = OnBoardingViewModel.shared
+    private let onBoardingViewModel: OnBoardingViewModel
 
-    init(viewControllerList: [UIViewController]) {
+    init(viewControllerList: [UIViewController], onBoardingViewModel: OnBoardingViewModel) {
         self.pageViewControllerList = viewControllerList
+        self.onBoardingViewModel = onBoardingViewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
     }
     
@@ -80,7 +81,7 @@ extension OnBoardingPageViewController: UIPageViewControllerDataSource {
 import SwiftUI
 struct OnBoardingPageViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        UINavigationController(rootViewController: OnBoardingPageViewController(viewControllerList: [OnBoardingFirstViewController()]))
+        UINavigationController(rootViewController: OnBoardingPageViewController(viewControllerList: [OnBoardingFirstViewController()], onBoardingViewModel: OnBoardingViewModel()))
             .toPreview()
     }
 }
