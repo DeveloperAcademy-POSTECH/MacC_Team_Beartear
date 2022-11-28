@@ -10,11 +10,22 @@ import RxRelay
 
 final class QuestionAnswerViewModel {
     let artwork: Artwork
-    var myAnswer: String
+    let artworkDescription: BehaviorRelay<Loadable<ArtworkDescription>> = .init(value: .notRequested)
+    var myAnswer: String = ""
 
     init(of artwork: Artwork) {
         self.artwork = artwork
-        self.myAnswer = ""
     }
+
+    // 디버그용 생성자
+    #if DEBUG
+    init(
+        of artwork: Artwork = .mockData,
+        artworkDescription: ArtworkDescription = .mockData
+    ) {
+        self.artwork = artwork
+        self.artworkDescription.accept(.loaded(artworkDescription))
+    }
+    #endif
 
 }

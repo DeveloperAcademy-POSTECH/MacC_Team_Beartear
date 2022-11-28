@@ -20,6 +20,11 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private let artworkDescriptionTextView: HighlightedTextView
     private let myReviewLabel: SectionTitleView = SectionTitleView(title: "나의 감상")
     private let myReviewTextView: PlaceholderTextView = PlaceholderTextView(placeholder: "작품을 보고 어떤 생각을 했나요?")
+    private var topDivider: CALayer?
+    private var startY: CGFloat?
+    private var bottomY: CGFloat!
+    private let contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
+    private var isInitiated: Bool = false
 
     init(
         artwork: Artwork,
@@ -29,10 +34,23 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
         self.artworkDescription = descrption
         self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content)
         super.init(frame: .zero)
+        setUpPanGestureRecognizer()
     }
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+    // 첫 사이즈가 정해질 때, 각종 위치설정들을 정의함
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if !isInitiated {
+            guard let superview else { return }
+            isInitiated = true
+            frame = CGRect(x: superview.bounds.minX, y: superview.bounds.height - 160, width: superview.bounds.width, height: superview.bounds.height)
+            bottomY = superview.bounds.height - 160
+            hideModal()
+        }
     }
 }
 
@@ -80,9 +98,9 @@ private extension ArtworkIntroductionModal {
         modalIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             modalIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
-            modalIndicator.widthAnchor.constraint(equalToConstant: 44),
-            modalIndicator.heightAnchor.constraint(equalToConstant: 4),
-            modalIndicator.topAnchor.constraint(equalTo: topAnchor, constant: 8)
+            modalIndicator.widthAnchor.constraint(equalTo: widthAnchor),
+            modalIndicator.heightAnchor.constraint(equalToConstant: 20),
+            modalIndicator.topAnchor.constraint(equalTo: topAnchor)
         ])
     }
 
@@ -157,8 +175,24 @@ private extension ArtworkIntroductionModal {
 // MARK: - UI 설정
 private extension ArtworkIntroductionModal {
 
+    func addTopDivider() {
+        topDivider = CALayer()
+        topDivider!.backgroundColor = UIColor.gray2.cgColor
+        topDivider!.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
+        layer.addSublayer(topDivider!)
+    }
+
+    func removeTopDivider() {
+        topDivider?.removeFromSuperlayer()
+        topDivider = nil
+    }
+
     func setUpSelf() {
         backgroundColor = .white
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.05
+        layer.shadowRadius = 1
+        layer.shadowOffset = CGSize(width: 0, height: -1)
         artworkDescriptionTextView.onToggled = { [unowned self] in
             self.artworkDescriptionTextView.setNeedsUpdateConstraints()
             self.myReviewLabel.setNeedsUpdateConstraints()
@@ -170,9 +204,12 @@ private extension ArtworkIntroductionModal {
     }
 
     func setUpModalIndicator() {
-        modalIndicator.backgroundColor = .gray2
-        modalIndicator.layer.cornerRadius = 2
-        modalIndicator.clipsToBounds = true
+        let layer: CALayer = CALayer()
+        layer.frame = CGRect(x: UIScreen.main.bounds.width / 2 - 22, y: 8, width: 44, height: 4)
+        layer.cornerRadius = 2
+        layer.masksToBounds = true
+        layer.backgroundColor = UIColor.gray2.cgColor
+        modalIndicator.layer.addSublayer(layer)
     }
 
     func setUpArtworkNameLabel() {
@@ -184,7 +221,7 @@ private extension ArtworkIntroductionModal {
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = true
         scrollView.indicatorStyle = .black
-        scrollView.contentInset = .init(top: 0, left: 16, bottom: 16, right: -16)
+        scrollView.contentInset = contentInset
     }
 
     func setUpArtistLabel() {
@@ -203,7 +240,6 @@ private extension ArtworkIntroductionModal {
                 let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
                     return
             }
-
             let contentInset = UIEdgeInsets(
                 top: 0.0,
                 left: 16,
@@ -215,10 +251,102 @@ private extension ArtworkIntroductionModal {
     }
 
     @objc func keyboardWillHide() {
-        let contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
+        let contentInset = contentInset
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = .zero
     }
+}
+
+// MARK: - 제스쳐 인식기 설정
+private extension ArtworkIntroductionModal {
+
+    func setUpPanGestureRecognizer() {
+        modalIndicator.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(onDrag(gestureRecognizer: ))))
+    }
+
+    @objc func onDrag(gestureRecognizer: UIPanGestureRecognizer) {
+        guard let superView = gestureRecognizer.view else { return }
+
+        // 먼저 드래그 제스처가 시작될 때 시작 y 포지션을 정해준다.
+        if startY == nil {
+            startY = frame.minY
+        }
+
+        let translation: CGPoint = gestureRecognizer.translation(in: superView)
+        switch gestureRecognizer.state {
+        case .changed:
+            onDragChanged(superView, translation)
+        case .ended:
+            let velocity = gestureRecognizer.velocity(in: superView)
+            onDragFinished(velocity, superView, translation)
+        default:
+            break
+        }
+    }
+
+    // 애니메이션이 끝난 경우
+    func onDragChanged(_ superView: UIView, _ translation: CGPoint) {
+        guard let startY else { return }
+        // 최종적으로 이동할 위치
+        let targetY: CGFloat = startY + translation.y
+
+        // 최종적으로 이동할 위치가, 화면 범위밖이면 이동하지 않는다
+        guard targetY <= bottomY && targetY >= 0 else { return }
+        UIView.animate(withDuration: 0.2, delay: 0.02, options: .curveEaseInOut) { [self] in
+            frame = CGRect(x: 0, y: startY + translation.y, width: frame.width, height: frame.height)
+        }
+    }
+
+    func onDragFinished(_ velocity: CGPoint, _ superView: UIView, _ tranlsation: CGPoint) {
+
+        // 드래그 제스처가 종료되면, 시작 포지션을 초기화해준다.
+        defer {
+            startY = nil
+        }
+        // 만약 아래로 보내는 힘이 100 이상이면 모달을 숨겨준다!
+        guard velocity.y < 100 else {
+            hideModal()
+            return
+        }
+
+        // 만약 위로 보내는 힘이 100 이상이면 모달을 보여준다!
+        guard velocity.y > -100 else {
+            showModal()
+            return
+        }
+
+        guard let _startY = startY else { return }
+        // 타겟의 최종 위치
+        let targetY: CGFloat = _startY + tranlsation.y
+
+        // 만약 최종 위치가 100보다 아래있으면, 모달을 보여준다.
+        if targetY < 100 {
+            showModal()
+        } else {
+            hideModal()
+        }
+    }
+
+    func hideModal() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) { [self] in
+            frame = CGRect(x: frame.minX, y: bottomY, width: frame.width, height: frame.height)
+            layer.cornerRadius = 16
+            layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            scrollView.isUserInteractionEnabled = false
+            removeTopDivider()
+        }
+        _ = myReviewTextView.resignFirstResponder()
+    }
+
+    func showModal() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) { [self] in
+            frame = CGRect(x: frame.minX, y: 0, width: frame.width, height: frame.height)
+            layer.cornerRadius = 0
+            scrollView.isUserInteractionEnabled = true
+            addTopDivider()
+        }
+    }
+
 }
 
 // MARK: - 프리뷰
