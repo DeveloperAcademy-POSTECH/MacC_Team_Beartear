@@ -35,7 +35,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return label
     }()
     
-    private lazy var questionAnswerLabel: UILabel = {
+    lazy var questionAnswerLabel: UILabel = {
         let label = UILabel()
         label.text = questionAnswer.questionAnswer
         label.numberOfLines = 0
@@ -68,15 +68,9 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     // 작품 정보
     
-    private lazy var artworkImageView: UIImageView = {
-        let imageView = UIImageView()
-        // TODO: 이미지 불러오기
-//        imageView.image = UIImage(named: artwork.imageUrl)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    private let artworkImageView: AsyncImageView
     
-    private lazy var artworkTitleLabel: UILabel = {
+    lazy var artworkTitleLabel: UILabel = {
         let label = UILabel()
         label.text = artwork.title
         label.numberOfLines = 0
@@ -85,7 +79,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return label
     }()
     
-    private lazy var artworkArtistLabel: UILabel = {
+    lazy var artworkArtistLabel: UILabel = {
         let label = UILabel()
         label.text = artwork.artist
         label.numberOfLines = 0
@@ -120,7 +114,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var artworkDesciptionSectionTitleView: SectionTitleView = .init(title: "작품 소개")
     
-    private lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: artworkDescription.content, highlights: highlights, isEditable: false, isExpandable: false)
+    lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: artworkDescription.content, highlights: highlights, isEditable: false, isExpandable: false)
     
     private lazy var artworkDescriptionStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [artworkDesciptionSectionTitleView,
@@ -137,7 +131,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var reviewSectionTitleView: SectionTitleView = .init(title: "나의 감상")
     
-    private lazy var reviewLabel: UILabel = {
+    lazy var reviewLabel: UILabel = {
         let label = UILabel()
         label.text = artworkReview.review
         label.numberOfLines = 0
@@ -180,6 +174,13 @@ final class MyFeedView: BaseAutoLayoutUIView {
         self.questionAnswer = questionAnswer
         self.artworkReview = artworkReview
         self.highlights = highlights
+        artworkImageView = AsyncImageView(
+            url: artwork.imageUrl,
+            contentMode: .scaleAspectFill,
+            filterOptions: [
+                .contrast(1.2),
+                .exposure(0.3)
+            ])
         super.init(frame: .zero)
         self.backgroundColor = .white
     }
@@ -230,7 +231,7 @@ extension MyFeedView {
     }
     
     func setUpUI() {
-        
+
     }
     
 }
