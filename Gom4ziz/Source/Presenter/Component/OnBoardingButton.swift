@@ -23,11 +23,7 @@ extension OnBoardingButton {
     
     func setUpUI(text: String) {
         var configuration = UIButton.Configuration.filled()
-        let font: UIFont = .systemFont(ofSize: 17, weight: .bold)
-        let attributes: AttributeContainer = .init([
-            .font: font,
-            .foregroundColor: UIColor.white
-        ])
+        let attributes = textStyleAttributes(.Headline1, .white)
         configuration.attributedTitle = AttributedString(text, attributes: attributes)
         configuration.background.backgroundColor = .gray4
         configuration.baseForegroundColor = .white

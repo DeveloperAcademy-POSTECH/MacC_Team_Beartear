@@ -16,8 +16,11 @@ final class OnBoardingViewController: UIViewController {
         OnBoardingSecondViewController(),
         OnBoardingThirdViewController()
     ]
-    private let onBoardingViewModel: OnBoardingViewModel = OnBoardingViewModel.shared
-    private lazy var pageViewController = OnBoardingPageViewController(viewControllerList: pageViewControllerList)
+    private let onBoardingViewModel: OnBoardingViewModel = OnBoardingViewModel()
+    private lazy var pageViewController = OnBoardingPageViewController(
+        viewControllerList: pageViewControllerList,
+        onBoardingViewModel: onBoardingViewModel
+    )
     private let onBoardingButton = OnBoardingButton(text: "다음으로")
     private let disposeBag: DisposeBag = .init()
     

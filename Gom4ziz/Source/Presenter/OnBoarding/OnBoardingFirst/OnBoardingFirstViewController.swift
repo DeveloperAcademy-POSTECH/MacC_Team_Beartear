@@ -11,6 +11,7 @@ final class OnBoardingFirstViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .yellow
     }
 }
 
