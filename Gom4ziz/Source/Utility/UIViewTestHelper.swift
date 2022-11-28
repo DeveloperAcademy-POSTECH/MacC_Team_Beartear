@@ -52,6 +52,14 @@ extension SceneDelegate {
         changeRootViewController(vc)
     }
 
+    func testZoomableAsyncImageView() {
+        let vc = UIViewController()
+        let zoomable = ZoomableAsyncImageView(url: Artwork.mockData.imageUrl)
+        vc.view.addSubview(zoomable)
+        zoomable.frame = CGRect(x: 0, y: 100, width: 300, height: 300)
+        changeRootViewController(vc)
+    }
+
     func testArtworkIntroductionView() {
         let vc = ArtworkIntroductionViewController(QuestionAnswerViewModel())
         let rootVc = UINavigationController(rootViewController: vc)
