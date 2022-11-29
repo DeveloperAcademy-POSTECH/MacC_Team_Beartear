@@ -57,7 +57,7 @@ private extension OnBoardingViewController {
             .rx
             .tap
             .bind {
-                self.goNextPage()
+                self.goNextPageOrSignIn()
             }
             .disposed(by: disposeBag)
         
@@ -70,18 +70,21 @@ private extension OnBoardingViewController {
             .disposed(by: disposeBag)
     }
     
-    func goNextPage() {
+    func goNextPageOrSignIn() {
         let currentIdx = onBoardingViewModel.currentPageIdx.value
         guard let currentViewController = pageViewController.viewControllers?[0] else { return }
-        guard let nextPage = pageViewController.dataSource?.pageViewController(pageViewController, viewControllerAfter: currentViewController) else { return }
-        pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
-        onBoardingViewModel
-            .currentPageIdx
-            .accept(currentIdx + 1)
+        if let nextPage = pageViewController.dataSource?.pageViewController(pageViewController, viewControllerAfter: currentViewController) {
+            pageViewController.setViewControllers([nextPage], direction: .forward, animated: true)
+            onBoardingViewModel
+                .currentPageIdx
+                .accept(currentIdx + 1)
+        } else {
+            skipOnBoarding()
+        }
     }
     
     func skipOnBoarding() {
-        // 유저 서버에 등록 registerUser
+        // TODO: 유저 서버에 등록 registerUser
         userViewModel
             .fetchUser()
     }
@@ -178,10 +181,10 @@ private extension OnBoardingViewController {
     func setUpOnBoardingButtonConstraints() {
         onBoardingButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            onBoardingButton.heightAnchor.constraint(equalToConstant: 60),
+            
             onBoardingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             onBoardingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            onBoardingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            onBoardingButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }
