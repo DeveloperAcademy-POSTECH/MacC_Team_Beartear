@@ -27,6 +27,8 @@ extension OnBoardingButton {
         configuration.attributedTitle = AttributedString(text, attributes: attributes)
         configuration.background.backgroundColor = .gray4
         configuration.background.cornerRadius = 0
+        configuration.contentInsets.top = 17
+        configuration.contentInsets.bottom = 53
         self.configuration = configuration
     }
 }
