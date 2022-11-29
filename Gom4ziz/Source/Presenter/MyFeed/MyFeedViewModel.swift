@@ -10,14 +10,26 @@ import Foundation
 import RxCocoa
 import RxSwift
 
+struct MyFeedViewModelMapper {
+    let artworkDescription: String
+    let highlights: [Highlight]
+    let artworkReview: String
+    
+    init(artworkDescription: ArtworkDescription,
+         highlights: [Highlight],
+         artworkReview: ArtworkReview) {
+        self.artworkDescription = artworkDescription.content
+        self.highlights = highlights
+        self.artworkReview = artworkReview.review
+    }
+}
+
 final class MyFeedViewModel {
     
     private let fetchArtworkReviewUseCase: FetchArtworkReviewUseCase
     private let fetchArtworkDescriptionUseCase: FetchArtworkDescriptionUseCase
     private let fetchHighlightUseCase: FetchHighlightUseCase
-    let artworkReviewObservable: BehaviorRelay<Loadable<ArtworkReview>> = .init(value: .notRequested)
-    let artworkDescriptionObservable: BehaviorRelay<Loadable<ArtworkDescription>> = .init(value: .notRequested)
-    let highlightObservable: BehaviorRelay<Loadable<[Highlight]>> = .init(value: .notRequested)
+    let myFeedViewModelMapper: BehaviorRelay<Loadable<MyFeedViewModelMapper>> = .init(value: .notRequested)
     private let disposeBag: DisposeBag = .init()
     
     init(fetchArtworkReviewUseCase: FetchArtworkReviewUseCase,
@@ -28,40 +40,36 @@ final class MyFeedViewModel {
         self.fetchHighlightUseCase = fetchHighlightUseCase
     }
     
-    func fetchArtworkReview(of artworkId: Int, _ userId: String) {
-        artworkReviewObservable.accept(.isLoading(last: nil))
-        fetchArtworkReviewUseCase.fetchArtwokReview(of: artworkId, userId)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                self?.artworkReviewObservable.accept(.loaded($0))
-            }, onError: { [weak self] in
-                self?.artworkReviewObservable.accept(.failed($0))
-            })
-            .disposed(by: disposeBag)
+    func fetchMyFeed(artworkId: Int, userId: String) {
+        myFeedViewModelMapper.accept(.isLoading(last: nil))
+        Observable.zip(fetchArtworkDescription(of: artworkId),
+                       fetchHighlight(of: artworkId, userId),
+                       fetchArtworkReview(of: artworkId, userId))
+        .map { (description: ArtworkDescription, highlights: [Highlight], review: ArtworkReview) in
+            MyFeedViewModelMapper(artworkDescription: description,
+                                  highlights: highlights,
+                                  artworkReview: review)
+        }
+        .observe(on: MainScheduler.instance)
+        .subscribe { [weak self] in
+            self?.myFeedViewModelMapper.accept(.loaded($0))
+        } onError: { [weak self] in
+            self?.myFeedViewModelMapper.accept(.failed($0))
+        }
+        .disposed(by: disposeBag)
+
     }
     
-    func fetchArtworkDescription(of artworkId: Int) {
-        artworkDescriptionObservable.accept(.isLoading(last: nil))
+    private func fetchArtworkDescription(of artworkId: Int) -> Observable<ArtworkDescription> {
         fetchArtworkDescriptionUseCase.fetchArtworkDescription(of: artworkId)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                self?.artworkDescriptionObservable.accept(.loaded($0))
-            }, onError: { [weak self] in
-                self?.artworkDescriptionObservable.accept(.failed($0))
-            })
-            .disposed(by: disposeBag)
     }
     
-    func fetchHighlight(of artworkId: Int, _ userId: String) {
-        highlightObservable.accept(.isLoading(last: nil))
+    private func fetchHighlight(of artworkId: Int, _ userId: String) -> Observable<[Highlight]> {
         fetchHighlightUseCase.fetchHighlight(of: artworkId, userId)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                self?.highlightObservable.accept(.loaded($0))
-            }, onError: { [weak self] in
-                self?.highlightObservable.accept(.failed($0))
-            })
-            .disposed(by: disposeBag)
+    }
+    
+    private func fetchArtworkReview(of artworkId: Int, _ userId: String) -> Observable<ArtworkReview> {
+        fetchArtworkReviewUseCase.fetchArtwokReview(of: artworkId, userId)
     }
     
 }
