@@ -10,10 +10,7 @@ import UIKit
 final class MyFeedView: BaseAutoLayoutUIView {
     
     private let artwork: Artwork
-    private let artworkDescription: ArtworkDescription
     private let questionAnswer: QuestionAnswer
-    private let artworkReview: ArtworkReview
-    private let highlights: [Highlight]
     
     // MARK: - UI Component
     
@@ -24,8 +21,6 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     // N번째 티라미술
-    private lazy var feedSectionTitleView: SectionTitleView = .init(title: "\(artwork.id)번째 티라미술")
-    
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.text = artwork.question
@@ -35,7 +30,9 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return label
     }()
     
-    lazy var questionAnswerLabel: UILabel = {
+    private lazy var questionAnswerSectionTitleView = SectionTitleView(title: "나의 생각")
+    
+    private lazy var questionAnswerLabel: UILabel = {
         let label = UILabel()
         label.text = questionAnswer.questionAnswer
         label.numberOfLines = 0
@@ -45,32 +42,27 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var questionStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [questionLabel,
+        let stackView = UIStackView(arrangedSubviews: [questionAnswerSectionTitleView,
                                                       questionAnswerLabel])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
-        stackView.spacing = 20
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private lazy var feedStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [feedSectionTitleView,
-                                                      questionStackView])
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.alignment = .fill
-        stackView.spacing = 20
+        stackView.spacing = 4
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
     // 작품 정보
     
-    private let artworkImageView: AsyncImageView
+    private lazy var artworkImageView: AsyncImageView = .init(
+        url: artwork.imageUrl,
+        contentMode: .scaleAspectFill,
+        filterOptions: [
+            .contrast(1.2),
+            .exposure(0.3)
+        ])
     
-    lazy var artworkTitleLabel: UILabel = {
+    private lazy var artworkTitleLabel: UILabel = {
         let label = UILabel()
         label.text = artwork.title
         label.numberOfLines = 0
@@ -79,7 +71,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return label
     }()
     
-    lazy var artworkArtistLabel: UILabel = {
+    private lazy var artworkArtistLabel: UILabel = {
         let label = UILabel()
         label.text = artwork.artist
         label.numberOfLines = 0
@@ -114,7 +106,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var artworkDesciptionSectionTitleView: SectionTitleView = .init(title: "작품 소개")
     
-    lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: artworkDescription.content, highlights: highlights, isEditable: false, isExpandable: false)
+    lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: " ", highlights: [], isEditable: false, isExpandable: false)
     
     private lazy var artworkDescriptionStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [artworkDesciptionSectionTitleView,
@@ -133,7 +125,6 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     lazy var reviewLabel: UILabel = {
         let label = UILabel()
-        label.text = artworkReview.review
         label.numberOfLines = 0
         label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +143,8 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var myFeedStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [feedStackView,
+        let stackView = UIStackView(arrangedSubviews: [questionLabel,
+                                                       questionStackView,
                                                        artworkStackView,
                                                        artworkDescriptionStackView,
                                                        reviewStackView])
@@ -165,22 +157,9 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     init(artwork: Artwork,
-         artworkDescription: ArtworkDescription,
-         questionAnswer: QuestionAnswer,
-         artworkReview: ArtworkReview,
-         highlights: [Highlight]) {
+         questionAnswer: QuestionAnswer) {
         self.artwork = artwork
-        self.artworkDescription = artworkDescription
         self.questionAnswer = questionAnswer
-        self.artworkReview = artworkReview
-        self.highlights = highlights
-        artworkImageView = AsyncImageView(
-            url: artwork.imageUrl,
-            contentMode: .scaleAspectFill,
-            filterOptions: [
-                .contrast(1.2),
-                .exposure(0.3)
-            ])
         super.init(frame: .zero)
         self.backgroundColor = .white
     }
@@ -206,15 +185,16 @@ extension MyFeedView {
             scrollView.rightAnchor.constraint(equalTo: rightAnchor),
             
             myFeedStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            myFeedStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            myFeedStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -80),
             myFeedStackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
             myFeedStackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor),
             myFeedStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            questionLabel.topAnchor.constraint(equalTo: myFeedStackView.topAnchor, constant: 12),
+            questionLabel.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
+            questionLabel.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
 
-            feedStackView.topAnchor.constraint(equalTo: myFeedStackView.topAnchor, constant: 12),
-            feedStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
-            feedStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16), // 이거 왜 안먹죠? ㅜㅜ
-            feedSectionTitleView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
+            questionStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
             questionStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
             
             artworkStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor),
@@ -240,7 +220,9 @@ extension MyFeedView {
 import SwiftUI
 struct MyFeedViewPreview: PreviewProvider {
     static var previews: some View {
-        MyFeedView(artwork: .mockData, artworkDescription: .mockData, questionAnswer: .mockData, artworkReview: .mockData, highlights: []).toPreview()
+        MyFeedView(artwork: .mockData,
+                   questionAnswer: .mockData)
+            .toPreview()
     }
 }
 #endif
