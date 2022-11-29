@@ -24,7 +24,7 @@ final class OnBoardingViewController: UIViewController {
     private let onBoardingButton = OnBoardingButton(text: "다음으로")
     private let skipButton: UIButton = SkipButton(text: "Skip")
     private let skipButtonContainer: UIView = UIView()
-    private let pageControlContainer: UIView = UIView()
+    private let pageControlContainer: PageIndexIndicatorView = PageIndexIndicatorView(totalCount: 3)
     private let disposeBag: DisposeBag = .init()
     
     override func viewDidLoad() {
@@ -49,6 +49,7 @@ private extension OnBoardingViewController {
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
                 self.changeSkipButtonUI(with: $0)
+                self.changePageControlState(with: $0)
             })
             .disposed(by: disposeBag)
         
@@ -99,7 +100,7 @@ private extension OnBoardingViewController {
     }
     
     func setUpUI() {
-        view.backgroundColor = .gray4
+        view.backgroundColor = .white
         setUpSkipButtonContainer()
         setUpPageControlContainer()
     }
@@ -108,13 +109,17 @@ private extension OnBoardingViewController {
 private extension OnBoardingViewController {
     
     func changeSkipButtonUI(with currentIndex: Int) {
-        if currentIndex == pageViewControllerList.count {
+        if currentIndex == pageViewControllerList.count - 1 {
             skipButton.isHidden = true
             skipButton.isEnabled = false
         } else {
             skipButton.isHidden = false
             skipButton.isEnabled = true
         }
+    }
+    
+    func changePageControlState(with currentIndex: Int) {
+        pageControlContainer.currentSelectedIndex = currentIndex
     }
     
     func setUpSkipButtonContainer() {
@@ -160,7 +165,7 @@ private extension OnBoardingViewController {
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             pageViewController.view.topAnchor.constraint(equalTo: skipButtonContainer.bottomAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: pageControlContainer.topAnchor)
+            pageViewController.view.bottomAnchor.constraint(equalTo: pageControlContainer.topAnchor, constant: -16)
         ])
         
     }
@@ -168,10 +173,8 @@ private extension OnBoardingViewController {
     func setUpPageControlContainerConstraints() {
         pageControlContainer.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            pageControlContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            pageControlContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageControlContainer.heightAnchor.constraint(equalToConstant: 64),
-            pageControlContainer.bottomAnchor.constraint(equalTo: onBoardingButton.topAnchor)
+            pageControlContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControlContainer.bottomAnchor.constraint(equalTo: onBoardingButton.topAnchor, constant: -40)
         ])
     }
     

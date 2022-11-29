@@ -51,7 +51,7 @@ extension OnBoardingPageViewController: UIPageViewControllerDelegate {
             if previousIndex < currentIndex {
                 onBoardingViewModel
                     .addPageIdx()
-            } else {
+            } else if previousIndex > currentIndex {
                 onBoardingViewModel
                     .minusPageIdx()
             }

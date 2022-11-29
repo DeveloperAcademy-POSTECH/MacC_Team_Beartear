@@ -11,7 +11,7 @@ import UIKit
 final class VideoView: BaseAutoLayoutUIView {
     
     private let url: String
-    private var player = AVPlayer()
+    private let player = AVPlayer()
     private var playerLayer: AVPlayerLayer?
     private let videoFrameView: UIView = UIView()
     private var playerObserver: Any?
