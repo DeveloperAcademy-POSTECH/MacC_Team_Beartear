@@ -52,6 +52,7 @@ extension SceneDelegate {
         changeRootViewController(vc)
     }
 
+    // 확대/축소 가능한 이미지 뷰를 테스트할 수 있는 코드입니다.
     func testZoomableAsyncImageView() {
         let vc = UIViewController()
         let zoomable = ZoomableAsyncImageView(url: Artwork.mockData.imageUrl)
@@ -60,10 +61,18 @@ extension SceneDelegate {
         changeRootViewController(vc)
     }
 
+    // 작품 소개 UI를 테스트할 수 있는 코드입니다.
     func testArtworkIntroductionView() {
         let vc = ArtworkIntroductionViewController(QuestionAnswerViewModel())
         let rootVc = UINavigationController(rootViewController: vc)
         rootVc.view.backgroundColor = .white
+        changeRootViewController(rootVc)
+    }
+
+    // 질문 답변 UI를 테스트할 수 있는 코드입니다.
+    func testQuestionAnswerView() {
+        let vc = QuestionAnswerViewController(artwork: Artwork.mockData)
+        let rootVc = UINavigationController(rootViewController: vc)
         changeRootViewController(rootVc)
     }
 }
