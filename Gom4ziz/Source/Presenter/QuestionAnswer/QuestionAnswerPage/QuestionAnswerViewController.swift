@@ -96,7 +96,6 @@ private extension QuestionAnswerViewController {
             .rx
             .tap
             .bind { _ in
-
             }
             .disposed(by: disposeBag)
     }

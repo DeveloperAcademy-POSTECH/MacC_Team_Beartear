@@ -24,7 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
         // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
-        }
+        testQuestionAnswerView()
+    }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
     }
