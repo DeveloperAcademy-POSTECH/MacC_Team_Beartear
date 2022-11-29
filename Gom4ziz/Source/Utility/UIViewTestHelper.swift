@@ -65,7 +65,6 @@ extension SceneDelegate {
     func testArtworkIntroductionView() {
         let vc = ArtworkIntroductionViewController(QuestionAnswerViewModel())
         let rootVc = UINavigationController(rootViewController: vc)
-        rootVc.view.backgroundColor = .white
         changeRootViewController(rootVc)
     }
 

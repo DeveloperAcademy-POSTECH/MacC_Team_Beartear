@@ -36,8 +36,6 @@ extension FirebaseArtworkDescriptionRepository {
     
     func getArtworkDescripionRef(of artworkId: Int) -> DocumentReference {
         db
-            .collection(CollectionName.artwork)
-            .document("\(artworkId)")
             .collection(CollectionName.artworkDescription)
             .document("\(artworkId)")
     }

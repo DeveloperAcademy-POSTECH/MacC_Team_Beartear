@@ -29,13 +29,13 @@ final class ArtworkIntroductionViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         setUpNavigationBar()
     }
 
     override func loadView() {
         self.view = artworkIntroductionView
     }
-
 }
 
 // MARK: - 네비게이션 바 설정 부분

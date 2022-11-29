@@ -8,8 +8,9 @@
 import UIKit
 
 /// Placeholder를 지정할 수 있는 TextView입니다.
-final class PlaceholderTextView: UITextView {
-
+final class PlaceholderTextView: UITextView, Skeletonable {
+    let originalCornerRadius: CGFloat = 0
+    var skeletonLayer: CALayer?
     private let placeholder: UILabel = UILabel()
     private var textObservation: NSKeyValueObservation?
 

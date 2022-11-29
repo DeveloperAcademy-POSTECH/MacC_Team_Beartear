@@ -23,7 +23,7 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private var topDivider: CALayer?
     private var startY: CGFloat?
     private var bottomY: CGFloat!
-    private let contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
+    private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
     private var isInitiated: Bool = false
 
     init(
@@ -189,6 +189,7 @@ extension ArtworkIntroductionModal: UIScrollViewDelegate {
 private extension ArtworkIntroductionModal {
 
     func addTopDivider() {
+        guard topDivider == nil else { return }
         topDivider = CALayer()
         topDivider!.backgroundColor = UIColor.gray2.cgColor
         topDivider!.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
@@ -234,7 +235,7 @@ private extension ArtworkIntroductionModal {
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = true
         scrollView.indicatorStyle = .black
-        scrollView.contentInset = contentInset
+        scrollView.contentInset = baseInsets
     }
 
     func setUpArtistLabel() {
@@ -264,7 +265,7 @@ private extension ArtworkIntroductionModal {
     }
 
     @objc func keyboardWillHide() {
-        let contentInset = contentInset
+        let contentInset = baseInsets
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = .zero
     }

@@ -15,4 +15,5 @@ extension UIColor {
     static let gray4: UIColor = UIColor(named: "Gray4")!
     static let highlight: UIColor = UIColor(named: "Highlight")!
     static let primary: UIColor = UIColor(named: "Primary")!
+    static let skeleton: UIColor = UIColor(named: "Skeleton")!
 }
