@@ -16,6 +16,7 @@ final class QuestionAnswerViewController: UIViewController {
     private let nextButton: UIBarButtonItem
     private let viewModel: QuestionAnswerViewModel
     private let disposeBag: DisposeBag = .init()
+    private var isInitiated: Bool = false
 
     init(artwork: Artwork) {
         self.questionAnswerView = QuestionAnswerView(artwork: artwork)
@@ -29,8 +30,9 @@ final class QuestionAnswerViewController: UIViewController {
     }
 
     override func viewDidLoad() {
+        super.viewDidLoad()
         setUpNavigationBar()
-        setUpObservers()
+        setUpObservers() 
     }
 
     override func loadView() {
@@ -39,8 +41,12 @@ final class QuestionAnswerViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        focusOnTextView()
+        if !isInitiated {
+            isInitiated = true
+            viewModel.fetchArtworkDescription()
+        }
     }
+
 }
 
 // MARK: - Private API
@@ -67,12 +73,13 @@ private extension QuestionAnswerViewController {
         // 작품 설명 로딩 이벤트 관찰
         viewModel.artworkDescriptionRelay
             .asDriver()
-            .drive(onNext: { event in
+            .drive(onNext: { [weak self] event in
                 switch event {
                 case .isLoading:
-                    break
-                case .loaded(let artworkDescription):
-                    break
+                    self?.questionAnswerView.showSkeletonUI()
+                case .loaded:
+                    self?.questionAnswerView.hideSkeletonUI()
+                    self?.focusOnTextView()
                 case .failed(let error):
                     break
                 default: break
@@ -104,6 +111,7 @@ private extension QuestionAnswerViewController {
 private extension QuestionAnswerViewController {
 
     func showArtworkIntroductionUI() {
+        questionAnswerView.answerInputTextView.resignFirstResponder()
         let artworkIntroductionViewController = ArtworkIntroductionViewController(viewModel)
         navigationController?.pushViewController(artworkIntroductionViewController, animated: true)
     }
@@ -114,8 +122,6 @@ private extension QuestionAnswerViewController {
 private extension QuestionAnswerViewController {
 
     func setUpNavigationBar() {
-        let numberOfArtwork: Int = viewModel.artwork.id
-        navigationItem.title = "\(numberOfArtwork)번째 티라미수"
         navigationItem.rightBarButtonItem = nextButton
         setUpNextButton()
     }
@@ -133,17 +139,12 @@ private extension QuestionAnswerViewController {
     }
 }
 
-// MARK: - 화면 이동
-private extension QuestionAnswerViewController {
-
-}
-
 #if DEBUG
 import SwiftUI
 struct QuestionAnswerViewControllerPreview: PreviewProvider {
     static var previews: some View {
         UINavigationController(rootViewController: QuestionAnswerViewController(artwork: Artwork.mockData))
-            .toPreview()
+            .toPreview() 
     }
 }
 #endif

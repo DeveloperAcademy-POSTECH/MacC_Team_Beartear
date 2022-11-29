@@ -7,8 +7,9 @@
 
 import UIKit
 
-final class QuestionView: BaseAutoLayoutUIView {
-
+final class QuestionView: BaseAutoLayoutUIView, Skeletonable {
+    let originalCornerRadius: CGFloat = 12
+    var skeletonLayer: CALayer?
     private let artwork: Artwork
     private let questionNumberLabel: UILabel = UILabel()
     private let questionImageView: AsyncImageView

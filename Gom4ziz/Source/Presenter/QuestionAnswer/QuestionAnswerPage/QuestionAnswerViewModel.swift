@@ -31,12 +31,9 @@ final class QuestionAnswerViewModel {
 
     // 디버그용 생성자
     #if DEBUG
-    init(
-        of artwork: Artwork = .mockData,
-        artworkDescription: ArtworkDescription = .mockData
-    ) {
-        self.artwork = artwork
-        self.artworkDescriptionRelay.accept(.loaded(artworkDescription))
+    init() {
+        self.artwork = Artwork.mockData
+        self.artworkDescriptionRelay.accept(.loaded(ArtworkDescription.mockData))
         self.fetchDescriptionUsecase = RealFetchArtworkDescriptionUseCase()
     }
     #endif
