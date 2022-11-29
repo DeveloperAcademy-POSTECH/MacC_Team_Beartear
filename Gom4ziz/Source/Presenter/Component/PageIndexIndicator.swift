@@ -67,7 +67,6 @@ final class PageIndexIndicatorView: UIView {
     }
 }
 
-
 private extension PageIndexIndicatorView {
     
     func afterEllipseXPosition(idx: Int) -> Int {
@@ -106,8 +105,16 @@ import SwiftUI
 
 struct PageIndexIndicatorViewPreviews: PreviewProvider {
     static var previews: some View {
-        PageIndexIndicatorView(totalCount: 8).toPreview()
-            .frame(width: 300, height: 100)
+        VStack {
+            PageIndexIndicatorView(totalCount: 4, currentSelectedIndex: 0).toPreview()
+                .frame(width: 300, height: 100)
+            PageIndexIndicatorView(totalCount: 4, currentSelectedIndex: 1).toPreview()
+                .frame(width: 300, height: 100)
+            PageIndexIndicatorView(totalCount: 4, currentSelectedIndex: 2).toPreview()
+                .frame(width: 300, height: 100)
+            PageIndexIndicatorView(totalCount: 4, currentSelectedIndex: 3).toPreview()
+                .frame(width: 300, height: 100)
+        }
     }
 }
 #endif

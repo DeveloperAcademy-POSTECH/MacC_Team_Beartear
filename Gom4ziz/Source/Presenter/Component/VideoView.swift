@@ -8,12 +8,11 @@
 import AVFoundation
 import UIKit
 
-final class VideoView: BaseAutoLayoutUIView {
+final class VideoView: UIView {
     
     private let url: String
     private let player = AVPlayer()
     private var playerLayer: AVPlayerLayer?
-    private let videoFrameView: UIView = UIView()
     private var playerObserver: Any?
     
     init(url: String) {
@@ -21,6 +20,7 @@ final class VideoView: BaseAutoLayoutUIView {
         super.init(frame: .zero)
         self.playerLayer = setPlayerLayer(with: url)
         setVideoPlayer(with: playerLayer)
+        setUpUI()
     }
     
     required init?(coder: NSCoder) {
@@ -29,7 +29,7 @@ final class VideoView: BaseAutoLayoutUIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        playerLayer?.frame = videoFrameView.bounds
+        playerLayer?.frame = bounds
     }
     
     deinit {
@@ -38,28 +38,11 @@ final class VideoView: BaseAutoLayoutUIView {
     }
 }
 
-extension VideoView {
-    
-    func addSubviews() {
-        addSubview(videoFrameView)
-    }
-    
-    func setUpConstraints() {
-        videoFrameView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            videoFrameView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            videoFrameView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            videoFrameView.topAnchor.constraint(equalTo: topAnchor),
-            videoFrameView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
+private extension VideoView {
     
     func setUpUI() {
         backgroundColor = .white
     }
-}
-
-private extension VideoView {
     
     func setPlayerLayer(with url: String) -> AVPlayerLayer? {
         guard let path = Bundle.main.path(forResource: url, ofType: "mp4") else { return nil }
@@ -68,8 +51,8 @@ private extension VideoView {
         let item = AVPlayerItem(url: url)
         self.player.replaceCurrentItem(with: item)
         let playerLayer = AVPlayerLayer(player: self.player)
-        playerLayer.frame = videoFrameView.bounds
-        playerLayer.videoGravity = .resizeAspectFill
+        playerLayer.frame = bounds
+        playerLayer.videoGravity = .resizeAspect
         playerObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { _ in
             self.resetPlayer()
            }
@@ -79,7 +62,7 @@ private extension VideoView {
     
     func setVideoPlayer(with playerLayer: AVPlayerLayer?) {
         guard let playerLayer = playerLayer else { return }
-        videoFrameView.layer.addSublayer(playerLayer)
+        layer.addSublayer(playerLayer)
         player.play()
     }
 }
