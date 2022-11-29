@@ -39,6 +39,14 @@ final class PageIndexIndicatorView: UIView {
         }
     }
     
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: intrinsicWidth, height: 8)
+    }
+    
     private func displayDots(idx: Int, currentIdx: Int) {
         switch idx {
         case 0..<currentIdx:
@@ -56,14 +64,6 @@ final class PageIndexIndicatorView: UIView {
                 displayDots(idx: idx, currentIdx: newValue)
             }
         }
-    }
-    
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: intrinsicWidth, height: 8)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError()
     }
 }
 
