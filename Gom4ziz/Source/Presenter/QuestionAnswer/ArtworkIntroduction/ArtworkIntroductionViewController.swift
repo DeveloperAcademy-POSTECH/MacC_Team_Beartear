@@ -20,8 +20,7 @@ final class ArtworkIntroductionViewController: UIViewController {
         _ viewModel: QuestionAnswerViewModel
     ) {
         self.viewModel = viewModel
-        // TODO: 나중에 직접 observe 해야함!
-        self.artworkIntroductionView = ArtworkIntroductionView(viewModel.artwork, viewModel.artworkDescription.value.value!)
+        self.artworkIntroductionView = ArtworkIntroductionView(viewModel.artwork, viewModel.artworkDescription!)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -31,24 +30,10 @@ final class ArtworkIntroductionViewController: UIViewController {
 
     override func viewDidLoad() {
         setUpNavigationBar()
-        setUpObservers()
     }
 
     override func loadView() {
         self.view = artworkIntroductionView
-    }
-
-}
-
-// MARK: - 옵저버 설정
-private extension ArtworkIntroductionViewController {
-
-    func setUpObservers() {
-        viewModel.artworkDescription
-            .asDriver()
-            .drive(onNext: { _ in
-            })
-            .disposed(by: disposeBag)
     }
 
 }
