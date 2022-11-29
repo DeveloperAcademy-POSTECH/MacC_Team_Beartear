@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewedArtworkCell: UITableViewCell {
+final class ReviewedArtworkCell: UITableViewCell {
     
     private var artworkImageView: AsyncImageView
     private let tiramisulCountLable = UILabel()
@@ -30,7 +30,7 @@ class ReviewedArtworkCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func set(reviewedArtworkListCellViewModel: ReviewedArtworkListCellViewModel) {
+    func setViewModel(reviewedArtworkListCellViewModel: ReviewedArtworkListCellViewModel) {
 #warning("River: 호종이 작업 이후 AsyncImageView run time 변경되는 함수로 수정하기 ")
         artworkImageView = AsyncImageView(
             url: reviewedArtworkListCellViewModel.imageURLString,
@@ -43,7 +43,7 @@ class ReviewedArtworkCell: UITableViewCell {
     
 }
 
-extension ReviewedArtworkCell {
+private extension ReviewedArtworkCell {
     func addSubviews() {
         addSubview(artworkImageView)
         addSubview(tiramisulCountLable)
