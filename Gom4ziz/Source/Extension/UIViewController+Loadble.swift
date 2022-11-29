@@ -9,13 +9,12 @@ import UIKit
 
 extension UIViewController {
     
-    func setUpLoadingView(_ loadingView: LoadingView) {
+    func setUpLoadingView() {
+        let loadingView: LoadingView = .init()
         self.view.addSubview(loadingView)
         loadingView.startLoadingAnimation()
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            loadingView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            loadingView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             loadingView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             loadingView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -23,16 +22,18 @@ extension UIViewController {
         ])
     }
     
-    func removeLoadingView(_ loadingView: LoadingView) {
-        loadingView.removeFromSuperview()
+    func removeLoadingView() {
+        for subView in self.view.subviews where subView is LoadingView {
+            subView.removeFromSuperview()
+        }
     }
     
-    func setUpErrorView(_ errorView: ErrorView) {
+    func setUpErrorView(_ message: ErrorViewMessage, _ isShowLogo: Bool) {
+        let errorView: ErrorView = .init(message: message, isShowLogo: isShowLogo)
+        errorView.tag = 2
         self.view.addSubview(errorView)
         errorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            errorView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            errorView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             errorView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             errorView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             errorView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -40,8 +41,8 @@ extension UIViewController {
         ])
     }
     
-    func removeErrorView(_ errorView: ErrorView) {
-        errorView.removeFromSuperview()
+    func getErrorView() -> ErrorView? {
+        self.view.viewWithTag(2) as? ErrorView
     }
     
 }
