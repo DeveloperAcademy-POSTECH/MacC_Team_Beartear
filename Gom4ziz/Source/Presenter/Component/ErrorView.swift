@@ -106,7 +106,7 @@ extension ErrorView {
     }
     
     func setUpUI() {
-        
+        self.backgroundColor = .white
     }
     
 }
