@@ -41,12 +41,12 @@ private extension OnBoardingViewController {
     func setObservers() {
         onBoardingViewModel
             .currentPageIdx
-            .do(onNext: { [weak self] in
+            .do(onNext: { [unowned self] in
                 guard let self else { return }
                 let buttonText = $0 == self.pageViewControllerList.count - 1 ? "시작하기" : "다음으로"
                 self.onBoardingButton.setUpUI(text: buttonText)
             })
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [unowned self] in
                 guard let self else { return }
                 self.changeSkipButtonUI(with: $0)
                 self.changePageControlState(with: $0)
