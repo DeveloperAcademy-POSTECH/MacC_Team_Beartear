@@ -7,7 +7,7 @@
 
 import Foundation
 
-import RxCocoa
+import RxRelay
 import RxSwift
 
 struct MyFeedViewModelMapper {
@@ -30,6 +30,7 @@ final class MyFeedViewModel {
     private let fetchArtworkDescriptionUseCase: FetchArtworkDescriptionUseCase
     private let fetchHighlightUseCase: FetchHighlightUseCase
     let myFeedViewModelMapper: BehaviorRelay<Loadable<MyFeedViewModelMapper>> = .init(value: .notRequested)
+    
     private let disposeBag: DisposeBag = .init()
     
     init(fetchArtworkReviewUseCase: FetchArtworkReviewUseCase,

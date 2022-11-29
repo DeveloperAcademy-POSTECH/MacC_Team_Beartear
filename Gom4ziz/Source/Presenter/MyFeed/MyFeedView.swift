@@ -11,6 +11,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private let artwork: Artwork
     private let questionAnswer: QuestionAnswer
+    var myFeedViewModelDTO: MyFeedViewModelMapper?
     
     // MARK: - UI Component
     
@@ -56,11 +57,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var artworkImageView: AsyncImageView = .init(
         url: artwork.imageUrl,
-        contentMode: .scaleAspectFill,
-        filterOptions: [
-            .contrast(1.2),
-            .exposure(0.3)
-        ])
+        contentMode: .scaleAspectFill)
     
     private lazy var artworkTitleLabel: UILabel = {
         let label = UILabel()
@@ -106,7 +103,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private lazy var artworkDesciptionSectionTitleView: SectionTitleView = .init(title: "작품 소개")
     
-    lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: " ", highlights: [], isEditable: false, isExpandable: false)
+    lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: myFeedViewModelDTO?.artworkDescription ?? " ", highlights: myFeedViewModelDTO?.highlights ?? [], isEditable: false, isExpandable: false)
     
     private lazy var artworkDescriptionStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [artworkDesciptionSectionTitleView,
@@ -125,6 +122,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     lazy var reviewLabel: UILabel = {
         let label = UILabel()
+        label.text = myFeedViewModelDTO?.artworkReview
         label.numberOfLines = 0
         label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -157,9 +155,11 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     init(artwork: Artwork,
-         questionAnswer: QuestionAnswer) {
+         questionAnswer: QuestionAnswer,
+         myFeedViewModelDTO: MyFeedViewModelMapper? = nil) {
         self.artwork = artwork
         self.questionAnswer = questionAnswer
+        self.myFeedViewModelDTO = myFeedViewModelDTO
         super.init(frame: .zero)
         self.backgroundColor = .white
     }
@@ -221,7 +221,7 @@ import SwiftUI
 struct MyFeedViewPreview: PreviewProvider {
     static var previews: some View {
         MyFeedView(artwork: .mockData,
-                   questionAnswer: .mockData)
+                   questionAnswer: .mockData, myFeedViewModelDTO: .init(artworkDescription: .mockData, highlights: Highlight.mockData, artworkReview: .mockData))
             .toPreview()
     }
 }
