@@ -79,6 +79,20 @@ extension QuestionAnswer {
     }
 }
 
+extension ReviewedArtworkListCellViewModel {
+    static var mockDatas: [ReviewedArtworkListCellViewModel] {
+        [
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData),
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData),
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData),
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData),
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData),
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData),
+            ReviewedArtworkListCellViewModel(artwork: Artwork.mockData, questionAnswer: QuestionAnswer.mockData)
+        ]
+    }
+}
+
 extension String {
     
     /// 개발용 긴 문장

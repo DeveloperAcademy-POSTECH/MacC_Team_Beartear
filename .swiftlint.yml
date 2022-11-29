@@ -5,6 +5,7 @@ disabled_rules:
   - trailing_newline
   - switch_case_alignment
   - shorthand_operator
+  - force_cast
 
 opt_in_rules:
   - empty_count
