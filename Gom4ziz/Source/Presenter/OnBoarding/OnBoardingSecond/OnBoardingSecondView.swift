@@ -38,7 +38,7 @@ extension OnBoardingSecondView {
         
         guideVideoView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            guideVideoView.heightAnchor.constraint(equalToConstant: 480),
+            guideVideoView.topAnchor.constraint(equalTo: onBoardingLabel.bottomAnchor, constant: 16),
             guideVideoView.leadingAnchor.constraint(equalTo: leadingAnchor),
             guideVideoView.trailingAnchor.constraint(equalTo: trailingAnchor),
             guideVideoView.bottomAnchor.constraint(equalTo: bottomAnchor),
