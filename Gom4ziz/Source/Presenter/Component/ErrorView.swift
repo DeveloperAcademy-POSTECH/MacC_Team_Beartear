@@ -37,7 +37,7 @@ final class ErrorView: BaseAutoLayoutUIView {
     private let captionLabel: UILabel = {
         let label = UILabel()
         label.text = "아래 버튼을 탭해서 다시 불러와 보세요."
-        label.textStyle(.NavigationButton, .systemGray) // TODO: systemGray -> gray3
+        label.textStyle(.NavigationButton, .gray3)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -59,6 +59,7 @@ final class ErrorView: BaseAutoLayoutUIView {
         button.titleLabel?.font = .boldSystemFont(ofSize: 12)
         button.backgroundColor = .gray4
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(removeErrorView), for: .touchUpInside)
         return button
     }()
     
@@ -111,11 +112,20 @@ extension ErrorView {
     
 }
 
+extension ErrorView {
+    
+    @objc private func removeErrorView() {
+        self.removeFromSuperview()
+    }
+    
+}
+
 #if DEBUG
 import SwiftUI
 struct ErrorViewPreview: PreviewProvider {
     static var previews: some View {
-        ErrorView(message: .tiramisul, isShowLogo: false).toPreview()
+        ErrorView(message: .tiramisul, isShowLogo: false)
+            .toPreview()
     }
 }
 #endif

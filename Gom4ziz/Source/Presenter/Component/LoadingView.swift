@@ -13,7 +13,6 @@ final class LoadingView: BaseAutoLayoutUIView {
         // Create an indicator.
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        activityIndicator.center = self.center
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         // Also show the indicator even when the animation is stopped.
@@ -67,3 +66,13 @@ extension LoadingView {
     }
     
 }
+
+#if DEBUG
+import SwiftUI
+struct LoadingPreview: PreviewProvider {
+    static var previews: some View {
+        LoadingView()
+            .toPreview()
+    }
+}
+#endif
