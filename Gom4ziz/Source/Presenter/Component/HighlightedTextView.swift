@@ -20,7 +20,7 @@ final class HighlightedTextView: BaseAutoLayoutUIView {
     private let text: String
     private let highlightColor: UIColor
     private let highlightTextColor: UIColor
-    private let textView: UITextView = UITextView()
+    let textView: UITextView = UITextView()
     private let addButton: UIButton = UIButton()
     private let toggleButton: UILabel = UILabel()
     private let deleteButton: BubbleButton = BubbleButton(text: "삭제")
