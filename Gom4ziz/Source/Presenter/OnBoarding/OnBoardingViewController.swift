@@ -22,10 +22,14 @@ final class OnBoardingViewController: UIViewController {
         onBoardingViewModel: onBoardingViewModel
     )
     private let onBoardingButton = OnBoardingButton(text: "다음으로")
+    private let skipButton: UIButton = SkipButton(text: "Skip")
+    private let skipButtonContainer: UIView = UIView()
+    private let pageControlContainer: UIView = UIView()
     private let disposeBag: DisposeBag = .init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpUI()
         addSubviews()
         setUpConstraints()
         setObservers()
@@ -37,11 +41,14 @@ private extension OnBoardingViewController {
     func setObservers() {
         onBoardingViewModel
             .currentPageIdx
-            .map {
-                return $0 == self.pageViewControllerList.count - 1 ? "시작하기" : "다음으로"
-            }
+            .do(onNext: { [weak self] in
+                guard let self else { return }
+                let buttonText = $0 == self.pageViewControllerList.count - 1 ? "시작하기" : "다음으로"
+                self.onBoardingButton.setUpUI(text: buttonText)
+            })
             .subscribe(onNext: { [weak self] in
-                self?.onBoardingButton.setUpUI(text: $0)
+                guard let self else { return }
+                self.changeSkipButtonUI(with: $0)
             })
             .disposed(by: disposeBag)
         
@@ -50,6 +57,14 @@ private extension OnBoardingViewController {
             .tap
             .bind {
                 self.goNextPage()
+            }
+            .disposed(by: disposeBag)
+        
+        skipButton
+            .rx
+            .tap
+            .bind {
+                print("skip")
             }
             .disposed(by: disposeBag)
     }
@@ -69,12 +84,45 @@ private extension OnBoardingViewController {
     
     func addSubviews() {
         addPageViewController()
-        view.addSubview(onBoardingButton)
+        view.addSubviews(onBoardingButton,
+                         skipButtonContainer,
+                        skipButton,
+                        pageControlContainer)
     }
     
     func setUpConstraints() {
+        setUpSkipButtonContainerConstraints()
+        setUpSkipButtonConstraints()
         setUpPageViewControllerConstraints()
+        setUpPageControlContainerConstraints()
         setUpOnBoardingButtonConstraints()
+    }
+    
+    func setUpUI() {
+        view.backgroundColor = .gray4
+        setUpSkipButtonContainer()
+        setUpPageControlContainer()
+    }
+}
+
+private extension OnBoardingViewController {
+    
+    func changeSkipButtonUI(with currentIndex: Int) {
+        if currentIndex == pageViewControllerList.count {
+            skipButton.isHidden = true
+            skipButton.isEnabled = false
+        } else {
+            skipButton.isHidden = false
+            skipButton.isEnabled = true
+        }
+    }
+    
+    func setUpSkipButtonContainer() {
+        skipButtonContainer.backgroundColor = .white
+    }
+    
+    func setUpPageControlContainer() {
+        pageControlContainer.backgroundColor = .white
     }
 }
 
@@ -88,15 +136,43 @@ private extension OnBoardingViewController {
         pageViewController.didMove(toParent: self)
     }
     
+    func setUpSkipButtonContainerConstraints() {
+        skipButtonContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            skipButtonContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            skipButtonContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            skipButtonContainer.topAnchor.constraint(equalTo: view.topAnchor),
+            skipButtonContainer.heightAnchor.constraint(equalToConstant: 124)
+        ])
+    }
+    
+    func setUpSkipButtonConstraints() {
+        skipButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            skipButton.topAnchor.constraint(equalTo: skipButtonContainer.topAnchor, constant: 70),
+            skipButton.trailingAnchor.constraint(equalTo: skipButtonContainer.trailingAnchor, constant: -16)
+        ])
+    }
+    
     func setUpPageViewControllerConstraints() {
         pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             pageViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             pageViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pageViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: onBoardingButton.topAnchor)
+            pageViewController.view.topAnchor.constraint(equalTo: skipButtonContainer.bottomAnchor),
+            pageViewController.view.bottomAnchor.constraint(equalTo: pageControlContainer.topAnchor)
         ])
         
+    }
+    
+    func setUpPageControlContainerConstraints() {
+        pageControlContainer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            pageControlContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pageControlContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pageControlContainer.heightAnchor.constraint(equalToConstant: 64),
+            pageControlContainer.bottomAnchor.constraint(equalTo: onBoardingButton.topAnchor)
+        ])
     }
     
     func setUpOnBoardingButtonConstraints() {
@@ -105,7 +181,7 @@ private extension OnBoardingViewController {
             onBoardingButton.heightAnchor.constraint(equalToConstant: 60),
             onBoardingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             onBoardingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            onBoardingButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            onBoardingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

@@ -9,9 +9,14 @@ import UIKit
 
 final class OnBoardingThirdViewController: UIViewController {
     
+    private let onBoardingThirdView = OnBoardingThirdView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .blue
+    }
+    
+    override func loadView() {
+        self.view = onBoardingThirdView
     }
 }
 

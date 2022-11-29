@@ -26,7 +26,6 @@ extension OnBoardingButton {
         let attributes = textStyleAttributes(.Headline1, .white)
         configuration.attributedTitle = AttributedString(text, attributes: attributes)
         configuration.background.backgroundColor = .gray4
-        configuration.baseForegroundColor = .white
         configuration.background.cornerRadius = 0
         self.configuration = configuration
     }

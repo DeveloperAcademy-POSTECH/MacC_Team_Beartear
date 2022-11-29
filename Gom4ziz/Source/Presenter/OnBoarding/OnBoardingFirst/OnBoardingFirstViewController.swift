@@ -9,9 +9,14 @@ import UIKit
 
 final class OnBoardingFirstViewController: UIViewController {
     
+    private let onBoardingFirstView = OnBoardingFirstView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+    }
+    
+    override func loadView() {
+        self.view = onBoardingFirstView
     }
 }
 
