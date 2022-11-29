@@ -63,19 +63,49 @@ private extension QuestionAnswerViewController {
     }
 
     func setUpObservers() {
+
+        // 작품 설명 로딩 이벤트 관찰
+        viewModel.artworkDescriptionRelay
+            .asDriver()
+            .drive(onNext: { event in
+                switch event {
+                case .isLoading:
+                    break
+                case .loaded(let artworkDescription):
+                    break
+                case .failed(let error):
+                    break
+                default: break
+                }
+            })
+            .disposed(by: disposeBag)
+
+        // 유저 답변 입력 관찰
         questionAnswerView.answerInputTextView
             .rx
             .text
             .compactMap { $0 }
             .asDriver(onErrorJustReturn: "")
             .drive(onNext: { [unowned self] in
-                if $0.isEmpty {
-                    disableNextButton()
-                } else {
+                // 만약 유저가 답변을 입력하고, artworkDescription이 존재한다면 다음 버튼이 활성화된다.
+                if !$0.isEmpty && viewModel.artworkDescription != nil {
                     enableNextButton()
+                    return
                 }
+                // 만약 유저가 답변을 입력하지 않았거나, artworkDescription이 불러와지지 않은 경우 다음 버튼이 비활성화된다.
+                disableNextButton()
             })
             .disposed(by: disposeBag)
+    }
+
+}
+
+// MARK: - 화면 이동
+private extension QuestionAnswerViewController {
+
+    func showArtworkIntroductionUI() {
+        let artworkIntroductionViewController = ArtworkIntroductionViewController(viewModel)
+        navigationController?.pushViewController(artworkIntroductionViewController, animated: true)
     }
 
 }
@@ -90,15 +120,22 @@ private extension QuestionAnswerViewController {
         setUpNextButton()
     }
 
+    // 다음 버튼을 누르면, 작품 소개 UI로 넘어간다!
     func setUpNextButton() {
         nextButton.tintColor = .black
         nextButton
             .rx
             .tap
-            .bind { _ in
-            }
+            .bind(onNext: { [unowned self] _ in
+                self.showArtworkIntroductionUI()
+            })
             .disposed(by: disposeBag)
     }
+}
+
+// MARK: - 화면 이동
+private extension QuestionAnswerViewController {
+
 }
 
 #if DEBUG
