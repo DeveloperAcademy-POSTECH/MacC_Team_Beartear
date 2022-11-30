@@ -79,6 +79,7 @@ extension SceneDelegate {
     func testRemainingTimeView() {
         let vc = UIViewController()
         let remainTimeView = RemainingTimeView(.moreThanOneDay(day: 5))
+        vc.view.addSubview(remainTimeView)
         remainTimeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             remainTimeView.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor),
