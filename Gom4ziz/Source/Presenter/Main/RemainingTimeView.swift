@@ -72,24 +72,18 @@ private extension RemainingTimeView {
     func setUpBakingLabel() {
         guard let remainingTimeStatus else { return }
         bakingLabel.text = remainingTimeStatus.bakingStatusString
-        bakingLabel.textStyle(.SubHeadline, lineHeightMultiple: 1.2, UIColor.gray4)
-        bakingLabel.layer.borderColor = UIColor.green.cgColor
-        bakingLabel.layer.borderWidth = 0.5
+        bakingLabel.textStyle(.SubHeadline, UIColor.gray4)
     }
     
     func setUpTitleLabel() {
         titleLabel.text = "새로운 작품이 없습니다"
-        titleLabel.textStyle(.Display1, lineHeightMultiple: 1.5, UIColor.gray4)
-        titleLabel.layer.borderColor = UIColor.green.cgColor
-        titleLabel.layer.borderWidth = 0.5
+        titleLabel.textStyle(.Display1, UIColor.gray4)
     }
     
     func setUpSubTitleLabel() {
         guard let remainingTimeStatus else { return }
         subTitleLabel.text = "다음 업로드까지 \(remainingTimeStatus.remainingTimeToString) 남았습니다"
-        subTitleLabel.textStyle(.Headline1, lineHeightMultiple: 1.5, UIColor.gray4)
-        subTitleLabel.layer.borderColor = UIColor.green.cgColor
-        subTitleLabel.layer.borderWidth = 0.5
+        subTitleLabel.textStyle(.Headline1, UIColor.gray4)
     }
 }
 
