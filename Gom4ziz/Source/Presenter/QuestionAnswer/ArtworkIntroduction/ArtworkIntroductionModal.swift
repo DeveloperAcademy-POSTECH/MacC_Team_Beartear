@@ -21,20 +21,23 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private let artworkIntroductionLabel: SectionTitleView = SectionTitleView(title: "작품 소개")
     private let artworkDescriptionTextView: HighlightedTextView
     private let myReviewLabel: SectionTitleView = SectionTitleView(title: "나의 감상")
-    private let myReviewTextView: PlaceholderTextView = PlaceholderTextView(placeholder: "작품을 보고 어떤 생각을 했나요?")
+    private let myReviewTextView: PlaceholderTextView
     private var topDivider: CALayer?
     private var startY: CGFloat?
     private var bottomY: CGFloat
     private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
 
     init(
-        frame: CGRect,
+        frame: CGRect = .zero,
         artwork: Artwork,
-        descrption: ArtworkDescription
+        descrption: ArtworkDescription,
+        review: String,
+        highlights: [Highlight]
     ) {
         self.artwork = artwork
         self.artworkDescription = descrption
-        self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content)
+        self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content, highlights: highlights)
+        self.myReviewTextView = PlaceholderTextView(placeholder: "작품을 보고 어떤 생각을 했나요?", text: review)
         self.bottomY = frame.minY
         super.init(frame: frame)
         setUpPanGestureRecognizer()
@@ -55,6 +58,10 @@ extension ArtworkIntroductionModal {
             .rx
             .text
             .orEmpty
+    }
+
+    var highlights: BehaviorRelay<[Highlight]> {
+        artworkDescriptionTextView.rx.highlights
     }
 
     func setFrame(_ frame: CGRect) {
@@ -381,7 +388,12 @@ private extension ArtworkIntroductionModal {
 import SwiftUI
 struct ArtworkIntroductionModalPreview: PreviewProvider {
     static var previews: some View {
-        ArtworkIntroductionModal(frame: CGRect(x: 0, y: 300, width: 400, height: 800), artwork: .mockData, descrption: .mockData).toPreview()
+        ArtworkIntroductionModal(
+            artwork: .mockData,
+            descrption: ArtworkDescription.mockData,
+            review: .lorenIpsum,
+            highlights: Highlight.mockData
+        ).toPreview()
     }
 }
 #endif

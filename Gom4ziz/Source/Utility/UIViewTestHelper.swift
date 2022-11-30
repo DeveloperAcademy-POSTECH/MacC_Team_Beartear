@@ -39,7 +39,13 @@ extension SceneDelegate {
     // 작품 소개 modal을 테스트할 수 있는 코드입니다.
     func testArtworkIntroductionModal() {
         let vc = UIViewController()
-        let modal = ArtworkIntroductionModal(frame: CGRect(x: 0, y: 200, width: 400, height: 800), artwork: .mockData, descrption: .mockData)
+        let modal = ArtworkIntroductionModal(
+            frame: CGRect(x: 0, y: 200, width: 400, height: 800),
+            artwork: .mockData,
+            descrption: .mockData,
+            review: .lorenIpsum,
+            highlights: Highlight.mockData
+        )
         vc.view.addSubview(modal)
         let safeArea = vc.view.safeAreaLayoutGuide
         modal.translatesAutoresizingMaskIntoConstraints = false

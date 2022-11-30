@@ -7,11 +7,14 @@
 
 import UIKit
 
+import RxRelay
+
 final class HighlightedTextView: BaseAutoLayoutUIView {
-    var highlights: [Highlight] {
+    var highlight: [Highlight] {
         didSet {
             selectedHighlightIndex = -1
             highlightText()
+            onHighlightsChanged?(highlight)
         }
     }
     private var selectedHighlightIndex: Int = -1
@@ -25,6 +28,7 @@ final class HighlightedTextView: BaseAutoLayoutUIView {
     private let toggleButton: UILabel = UILabel()
     private let deleteButton: BubbleButton = BubbleButton(text: "삭제")
     private let isEditable: Bool
+    var onHighlightsChanged: (([Highlight]) -> Void)?
     var onToggled: (() -> Void)?
 
     /// 하이라이트 칠 수 있는 텍스트 뷰입니다.
@@ -48,7 +52,7 @@ final class HighlightedTextView: BaseAutoLayoutUIView {
         self.isEditable = isEditable
         self.highlightColor = highlightColor
         self.highlightTextColor = highlightTextColor
-        self.highlights = highlights
+        self.highlight = highlights
         super.init(frame: .zero)
         highlightText()
     }
@@ -171,15 +175,15 @@ private extension HighlightedTextView {
         }
         let start = getIntIndexOfTextPosition(range.start)
         let end = getIntIndexOfTextPosition(range.end)
-        var appended: [Highlight] = highlights
+        var appended: [Highlight] = highlight
         appended.append(Highlight(start: start, end: end))
-        highlights = HighlightProcessor().processHighlights(appended)
+        highlight = HighlightProcessor().processHighlights(appended)
         textView.selectedTextRange = nil
         hideAddButton()
     }
 
     func changeSelectedHighlight(of range: NSRange) {
-        guard let index = highlights.firstIndex(where: {
+        guard let index = highlight.firstIndex(where: {
             $0.range == range
         }) else {
             selectedHighlightIndex = -1
@@ -214,10 +218,10 @@ private extension HighlightedTextView {
 
     @objc func deleteHighlight() {
         // 하이라이트가 선택되있을 때만 작동함!
-        guard selectedHighlightIndex != -1 && highlights.count > selectedHighlightIndex else {
+        guard selectedHighlightIndex != -1 && highlight.count > selectedHighlightIndex else {
             return
         }
-        _ = highlights.remove(at: selectedHighlightIndex)
+        _ = highlight.remove(at: selectedHighlightIndex)
         hideDeleteButton()
     }
 }
@@ -228,7 +232,7 @@ private extension HighlightedTextView {
     func highlightText() {
         let willSet: NSMutableAttributedString = .init(attributedString: textView.attributedText)
         hideHighlights(willSet)
-        for highlight in highlights {
+        for highlight in highlight {
             showHighlight(willSet, range: highlight.range)
         }
         textView.attributedText = willSet

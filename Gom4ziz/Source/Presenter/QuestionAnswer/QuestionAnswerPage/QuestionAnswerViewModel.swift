@@ -17,17 +17,16 @@ final class QuestionAnswerViewModel {
     private let disposeBag: DisposeBag = .init()
     private let userId: String
     let artwork: Artwork
+    var artworkDescription: ArtworkDescription? {
+        artworkDescriptionRelay.value.value
+    }
+    // MARK: - Rx Relays
     let artworkDescriptionRelay: BehaviorRelay<Loadable<ArtworkDescription>> = .init(value: .notRequested)
     let addEvent: BehaviorRelay<Loadable<Void>> = .init(value: .notRequested)
     let myAnswer: BehaviorRelay<String> = .init(value: "")
     let review: BehaviorRelay<String> = .init(value: "")
+    let highlights: BehaviorRelay<[Highlight]> = .init(value: [])
     let canUpload: BehaviorRelay<Bool> = .init(value: false)
-    // TODO: Highlight도 얻을 수 있게 변경해야함!
-    var highlights: [Highlight] = []
-
-    var artworkDescription: ArtworkDescription? {
-        artworkDescriptionRelay.value.value
-    }
 
     init(
         userId: String,
@@ -54,8 +53,11 @@ final class QuestionAnswerViewModel {
     }
     #endif
 
+    /// 작품 상세 설명을 불러오는 함수
     func fetchArtworkDescription() {
+        // 먼저 작품 상세설명을 로딩 상태로 바꿈
         artworkDescriptionRelay.accept(.isLoading(last: nil))
+        // 작품 상세 정보 fetch 요청
         fetchDescriptionUsecase.fetchArtworkDescription(of: artwork.id)
             .subscribe(onNext: { [weak self] description in
                 self?.artworkDescriptionRelay.accept(.loaded(description))
@@ -65,12 +67,20 @@ final class QuestionAnswerViewModel {
             .disposed(by: disposeBag)
     }
 
-    func addArtworkReview() {        
+    /// 질문 답변, 감상평, 하이라이트들을 DB에 업로드하는 함수
+    func addArtworkReview() {
+        // 먼저 업로드 이벤트를 Loading 상태로 바꿈
         addEvent.accept(.isLoading(last: nil))
-        addReviewUsecase.addArtworkReview(maker: userId, of: artwork.id, review: review.value, answer: myAnswer.value, highlights: highlights)
+        let review = review.value
+        let answer = myAnswer.value
+        let highlights = highlights.value
+        // DB 업로드 요청
+        addReviewUsecase.addArtworkReview(maker: userId, of: artwork.id, review: review, answer: answer, highlights: highlights)
             .subscribe(onSuccess: { [weak self] in
+                // 업로드 이벤트를 마무리한다.
                 self?.addEvent.accept(.loaded(()))
             }, onFailure: { [weak self] error in
+                // 업로드 도중 실패 시
                 self?.addEvent.accept(.failed(error))
             })
             .disposed(by: disposeBag)
