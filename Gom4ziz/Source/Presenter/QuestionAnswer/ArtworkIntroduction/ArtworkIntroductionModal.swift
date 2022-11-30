@@ -24,35 +24,26 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private var startY: CGFloat?
     private var bottomY: CGFloat!
     private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
-    private var isInitiated: Bool = false
 
     init(
+        frame: CGRect,
         artwork: Artwork,
         descrption: ArtworkDescription
     ) {
         self.artwork = artwork
         self.artworkDescription = descrption
         self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content)
-        super.init(frame: .zero)
+        self.bottomY = frame.minY
+        super.init(frame: frame)
         setUpPanGestureRecognizer()
         scrollView.delegate = self
+        hideModal()
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
 
-    // 첫 사이즈가 정해질 때, 각종 위치설정들을 정의함
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if !isInitiated {
-            guard let superview else { return }
-            isInitiated = true
-            frame = CGRect(x: superview.bounds.minX, y: superview.bounds.height - 160, width: superview.bounds.width, height: superview.bounds.height)
-            bottomY = superview.bounds.height - 160
-            hideModal()
-        }
-    }
 }
 
 // MARK: - 프로토콜 구현부
@@ -368,7 +359,7 @@ private extension ArtworkIntroductionModal {
 import SwiftUI
 struct ArtworkIntroductionModalPreview: PreviewProvider {
     static var previews: some View {
-        ArtworkIntroductionModal(artwork: .mockData, descrption: .mockData).toPreview()
+        ArtworkIntroductionModal(frame: CGRect(x: 0, y: 300, width: 400, height: 800), artwork: .mockData, descrption: .mockData).toPreview()
     }
 }
 #endif
