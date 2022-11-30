@@ -102,7 +102,7 @@ private extension RemainingTimeView {
             bakingImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             bakingImageView.widthAnchor.constraint(equalToConstant: 244),
             bakingImageView.heightAnchor.constraint(equalToConstant: 185),
-            bakingImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 13)
+            bakingImageView.topAnchor.constraint(equalTo: topAnchor, constant: 60)
         ])
     }
     
@@ -137,7 +137,7 @@ struct RemainingTimeViewPreview1: PreviewProvider {
     static var previews: some View {
         RemainingTimeView(.moreThanOneDay(day: 3))
             .toPreview()
-            .frame(width: 390, height: 520)
+            .frame(width: 390, height: 400)
             .previewDisplayName("1일 이상 남음")
     }
 }
@@ -146,7 +146,7 @@ struct RemainingTimeViewPreview2: PreviewProvider {
     static var previews: some View {
         RemainingTimeView(.lessThanDayMoreThanHour(hour: 4))
             .toPreview()
-            .frame(width: 390, height: 520)
+            .frame(width: 390, height: 400)
             .previewDisplayName("1시간 이상 남음")
     }
 }
@@ -155,7 +155,7 @@ struct RemainingTimeViewPreview3: PreviewProvider {
     static var previews: some View {
         RemainingTimeView(.lessThanOneHour(minute: 39))
             .toPreview()
-            .frame(width: 390, height: 520)
+            .frame(width: 390, height: 400)
             .previewDisplayName("1시간 미만 남음")
     }
 }
