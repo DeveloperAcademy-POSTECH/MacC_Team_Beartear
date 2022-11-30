@@ -70,7 +70,7 @@ extension SceneDelegate {
 
     // 질문 답변 UI를 테스트할 수 있는 코드입니다.
     func testQuestionAnswerView() {
-        let vc = QuestionAnswerViewController(artwork: Artwork.mockData)
+        let vc = QuestionAnswerViewController(artwork: Artwork.mockData, userId: User.mockData.id)
         let rootVc = UINavigationController(rootViewController: vc)
         changeRootViewController(rootVc)
     }

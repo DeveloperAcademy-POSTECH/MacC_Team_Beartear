@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+
 final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
 
     private let artwork: Artwork
@@ -22,7 +24,7 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private let myReviewTextView: PlaceholderTextView = PlaceholderTextView(placeholder: "작품을 보고 어떤 생각을 했나요?")
     private var topDivider: CALayer?
     private var startY: CGFloat?
-    private var bottomY: CGFloat!
+    private var bottomY: CGFloat
     private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
 
     init(
@@ -42,6 +44,26 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
 
     required init?(coder: NSCoder) {
         fatalError()
+    }
+
+}
+// MARK: - 퍼블릭 API
+extension ArtworkIntroductionModal {
+
+    var text: ControlProperty<String> {
+        myReviewTextView
+            .rx
+            .text
+            .orEmpty
+    }
+
+    func setFrame(_ frame: CGRect) {
+        self.frame = frame
+        self.bottomY = frame.minY
+    }
+
+    func hideKeyboard() {
+        _ = myReviewTextView.resignFirstResponder()
     }
 
 }

@@ -13,8 +13,8 @@ extension Date {
         DateFormatter.yyyyMMddHHmmssFormatter.string(from: self)
     }
     
-    var yyyyMMddHHmmssFormattedInt: Int? {
-        Int(yyyyMMddHHmmssFormattedString)
+    var yyyyMMddHHmmssFormattedInt: Int {
+        Int(yyyyMMddHHmmssFormattedString)!
     }
     
     var weekday: Int? {

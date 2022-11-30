@@ -18,9 +18,9 @@ final class QuestionAnswerViewController: UIViewController {
     private let disposeBag: DisposeBag = .init()
     private var isInitiated: Bool = false
 
-    init(artwork: Artwork) {
+    init(artwork: Artwork, userId: String) {
         self.questionAnswerView = QuestionAnswerView(artwork: artwork)
-        self.viewModel = QuestionAnswerViewModel(of: artwork)
+        self.viewModel = QuestionAnswerViewModel(userId: userId, of: artwork)
         self.nextButton = UIBarButtonItem(title: "다음")
         super.init(nibName: nil, bundle: nil)
     }
@@ -81,6 +81,7 @@ private extension QuestionAnswerViewController {
                     self?.questionAnswerView.hideSkeletonUI()
                     self?.focusOnTextView()
                 case .failed(let error):
+                    // TODO: 에러 뷰 보여줘야함
                     break
                 default: break
                 }
@@ -102,6 +103,14 @@ private extension QuestionAnswerViewController {
                 // 만약 유저가 답변을 입력하지 않았거나, artworkDescription이 불러와지지 않은 경우 다음 버튼이 비활성화된다.
                 disableNextButton()
             })
+            .disposed(by: disposeBag)
+
+        questionAnswerView
+            .answerInputTextView
+            .rx
+            .text
+            .orEmpty
+            .bind(to: viewModel.myAnswer)
             .disposed(by: disposeBag)
     }
 
@@ -143,7 +152,7 @@ private extension QuestionAnswerViewController {
 import SwiftUI
 struct QuestionAnswerViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        UINavigationController(rootViewController: QuestionAnswerViewController(artwork: Artwork.mockData))
+        UINavigationController(rootViewController: QuestionAnswerViewController(artwork: Artwork.mockData, userId: User.mockData.id))
             .toPreview() 
     }
 }

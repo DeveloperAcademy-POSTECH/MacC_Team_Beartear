@@ -30,6 +30,7 @@ final class ArtworkIntroductionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpObserver()
         setUpNavigationBar()
     }
 
@@ -38,19 +39,59 @@ final class ArtworkIntroductionViewController: UIViewController {
     }
 }
 
+// MARK: - 뷰모델 릴레이 옵저버 설정
+private extension ArtworkIntroductionViewController {
+
+    func setUpObserver() {
+        viewModel.addEvent
+            .asDriver()
+            .drive(onNext: { [unowned self] in
+                switch $0 {
+                case .notRequested: break
+                case .isLoading:
+                    artworkIntroductionView.hideKeyboard()
+                    showLottieLoadingView()
+                case .loaded:
+                    hideLottieLoadingView()
+                    break
+                    // TODO: 에러 처리 해야함
+                case .failed(let error):
+                    hideLottieLoadingView()
+                    break
+                }
+            })
+            .disposed(by: disposeBag)
+
+        viewModel
+            .canUpload
+            .asDriver()
+            .drive(completeButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        artworkIntroductionView
+            .review
+            .bind(to: viewModel.review)
+            .disposed(by: disposeBag)
+    }
+
+}
+
 // MARK: - 네비게이션 바 설정 부분
 private extension ArtworkIntroductionViewController {
+
     func setUpNavigationBar() {
         navigationItem.rightBarButtonItem = completeButton
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .gray4
         navigationController?.navigationBar.isTranslucent = false
-        completeButton.action = #selector(onCompleteButtonTapped(sender:))
-    }
-
-    // TODO: ArtworkReview DB에 업로드하고 홈화면으로 이동해야함!
-    @objc func onCompleteButtonTapped(sender: UIBarButtonItem) {
-
+        completeButton
+            .rx
+            .tap
+            .asDriver()
+            .drive(onNext: { [unowned self] in
+                self.viewModel.addArtworkReview()
+            })
+            .disposed(by: disposeBag)
     }
 }
 

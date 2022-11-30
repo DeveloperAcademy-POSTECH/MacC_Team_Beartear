@@ -7,13 +7,19 @@
 
 import UIKit
 
+import RxCocoa
+
 final class ArtworkIntroductionView: BaseAutoLayoutUIView {
 
     private let artwork: Artwork
     private let artworkDescription: ArtworkDescription
     private let artworkImage: ZoomableAsyncImageView
-    private var artworkModal: ArtworkIntroductionModal!
+    private let artworkModal: ArtworkIntroductionModal
     private var isInitiated: Bool = false
+
+    var review: ControlProperty<String> {
+        artworkModal.text
+    }
 
     init(
         _ artwork: Artwork,
@@ -22,6 +28,7 @@ final class ArtworkIntroductionView: BaseAutoLayoutUIView {
         self.artwork = artwork
         self.artworkDescription = artworkDescription
         artworkImage = ZoomableAsyncImageView(url: artwork.imageUrl, contentMode: .scaleAspectFit)
+        artworkModal = ArtworkIntroductionModal(frame: .zero, artwork: artwork, descrption: artworkDescription)
         super.init(frame: .zero)
     }
 
@@ -38,7 +45,7 @@ final class ArtworkIntroductionView: BaseAutoLayoutUIView {
 extension ArtworkIntroductionView {
 
     func addSubviews() {
-        addSubviews(artworkImage)
+        addSubviews(artworkImage, artworkModal)
     }
 
     func setUpConstraints() {
@@ -47,6 +54,10 @@ extension ArtworkIntroductionView {
 
     func setUpUI() {
         backgroundColor = .gray1
+    }
+
+    func hideKeyboard() {
+        artworkModal.hideKeyboard()
     }
 
 }
@@ -66,14 +77,14 @@ private extension ArtworkIntroductionView {
 
 }
 
+// MARK: - 모달의 frame을 재조정
 private extension ArtworkIntroductionView {
 
     func addArtworkInfoModal() {
         if !isInitiated {
             isInitiated = true
             let modalFrame: CGRect = CGRect(x: frame.minX, y: artworkImage.frame.maxY, width: frame.width, height: frame.height)
-            artworkModal = ArtworkIntroductionModal(frame: modalFrame, artwork: artwork, descrption: artworkDescription)
-            addSubview(artworkModal)
+            artworkModal.setFrame(modalFrame)
         }
     }
 
