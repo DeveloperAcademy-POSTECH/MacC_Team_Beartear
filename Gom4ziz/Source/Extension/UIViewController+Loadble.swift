@@ -11,6 +11,7 @@ extension UIViewController {
     
     func setUpLoadingView() {
         let loadingView: LoadingView = .init()
+        loadingView.tag = 1
         self.view.addSubview(loadingView)
         loadingView.startLoadingAnimation()
         loadingView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,9 +24,7 @@ extension UIViewController {
     }
     
     func removeLoadingView() {
-        for subView in self.view.subviews where subView is LoadingView {
-            subView.removeFromSuperview()
-        }
+        (self.view.viewWithTag(1) as? LoadingView)?.removeFromSuperview()
     }
     
     func setUpErrorView(_ message: ErrorViewMessage, _ isShowLogo: Bool) {
