@@ -15,6 +15,7 @@ final class MainQuestionView: BaseAutoLayoutUIView {
     private let questionLabel: UILabel = UILabel()
     private let questionImageView: AsyncImageView
     private let maskImageView: UIImageView = UIImageView()
+    private let transparentLayer: UIView = UIView()
     private let imageMaskNames: [String] = [ImageName.questionImageMask]
     private var imageMask: UIImage? {
         let randomInt = Int.random(in: 0..<imageMaskNames.count)
@@ -40,6 +41,7 @@ extension MainQuestionView {
     
     func addSubviews() {
         addSubviews(questionImageView,
+                    transparentLayer,
                     maskImageView,
                     questionNumberLabel,
                     whiteDivider,
@@ -49,6 +51,7 @@ extension MainQuestionView {
     
     func setUpConstraints() {
         setUpQuestionImageViewConstraints()
+        setTransparentLayerConstraints()
         setUpMaskImageViewConstraints()
         setUpQuestionNumberLabelConstraints()
         setUpWhiteDividerConstraints()
@@ -59,6 +62,7 @@ extension MainQuestionView {
     func setUpUI() {
         setUpSelf()
         setUpQuestionImageView()
+        setTransparentLayer()
         setUpMaskImageView()
         setUpQuestionNumberLabel()
         setUpWhiteDivider()
@@ -77,6 +81,10 @@ private extension MainQuestionView {
     
     func setUpMaskImageView() {
         maskImageView.image = imageMask
+    }
+    
+    func setTransparentLayer() {
+        transparentLayer.backgroundColor = .black.withAlphaComponent(0.3)
     }
     
     func setUpQuestionNumberLabel() {
@@ -170,6 +178,16 @@ private extension MainQuestionView {
             maskImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             maskImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             maskImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+    
+    func setTransparentLayerConstraints() {
+        transparentLayer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            transparentLayer.topAnchor.constraint(equalTo: topAnchor),
+            transparentLayer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            transparentLayer.trailingAnchor.constraint(equalTo: trailingAnchor),
+            transparentLayer.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }
