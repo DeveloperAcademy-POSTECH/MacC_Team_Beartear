@@ -13,7 +13,7 @@ extension UIViewController {
 
     func showLottieLoadingView() {
         guard let window = view.window else { return }
-        let lottieLoadingView: LottieAnimationView = LottieAnimationView(name: "tiramisul_lottie")
+        let lottieLoadingView: LottieAnimationView = LottieAnimationView(name: "spinner")
         lottieLoadingView.loopMode = .loop
         lottieLoadingView.backgroundColor = .black.withAlphaComponent(0.5)
         lottieLoadingView.tag = 1004
