@@ -112,9 +112,9 @@ extension ErrorView {
     
 }
 
-extension ErrorView {
+private extension ErrorView {
     
-    @objc private func removeErrorView() {
+    @objc func removeErrorView() {
         self.removeFromSuperview()
     }
     
