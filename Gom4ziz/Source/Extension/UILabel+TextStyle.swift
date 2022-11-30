@@ -33,14 +33,14 @@ extension UILabel {
             paragraphStyle.lineSpacing = lineSpacing
             paragraphStyle.lineHeightMultiple = lineHeightMultiple
             paragraphStyle.alignment = alignment
-
+            
             let attributedString: NSMutableAttributedString
             if let labelAttributedText = self.attributedText {
                 attributedString = NSMutableAttributedString(attributedString: labelAttributedText)
             } else {
                 attributedString = NSMutableAttributedString(string: labelText)
             }
-
+        
             attributedString.addAttribute(NSAttributedString.Key.paragraphStyle,
                                           value: paragraphStyle,
                                           range: NSRange(location: 0, length: attributedString.length))
