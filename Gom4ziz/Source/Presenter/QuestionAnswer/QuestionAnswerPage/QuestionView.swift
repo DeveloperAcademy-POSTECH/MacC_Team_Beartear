@@ -33,10 +33,6 @@ final class QuestionView: BaseAutoLayoutUIView, Skeletonable {
         fatalError()
     }
 
-    override var intrinsicContentSize: CGSize {
-        return CGSize(width: 100, height: 200)
-    }
-
 }
 
 extension QuestionView {
