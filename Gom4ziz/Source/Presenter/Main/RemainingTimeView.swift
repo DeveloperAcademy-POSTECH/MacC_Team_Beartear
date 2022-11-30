@@ -13,50 +13,150 @@ final class RemainingTimeView: BaseAutoLayoutUIView {
     private let bakingLabel: UILabel = UILabel()
     private let titleLabel: UILabel = UILabel()
     private let subTitleLabel: UILabel = UILabel()
+    var remainingTimeStatus: RemainingTimeStatus? {
+        didSet {
+            setUpBakingImageView()
+            setUpBakingLabel()
+            setUpSubTitleLabel()
+        }
+    }
     
-    init() {
+    init(_ timeStatus: RemainingTimeStatus) {
+        self.remainingTimeStatus = timeStatus
         super.init(frame: .zero)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError()
     }
 }
 
 extension RemainingTimeView {
     
     func addSubviews() {
-        
+        addSubviews(bakingImageView,
+                    bakingLabel,
+                    titleLabel,
+                    subTitleLabel)
     }
     
     func setUpConstraints() {
-        
+        setUpBakingImageViewConstraints()
+        setUpBakingLabelConstraints()
+        setUpTitleLabelConstraints()
+        setUpSubTitleLabelConstraints()
     }
     
     func setUpUI() {
-        
+        setUpSelf()
+        setUpBakingImageView()
+        setUpBakingLabel()
+        setUpTitleLabel()
+        setUpSubTitleLabel()
     }
 }
 
 // MARK: - Set UI
 private extension RemainingTimeView {
     
+    func setUpSelf() {
+        backgroundColor = .white
+    }
+    
+    func setUpBakingImageView() {
+        guard let remainingTimeStatus else { return }
+        bakingImageView.image = UIImage(named: remainingTimeStatus.bakingStatusImageName)
+        bakingImageView.contentMode = .scaleAspectFit
+    }
+    
+    func setUpBakingLabel() {
+        guard let remainingTimeStatus else { return }
+        bakingLabel.text = remainingTimeStatus.bakingStatusString
+        bakingLabel.textStyle(.SubHeadline, lineHeightMultiple: 1.2, UIColor.gray4)
+        bakingLabel.layer.borderColor = UIColor.green.cgColor
+        bakingLabel.layer.borderWidth = 0.5
+    }
+    
+    func setUpTitleLabel() {
+        titleLabel.text = "새로운 작품이 없습니다"
+        titleLabel.textStyle(.Display1, lineHeightMultiple: 1.5, UIColor.gray4)
+        titleLabel.layer.borderColor = UIColor.green.cgColor
+        titleLabel.layer.borderWidth = 0.5
+    }
+    
+    func setUpSubTitleLabel() {
+        guard let remainingTimeStatus else { return }
+        subTitleLabel.text = "다음 업로드까지 \(remainingTimeStatus.remainingTimeToString) 남았습니다"
+        subTitleLabel.textStyle(.Headline1, lineHeightMultiple: 1.5, UIColor.gray4)
+        subTitleLabel.layer.borderColor = UIColor.green.cgColor
+        subTitleLabel.layer.borderWidth = 0.5
+    }
 }
 
 // MARK: - Constraints
 private extension RemainingTimeView {
     
+    func setUpBakingImageViewConstraints() {
+        bakingImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bakingImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            bakingImageView.widthAnchor.constraint(equalToConstant: 244),
+            bakingImageView.heightAnchor.constraint(equalToConstant: 185),
+            bakingImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 13)
+        ])
+    }
+    
+    func setUpBakingLabelConstraints() {
+        bakingLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bakingLabel.topAnchor.constraint(equalTo: bakingImageView.bottomAnchor, constant: 23),
+            bakingLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
+    
+    func setUpTitleLabelConstraints() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: bakingLabel.bottomAnchor, constant: 10),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
+    
+    func setUpSubTitleLabelConstraints() {
+        subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: -3),
+            subTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
 }
 
 #if DEBUG
 import SwiftUI
-struct RemainingTimeViewPreview: PreviewProvider {
+struct RemainingTimeViewPreview1: PreviewProvider {
     static var previews: some View {
-        VStack {
-            RemainingTimeView()
-                .toPreview()
-                .frame(width: 390, height: 520)
-        }
+        RemainingTimeView(.moreThanOneDay(day: 3))
+            .toPreview()
+            .frame(width: 390, height: 520)
+            .previewDisplayName("1일 이상 남음")
+    }
+}
+
+struct RemainingTimeViewPreview2: PreviewProvider {
+    static var previews: some View {
+        RemainingTimeView(.lessThanDayMoreThanHour(hour: 4))
+            .toPreview()
+            .frame(width: 390, height: 520)
+            .previewDisplayName("1시간 이상 남음")
+    }
+}
+
+struct RemainingTimeViewPreview3: PreviewProvider {
+    static var previews: some View {
+        RemainingTimeView(.lessThanOneHour(minute: 39))
+            .toPreview()
+            .frame(width: 390, height: 520)
+            .previewDisplayName("1시간 미만 남음")
     }
 }
 #endif

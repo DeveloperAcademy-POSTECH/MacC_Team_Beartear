@@ -34,4 +34,13 @@ extension RemainingTimeStatus {
             return "\(minute)분"
         }
     }
+    
+    var bakingStatusImageName: String {
+        switch self {
+        case .moreThanOneDay:
+            return ImageName.bakingFirst
+        case .lessThanDayMoreThanHour, .lessThanOneHour:
+            return ImageName.bakingSecond
+        }
+    }
 }
