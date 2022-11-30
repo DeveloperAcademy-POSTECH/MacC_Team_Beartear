@@ -59,7 +59,8 @@ let appTarget: Target = Project.target(name: "Gom4ziz",
                                                       .package(product: "FirebaseFirestoreSwift"),
                                                       .package(product: "RxSwift"),
                                                       .package(product: "RxRelay"),
-                                                      .package(product: "RxCocoa")
+                                                      .package(product: "RxCocoa"),
+                                                      .package(product: "Lottie")
                                                       ],
                                        additionalFiles: [".swiftlint.yml"])
 
@@ -92,7 +93,8 @@ let project = Project(
     options: .options(automaticSchemesOptions: .disabled),
     packages: [
         .remote(url: "https://github.com/firebase/firebase-ios-sdk", requirement: .upToNextMajor(from: "9.0.0")),
-        .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.0.0"))
+        .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.0.0")),
+        .remote(url: "https://github.com/airbnb/lottie-ios", requirement: .upToNextMajor(from: "3.0.0"))
     ],
     settings: settings,
     targets: [
