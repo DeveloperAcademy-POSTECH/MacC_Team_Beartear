@@ -36,8 +36,7 @@ final class MyFeedViewController: UIViewController {
     private let artwork: Artwork
     private let questionAnswer: QuestionAnswer
     
-    private lazy var myFeedView: MyFeedView = .init(artwork: artwork,
-                                                    questionAnswer: questionAnswer)
+    private lazy var myFeedView: MyFeedView = .init(artwork: artwork, questionAnswer: questionAnswer)
     private lazy var backButton: UIBarButtonItem = .init(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backButtonTapped))
     private let editButton: UIBarButtonItem = .init(title: "편집")
     
@@ -87,23 +86,19 @@ private extension MyFeedViewController {
     }
     
     func setMyFeedViewModelObserver() {
-        viewModel.myFeedViewModelMapper
-            .map { mapper in
-                switch mapper {
+        viewModel.myFeedViewModelRelay
+            .asDriver()
+            .drive { [weak self] model in
+                switch model {
                 case .notRequested, .isLoading:
-                    self.setUpLoadingView()
-                    return nil
+                    self?.setUpLoadingView()
                 case .loaded(let data):
-                    self.removeLoadingView()
-                    return data
+                    self?.removeLoadingView()
+                    self?.myFeedView.myFeedViewModelDTO = data
                 case .failed:
-                    self.removeLoadingView()
-                    self.setUpErrorView(.tiramisul, false)
-                    return nil
+                    self?.removeLoadingView()
+                    self?.setUpErrorView(.tiramisul, false)
                 }
-            }
-            .subscribe { [weak self] in
-                self?.myFeedView.myFeedViewModelDTO = $0
             }
             .disposed(by: disposeBag)
     }
@@ -112,10 +107,10 @@ private extension MyFeedViewController {
         getErrorView()?.retryButton
             .rx
             .tap
-            .subscribe { _ in
-                self.viewModel.fetchMyFeed(artworkId: self.artwork.id,
-                                        userId: self.user.id)
-            }
+            .subscribe({ [weak self] _ in
+                self?.viewModel.fetchMyFeed(artworkId: (self?.artwork.id)!,
+                                            userId: (self?.user.id)!)
+            })
             .disposed(by: disposeBag)
     }
 
@@ -136,16 +131,7 @@ private extension MyFeedViewController {
         navigationItem.title = "\(artwork.id)번째 티라미술"
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = editButton
-        setUpBackButton()
-        setUpEditButton()
-    }
-    
-    func setUpBackButton() {
-        backButton.tintColor = .black
-    }
-
-    func setUpEditButton() {
-        editButton.tintColor = .black
+        navigationController?.navigationBar.tintColor = .black
     }
     
 }
@@ -156,7 +142,10 @@ struct MyFeedViewControllerPreview: PreviewProvider {
     static var previews: some View {
         UINavigationController(rootViewController: MyFeedViewController(user: .mockData, artwork: .mockData, questionAnswer: .mockData))
             .toPreview()
-            .padding()
+            .previewDisplayName("데이터 요청 성공")
+        
+        UINavigationController(rootViewController: MyFeedViewController(user: User(id: "r189u4128947129", lastArtworkId: 1, firstLoginedDate: 1), artwork: .mockData, questionAnswer: .mockData))
+            .toPreview()
             .previewDisplayName("데이터 요청 실패")
     }
 }
