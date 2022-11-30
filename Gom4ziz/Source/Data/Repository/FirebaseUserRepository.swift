@@ -8,7 +8,7 @@ import FirebaseFirestore
 import RxSwift
 
 protocol UserRepository {
-    func addUser(for userId: String) -> Single<Void>
+    func addUser(for userId: String) -> Single<User>
     func fetchUser(for userId: String) -> Observable<User>
 }
 
@@ -21,13 +21,14 @@ final class FirebaseUserRepository {
 
 // MARK: - UserRepository protocol extension
 extension FirebaseUserRepository: UserRepository {
-    func addUser(for userId: String) -> Single<Void> {
+    func addUser(for userId: String) -> Single<User> {
         let user = User(id: userId,
                         lastArtworkId: 0,
                         firstLoginedDate: Date().yyyyMMddHHmmssFormattedInt)
         return getUserRef(of: user.id)
             .rx
             .setData(user)
+            .map { user }
     }
     func fetchUser(for userId: String) -> Observable<User> {
         return getUserRef(of: userId)
