@@ -20,7 +20,12 @@ final class ArtworkIntroductionViewController: UIViewController {
         _ viewModel: QuestionAnswerViewModel
     ) {
         self.viewModel = viewModel
-        self.artworkIntroductionView = ArtworkIntroductionView(viewModel.artwork, viewModel.artworkDescription!)
+        self.artworkIntroductionView = ArtworkIntroductionView(
+            artwork: viewModel.artwork,
+            artworkDescription: viewModel.artworkDescription!,
+            review: viewModel.review.value,
+            highlights: viewModel.highlights.value
+        )
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -52,12 +57,11 @@ private extension ArtworkIntroductionViewController {
                     artworkIntroductionView.hideKeyboard()
                     showLottieLoadingView()
                 case .loaded:
+                    // TODO: 메인화면으로 이동하는 처리 해야함 and 토스트 메시지도
                     hideLottieLoadingView()
-                    break
-                    // TODO: 에러 처리 해야함
                 case .failed(let error):
+                    // TODO: 에러 처리 해야함
                     hideLottieLoadingView()
-                    break
                 }
             })
             .disposed(by: disposeBag)
@@ -71,6 +75,12 @@ private extension ArtworkIntroductionViewController {
             .review
             .bind(to: viewModel.review)
             .disposed(by: disposeBag)
+        
+        artworkIntroductionView
+            .highlights
+            .bind(to: viewModel.highlights)
+            .disposed(by: disposeBag) 
+
     }
 
 }

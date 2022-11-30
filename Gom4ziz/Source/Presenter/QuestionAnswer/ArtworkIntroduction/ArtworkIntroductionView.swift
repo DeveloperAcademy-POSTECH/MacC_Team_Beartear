@@ -21,14 +21,25 @@ final class ArtworkIntroductionView: BaseAutoLayoutUIView {
         artworkModal.text
     }
 
+    var highlights: BehaviorRelay<[Highlight]> {
+        artworkModal.highlights
+    }
+
     init(
-        _ artwork: Artwork,
-        _ artworkDescription: ArtworkDescription
+        artwork: Artwork,
+        artworkDescription: ArtworkDescription,
+        review: String,
+        highlights: [Highlight]
     ) {
         self.artwork = artwork
         self.artworkDescription = artworkDescription
         artworkImage = ZoomableAsyncImageView(url: artwork.imageUrl, contentMode: .scaleAspectFit)
-        artworkModal = ArtworkIntroductionModal(frame: .zero, artwork: artwork, descrption: artworkDescription)
+        artworkModal = ArtworkIntroductionModal(
+            artwork: artwork,
+            descrption: artworkDescription,
+            review: review,
+            highlights: highlights
+        )
         super.init(frame: .zero)
     }
 
@@ -95,8 +106,10 @@ import SwiftUI
 struct ArtworkIntroductionViewPreview: PreviewProvider {
     static var previews: some View {
         ArtworkIntroductionView(
-            Artwork.mockData,
-            ArtworkDescription.mockData
+            artwork: Artwork.mockData,
+            artworkDescription: ArtworkDescription.mockData,
+            review: String.lorenIpsum,
+            highlights: Highlight.mockData
         ).toPreview()
     }
 }

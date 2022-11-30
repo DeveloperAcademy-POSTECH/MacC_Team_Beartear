@@ -15,19 +15,23 @@ extension UITextView {
     ) {
         let (fontSize, lineheight, fontWeight) = typography.toValue
         self.font = .systemFont(ofSize: fontSize, weight: fontWeight)
-        self.setTypingAttributes(lineHeightMultiple: lineheight)
+        self.setTypingAttributes(fontSize: fontSize, weight: fontWeight, lineHeightMultiple: lineheight)
         self.textColor = color
     }
     
     func setTypingAttributes(
+        fontSize: CGFloat,
+        weight: UIFont.Weight,
         kernValue: Double = 0.0,
         lineSpacing: CGFloat = 0.0,
         lineHeightMultiple: CGFloat = 0.0) {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = lineSpacing
         paragraphStyle.lineHeightMultiple = lineHeightMultiple
-        let attributes: [NSAttributedString.Key: Any] = [.kern: -0.6,
-                                                         .paragraphStyle: paragraphStyle]
+        let attributes: [NSAttributedString.Key: Any] = [.kern: kernValue,
+                                                         .paragraphStyle: paragraphStyle,
+                                                         .font: UIFont.systemFont(ofSize: fontSize, weight: weight)
+        ]
         self.typingAttributes = attributes
 
         guard attributedText.length > 0 else {
