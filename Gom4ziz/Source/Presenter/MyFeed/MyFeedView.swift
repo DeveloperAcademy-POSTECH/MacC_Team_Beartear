@@ -11,7 +11,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     private let artwork: Artwork
     private let questionAnswer: QuestionAnswer
-    var myFeedViewModelDTO: MyFeedViewModelMapper?
+    var myFeedViewModelDTO: MyFeedViewModelDTO?
     
     // MARK: - UI Component
     
@@ -156,7 +156,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     init(artwork: Artwork,
          questionAnswer: QuestionAnswer,
-         myFeedViewModelDTO: MyFeedViewModelMapper? = nil) {
+         myFeedViewModelDTO: MyFeedViewModelDTO? = nil) {
         self.artwork = artwork
         self.questionAnswer = questionAnswer
         self.myFeedViewModelDTO = myFeedViewModelDTO

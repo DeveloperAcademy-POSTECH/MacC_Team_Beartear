@@ -10,7 +10,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-struct MyFeedViewModelMapper {
+struct MyFeedViewModelDTO {
     let artworkDescription: String
     let highlights: [Highlight]
     let artworkReview: String
@@ -29,7 +29,7 @@ final class MyFeedViewModel {
     private let fetchArtworkReviewUseCase: FetchArtworkReviewUseCase
     private let fetchArtworkDescriptionUseCase: FetchArtworkDescriptionUseCase
     private let fetchHighlightUseCase: FetchHighlightUseCase
-    let myFeedViewModelMapper: BehaviorRelay<Loadable<MyFeedViewModelMapper>> = .init(value: .notRequested)
+    let myFeedViewModelRelay: BehaviorRelay<Loadable<MyFeedViewModelDTO>> = .init(value: .notRequested)
     
     private let disposeBag: DisposeBag = .init()
     
@@ -42,20 +42,19 @@ final class MyFeedViewModel {
     }
     
     func fetchMyFeed(artworkId: Int, userId: String) {
-        myFeedViewModelMapper.accept(.isLoading(last: nil))
+        myFeedViewModelRelay.accept(.isLoading(last: nil))
         Observable.zip(fetchArtworkDescription(of: artworkId),
                        fetchHighlight(of: artworkId, userId),
                        fetchArtworkReview(of: artworkId, userId))
         .map { (description: ArtworkDescription, highlights: [Highlight], review: ArtworkReview) in
-            MyFeedViewModelMapper(artworkDescription: description,
+            MyFeedViewModelDTO(artworkDescription: description,
                                   highlights: highlights,
                                   artworkReview: review)
         }
-        .observe(on: MainScheduler.instance)
         .subscribe { [weak self] in
-            self?.myFeedViewModelMapper.accept(.loaded($0))
+            self?.myFeedViewModelRelay.accept(.loaded($0))
         } onError: { [weak self] in
-            self?.myFeedViewModelMapper.accept(.failed($0))
+            self?.myFeedViewModelRelay.accept(.failed($0))
         }
         .disposed(by: disposeBag)
 
