@@ -28,7 +28,6 @@ extension UILabel {
         lineHeightMultiple: CGFloat = 0.0,
         alignment: NSTextAlignment = .left) {
             guard let labelText = self.text else { return }
-            
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = lineSpacing
             paragraphStyle.lineHeightMultiple = lineHeightMultiple
@@ -43,7 +42,6 @@ extension UILabel {
             } else {
                 attributedString = NSMutableAttributedString(string: labelText)
             }
-        
             attributedString.addAttribute(NSAttributedString.Key.paragraphStyle,
                                           value: paragraphStyle,
                                           range: NSRange(location: 0, length: attributedString.length))
