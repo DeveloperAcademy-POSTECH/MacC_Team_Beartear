@@ -64,8 +64,7 @@ private extension ArtworkIntroductionViewController {
 
         viewModel
             .canUpload
-            .asDriver()
-            .drive(completeButton.rx.isEnabled)
+            .bind(to: completeButton.rx.isEnabled)
             .disposed(by: disposeBag)
 
         artworkIntroductionView
@@ -84,11 +83,11 @@ private extension ArtworkIntroductionViewController {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .gray4
         navigationController?.navigationBar.isTranslucent = false
+
         completeButton
             .rx
             .tap
-            .asDriver()
-            .drive(onNext: { [unowned self] in
+            .subscribe(onNext: { [unowned self] in
                 self.viewModel.addArtworkReview()
             })
             .disposed(by: disposeBag)
