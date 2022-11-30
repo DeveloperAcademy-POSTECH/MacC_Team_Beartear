@@ -34,8 +34,8 @@ extension UILabel {
             paragraphStyle.lineHeightMultiple = lineHeightMultiple
             paragraphStyle.alignment = alignment
             
-            let lineHeight = font.pointSize * lineHeightMultiple
-            let baseLineOffset = (lineHeight - font.pointSize) / 2
+            let lineHeight = font.lineHeight * lineHeightMultiple
+            let baseLineOffset = (lineHeight - font.lineHeight) / 2
             
             let attributedString: NSMutableAttributedString
             if let labelAttributedText = self.attributedText {
