@@ -14,6 +14,7 @@ enum ImageName {
     static let questionImageMask = "QuestionImageMask"
     static let bakingFirst = "BakingFirst"
     static let bakingSecond = "BakingSecond"
+    static let errorImage = "ErrorImage"
     
     // SF Symbol
     static let rightArrow = "arrow.right"
