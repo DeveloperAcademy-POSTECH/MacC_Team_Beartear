@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 
 protocol AddUserUsecase {
-    func addUser() -> Single<User>
+    func addUser(for userId: String) -> Single<User>
 }
 
 final class RealAddUserUsecase: AddUserUsecase {
@@ -19,17 +19,7 @@ final class RealAddUserUsecase: AddUserUsecase {
         self.userRepository = userRepository
     }
     
-    func addUser() -> Single<User> {
-        userRepository.addUser(for: getDeviceUUID())
-    }
-}
-
-extension RealAddUserUsecase {
-    private func getDeviceUUID() -> String {
-#if DEBUG
-        return "mock"
-#else
-        return UIDevice.current.identifierForVendor!.uuidString
-#endif
+    func addUser(for userId: String) -> Single<User> {
+        userRepository.addUser(for: userId)
     }
 }
