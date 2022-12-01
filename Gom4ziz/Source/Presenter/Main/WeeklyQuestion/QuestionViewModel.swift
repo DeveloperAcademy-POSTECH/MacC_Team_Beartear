@@ -14,11 +14,10 @@ final class QuestionViewModel {
 
     private let requestNextArtworkUsecase: RequestNextArtworkUsecase
     private let timeDiffHandler: TimeDiffHandler
-    private let dateHelper: DateHelper = .init()
+    private let artworkHelper: ArtworkHelper = .init()
     private let disposeBag: DisposeBag = .init()
     
     private(set) var artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
-    private(set) var remainingTime: PublishRelay<RemainingTimeStatus> = .init()
     private(set) var possibleAnsweringNewQuestion: BehaviorRelay<Bool> = .init(value: true)
     
     init(requestNextQuestionUsecase: RequestNextArtworkUsecase,
@@ -47,10 +46,9 @@ private extension QuestionViewModel {
     
     func checkRemainingTime() -> RemainingTimeStatus {
         let today = Date()
-        let comparedDate = getNextArtworkDate(from: today)
+        let comparedDate = artworkHelper.getNextArtworkDate(from: today)
         let diffTimeDateComponents = timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate)
         let timeStatus = formatDateComponentsToRemainingTimeStatus(dateComponents: diffTimeDateComponents)
-        remainingTime.accept(timeStatus)
         return timeStatus
     }
     
@@ -68,7 +66,6 @@ private extension QuestionViewModel {
         return failedStatus
     }
     
-    // 구현에 고민 필요, 깔끔하게 바꿀 필요성 보임
     func formatDateComponentsToRemainingTimeStatus(dateComponents: DateComponents) -> RemainingTimeStatus {
         let day = dateComponents.day
         let hour = dateComponents.hour
@@ -82,21 +79,6 @@ private extension QuestionViewModel {
             return .lessThanOneHour(minute: minute)
         } else {
             return .lessThanOneHour(minute: 1)
-        }
-    }
-    
-    func getNextArtworkDate(from today: Date) -> Date {
-        
-        let thisWeekSundayArtworkTime = dateHelper.makeDateInSameWeek(with: today, to: .sun, HHmmss: "140000")
-        let thisWeekSaturdayArtworkTime = dateHelper.makeDateInSameWeek(with: today, to: .sat, HHmmss: "140000")
-        
-        if today.isEarlierDate(than: thisWeekSundayArtworkTime) {
-            return thisWeekSundayArtworkTime
-        } else if today.isEarlierDate(than: thisWeekSaturdayArtworkTime) {
-            return thisWeekSaturdayArtworkTime
-        } else {
-            let nextWeekSundayArtworkTime = dateHelper.dateAfter(days: 7, from: thisWeekSundayArtworkTime)
-            return nextWeekSundayArtworkTime
         }
     }
 }

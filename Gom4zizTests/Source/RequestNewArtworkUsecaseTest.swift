@@ -7,20 +7,11 @@
 @testable import Gom4ziz
 import XCTest
 
-final class RequestNewArtworkUsecaseTest: XCTestCase {
+final class ArtworkHelperTest: XCTestCase {
 
-    private var requestNewArtworkUsecase: RequestNextArtworkUsecase!
+    private var artworkHelper = ArtworkHelper()
     private let oneHourSeconds: Double = 3600
     private lazy var oneDaySeconds: Double = oneHourSeconds * 24
-    
-    override func setUpWithError() throws {
-           try super.setUpWithError()
-           requestNewArtworkUsecase = RealRequestNextArtworkUsecase()
-       }
-   
-    override func tearDownWithError() throws {
-        requestNewArtworkUsecase = nil
-    }
     
     func test_이번주_일요일_아침기준_이번주에_받게될_남은_작품은_2개() throws {
         // given
@@ -29,9 +20,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         var num = -1
         
         // when
-        if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getThisWeekArtworkCount(after: sundayMorningDate)
-        }
+        num = artworkHelper.getThisWeekArtworkCount(after: sundayMorningDate)
         
         // then
         XCTAssertEqual(2, num)
@@ -44,9 +33,7 @@ final class RequestNewArtworkUsecaseTest: XCTestCase {
         var num = -1
         
         // when
-        if let usecase = requestNewArtworkUsecase as? RealRequestNextArtworkUsecase {
-            num = usecase.getThisWeekArtworkCount(after: mondayMorningDate)
-        }
+            num = artworkHelper.getThisWeekArtworkCount(after: mondayMorningDate)
         
         // then
         XCTAssertEqual(1, num)
