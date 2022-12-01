@@ -17,9 +17,6 @@ final class QuestionAnswerViewModel {
     private let disposeBag: DisposeBag = .init()
     private let userId: String
     let artwork: Artwork
-    var artworkDescription: ArtworkDescription? {
-        artworkDescriptionRelay.value.value
-    }
     // MARK: - Rx Relays
     let artworkDescriptionRelay: BehaviorRelay<Loadable<ArtworkDescription>> = .init(value: .notRequested)
     let addEvent: BehaviorRelay<Loadable<Void>> = .init(value: .notRequested)
