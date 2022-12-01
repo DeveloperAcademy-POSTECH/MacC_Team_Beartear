@@ -17,6 +17,7 @@ final class ErrorAlert: BaseAutoLayoutUIView {
     private let suggestionLabel: UILabel = UILabel()
     private let cancelButton: UIButton = UIButton()
     private let retryButton: UIButton = UIButton()
+    private let container: UIView = UIView()
 
     init(
         title: String,
@@ -34,11 +35,25 @@ final class ErrorAlert: BaseAutoLayoutUIView {
     }
 }
 
+// MARK: - 내부구현
+private extension ErrorAlert {
+
+    @objc func closeAlert() {
+        self.removeFromSuperview()
+    }
+
+    @objc func retry() {
+        closeAlert()
+        self.onRetryButtonTapped()
+    }
+}
+
 // MARK: - 프로토콜 구현
 extension ErrorAlert {
 
     func addSubviews() {
-        addSubviews(
+        addSubview(container)
+        container.addSubviews(
             image,
             titleLabel,
             suggestionLabel,
@@ -48,6 +63,7 @@ extension ErrorAlert {
     }
 
     func setUpConstraints() {
+        setUpContainerConstraints()
         setUpImageConstraints()
         setUpTitleConstraints()
         setUpSuggestionConstraints()
@@ -68,12 +84,21 @@ extension ErrorAlert {
 // MARK: - 제약조건 설정
 private extension ErrorAlert {
 
+    func setUpContainerConstraints() {
+        container.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            container.centerYAnchor.constraint(equalTo: centerYAnchor),
+            container.leftAnchor.constraint(equalTo: leftAnchor, constant: 26),
+            container.rightAnchor.constraint(equalTo: rightAnchor, constant: -26)
+        ])
+    }
+
     func setUpImageConstraints() {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.setContentHuggingPriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
-            image.centerXAnchor.constraint(equalTo: centerXAnchor),
-            image.topAnchor.constraint(equalTo: topAnchor, constant: 40)
+            image.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            image.topAnchor.constraint(equalTo: container.topAnchor, constant: 40)
         ])
     }
 
@@ -82,8 +107,8 @@ private extension ErrorAlert {
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 50),
-            titleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 47),
-            titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -47),
+            titleLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 47),
+            titleLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -47),
         ])
     }
 
@@ -101,9 +126,9 @@ private extension ErrorAlert {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.setContentHuggingPriority(.required, for: .vertical)
         NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: suggestionLabel.bottomAnchor, constant: 50),
+            cancelButton.topAnchor.constraint(equalTo: suggestionLabel.bottomAnchor, constant: 42),
             cancelButton.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
-            cancelButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40),
+            cancelButton.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -40),
         ])
 
     }
@@ -124,12 +149,17 @@ private extension ErrorAlert {
 private extension ErrorAlert {
 
     func setUpSelf() {
-        backgroundColor = .white
+        backgroundColor = .black.withAlphaComponent(0.5)
+        container.backgroundColor = .white
+        container.layer.cornerRadius = 16
+        container.layer.masksToBounds = true
     }
 
     func setUpTitleLabel() {
         titleLabel.text = title
-        titleLabel.textStyle(.Headline1, alignment: .center, .black)
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.textStyle(.Headline1, lineHeightMultiple: 1.12, alignment: .center, .black)
+        titleLabel.numberOfLines = 0
     }
 
     func setUpSuggestionLabel() {
@@ -143,16 +173,18 @@ private extension ErrorAlert {
         let attributes: AttributeContainer = cancelButton.textStyleAttributes(.Headline2, .gray4)
         var configuration: UIButton.Configuration = .borderless()
         configuration.attributedTitle = AttributedString("취소", attributes: attributes)
-        configuration.contentInsets = .init(top: 8, leading: 27, bottom: 8, trailing: 16)
+        configuration.contentInsets = .init(top: 8, leading: 27, bottom: 4, trailing: 16)
         cancelButton.configuration = configuration
+        cancelButton.addTarget(self, action: #selector(closeAlert), for: .touchUpInside)
     }
 
     func setUpRetryButton() {
         let attributes: AttributeContainer = retryButton.textStyleAttributes(.Headline2, .orange)
         var configuration: UIButton.Configuration = .borderless()
         configuration.attributedTitle = AttributedString("다시 시도", attributes: attributes)
-        configuration.contentInsets = .init(top: 8, leading: 16, bottom: 8, trailing: 27)
+        configuration.contentInsets = .init(top: 8, leading: 16, bottom: 4, trailing: 27)
         retryButton.configuration = configuration
+        retryButton.addTarget(self, action: #selector(retry), for: .touchUpInside)
     }
 
 }
