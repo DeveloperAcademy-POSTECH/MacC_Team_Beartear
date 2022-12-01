@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ArtworkHelper {
+struct ArtworkHelper {
     
     private let weeklyArtworksCount: Int = 2
     private let dateHelper: DateHelper = .init()
