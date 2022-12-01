@@ -95,6 +95,17 @@ extension SceneDelegate {
         ])
         changeRootViewController(vc)
     }
+
+    // 에러 경고창을 테스트할 수 있는 코드입니다.
+    func testErrorAlert() {
+        let vc = UIViewController()
+        changeRootViewController(vc)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            vc.showErrorAlert(title: "에러 테스트입니다.", suggestion: "테스트입니다") {
+                
+            }
+        }
+    }
 }
 #endif
 

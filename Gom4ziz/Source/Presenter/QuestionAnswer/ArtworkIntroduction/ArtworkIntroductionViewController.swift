@@ -59,9 +59,11 @@ private extension ArtworkIntroductionViewController {
                 case .loaded:
                     // TODO: 메인화면으로 이동하는 처리 해야함 and 토스트 메시지도
                     hideLottieLoadingView()
-                case .failed(let error):
-                    // TODO: 에러 처리 해야함
+                case .failed:
                     hideLottieLoadingView()
+                    showErrorAlert(title: "감상문을 저장하는데 실패했습니다.", suggestion: "작성한 감상문이 저장되지 않았습니다. 다시 시도하여 감상문을 저장해주세요.") { [unowned self] in
+                        self.viewModel.addArtworkReview()
+                    }
                 }
             })
             .disposed(by: disposeBag)
