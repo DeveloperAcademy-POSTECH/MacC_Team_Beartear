@@ -26,6 +26,13 @@ final class OnBoardingViewController: UIViewController {
     private let skipButton: UIButton = UIButton()
     private let pageControlContainer: PageIndexIndicatorView = PageIndexIndicatorView(totalCount: 3)
     private let disposeBag: DisposeBag = .init()
+    private var getDeviceUUID: String {
+#if DEBUG
+        return "mock"
+#else
+        return UIDevice.current.identifierForVendor!.uuidString
+#endif
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +70,7 @@ private extension OnBoardingViewController {
             .rx
             .tap
             .bind {
-                self.skipOnBoarding()
+                self.userRegister()
             }
             .disposed(by: disposeBag)
     }
@@ -77,14 +84,13 @@ private extension OnBoardingViewController {
                 .currentPageIdx
                 .accept(currentIdx + 1)
         } else {
-            skipOnBoarding()
+            userRegister()
         }
     }
     
-    func skipOnBoarding() {
-        // TODO: 유저 서버에 등록 registerUser
+    func userRegister() {
         userViewModel
-            .fetchUser()
+            .addUser(for: getDeviceUUID)
     }
 }
 

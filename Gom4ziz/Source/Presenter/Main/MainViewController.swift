@@ -12,7 +12,6 @@ import RxSwift
 
 final class MainViewController: UIViewController {
     
-    private let mainView: MainView = MainView()
     private let disposeBag: DisposeBag = .init()
     
     override func viewDidLoad() {
@@ -20,7 +19,6 @@ final class MainViewController: UIViewController {
     }
     
     override func loadView() {
-        self.view = mainView
     }
 }
 
