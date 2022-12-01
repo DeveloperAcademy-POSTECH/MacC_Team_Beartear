@@ -12,26 +12,6 @@ import RxSwift
 
 final class MyFeedViewController: UIViewController {
     
-    private let myFeedView: MyFeedView = .init(artwork: .mockData, artworkDescription: .mockData, questionAnswer: .mockData, artworkReview: .mockData, highlights: [])
-    private let viewModel: MyFeedViewModel = MyFeedViewModel(fetchArtworkReviewUseCase: RealFetchArtworkReviewUseCase(),
-                                                             fetchArtworkDescriptionUseCase: RealFetchArtworkDescriptionUseCase(),
-                                                             fetchHighlightUseCase: RealFetchHighlightUseCase())
-    private let disposebag: DisposeBag = .init()
-    
-    private var isLoading: Bool {
-        didSet {
-            if oldValue {
-                setUpLoadingView(loadingView)
-            } else {
-                removeLoadingView(loadingView)
-                
-                if isError {
-                    setUpErrorView(errorView)
-                }
-            }
-        }
-    }
-    
     private let user: User
     private let artwork: Artwork
     private let questionAnswer: QuestionAnswer
