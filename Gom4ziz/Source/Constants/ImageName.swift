@@ -12,6 +12,8 @@ enum ImageName {
     static let onBoarding1Image = "onBoarding1Image"
     static let onBoarding3Image = "onBoarding3Image"
     static let questionImageMask = "QuestionImageMask"
+    static let bakingFirst = "BakingFirst"
+    static let bakingSecond = "BakingSecond"
     
     // SF Symbol
     static let rightArrow = "arrow.right"

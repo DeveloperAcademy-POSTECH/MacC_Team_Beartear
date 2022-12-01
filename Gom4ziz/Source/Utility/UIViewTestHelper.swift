@@ -80,6 +80,21 @@ extension SceneDelegate {
         let rootVc = UINavigationController(rootViewController: vc)
         changeRootViewController(rootVc)
     }
+    
+    // 남은 시간 UI를 테스트할 수 있는 코드입니다.
+    func testRemainingTimeView() {
+        let vc = UIViewController()
+        let remainTimeView = RemainingTimeView(.moreThanOneDay(day: 5))
+        vc.view.addSubview(remainTimeView)
+        remainTimeView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            remainTimeView.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor),
+            remainTimeView.topAnchor.constraint(equalTo: vc.view.topAnchor),
+            remainTimeView.trailingAnchor.constraint(equalTo: vc.view.trailingAnchor),
+            remainTimeView.bottomAnchor.constraint(equalTo: vc.view.bottomAnchor)
+        ])
+        changeRootViewController(vc)
+    }
 }
 #endif
 

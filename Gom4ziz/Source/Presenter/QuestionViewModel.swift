@@ -18,7 +18,7 @@ final class QuestionViewModel {
     private let disposeBag: DisposeBag = .init()
     
     private(set) var artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
-    private(set) var remainingTime: PublishRelay<String> = .init()
+    private(set) var remainingTime: PublishRelay<RemainingTimeStatus> = .init()
     private(set) var possibleAnsweringNewQuestion: BehaviorRelay<Bool> = .init(value: true)
     
     init(requestNextQuestionUsecase: RequestNextArtworkUsecase,
@@ -36,8 +36,8 @@ final class QuestionViewModel {
                 self?.artwork.accept(loadedStatus)
             },
                        onError: { [weak self] error in
-                guard let status = self?.getArtworkStatus(error) else { return }
-                self?.artwork.accept(status)
+                guard let failedStatus = self?.errorToFailedOrNoData(error) else { return }
+                self?.artwork.accept(failedStatus)
             })
             .disposed(by: disposeBag)
     }
@@ -63,7 +63,7 @@ final class QuestionViewModel {
 
 private extension QuestionViewModel {
     
-    func getArtworkStatus(_ error: Error) -> WeeklyArtworkStatus? {
+    func errorToFailedOrNoData(_ error: Error) -> WeeklyArtworkStatus? {
         let failedStatus = WeeklyArtworkStatus.failed(error)
         guard case let .failed(error) = failedStatus else {
             return nil
@@ -75,22 +75,20 @@ private extension QuestionViewModel {
     }
     
     // 구현에 고민 필요, 깔끔하게 바꿀 필요성 보임
-    func formatDateComponentsToTextString(dateComponents: DateComponents) -> String {
+    func formatDateComponentsToTextString(dateComponents: DateComponents) -> RemainingTimeStatus {
         let day = dateComponents.day
         let hour = dateComponents.hour
         let minute = dateComponents.minute
         let second = dateComponents.second
         
         if let day, day > 0 {
-            return "\(day)일"
+            return .moreThanOneDay(day: day)
         } else if let hour, hour > 0 {
-            return "\(hour)시간"
+            return .lessThanDayMoreThanHour(hour: hour)
         } else if let minute, minute > 0 {
-            return "\(minute)분"
-        } else if let second, second > 0 {
-            return "1분"
+            return .lessThanOneHour(minute: minute)
         } else {
-            return ""
+            return .lessThanOneHour(minute: 1)
         }
     }
     
