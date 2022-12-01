@@ -11,13 +11,15 @@ import RxCocoa
 import RxSwift
 
 final class UserViewModel {
-    static let shared: UserViewModel = UserViewModel(fetchUserUsecase: RealFetchUserUsecase())
+    static let shared: UserViewModel = UserViewModel(fetchUserUsecase: RealFetchUserUsecase(), addUserUsecase: RealAddUserUsecase())
     private let fetchUserUsecase: FetchUserUsecase
+    private let addUserUsecase: AddUserUsecase
     private let disposeBag: DisposeBag = .init()
     let userObservable: BehaviorRelay<Loadable<User>> = .init(value: .notRequested)
     
-    init(fetchUserUsecase: FetchUserUsecase) {
+    init(fetchUserUsecase: FetchUserUsecase, addUserUsecase: AddUserUsecase) {
         self.fetchUserUsecase = fetchUserUsecase
+        self.addUserUsecase = addUserUsecase
     }
     
     func fetchUser() {
@@ -25,8 +27,24 @@ final class UserViewModel {
         fetchUserUsecase.fetchUser().subscribe { [weak self] user in
             self?.userObservable.accept(.loaded(user))
         } onError: { [weak self] error in
-            self?.userObservable.accept(.failed(error))
+            if case RxFirestoreError.documentIsNotExist = error {
+                self?.userObservable.accept(.failed(UserRequestError.notRegisteredUser))
+            } else {
+                self?.userObservable.accept(.failed(error))
+            }
         }
         .disposed(by: disposeBag)
+    }
+    
+    func addUser() {
+        userObservable.accept(.isLoading(last: nil))
+        addUserUsecase.addUser()
+            .subscribe(onSuccess: { [weak self] user in
+                self?.userObservable.accept(.loaded(user))
+            },
+                       onFailure: { [weak self] error in
+                self?.userObservable.accept(.failed(error))
+            })
+            .disposed(by: disposeBag)
     }
 }
