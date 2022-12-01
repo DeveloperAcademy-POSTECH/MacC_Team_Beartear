@@ -42,22 +42,12 @@ final class QuestionViewModel {
             .disposed(by: disposeBag)
     }
     
-    // TODO: interval로 인해 요구 기능치고는 너무 많은 소모가 있을 것으로 예상되어 observable stream을 다루는 함수가 아닌 그냥 체크 함수 사용할까 고민
-    func checkRemainingTime(to date: Date) -> Disposable {
-        return Observable<Int>
-            .interval(.seconds(60),
-                      scheduler: MainScheduler.asyncInstance)
-            .map { [weak self] _ in
-                let today = Date()
-                let comparedDate = self?.getNextArtworkDate(from: today)
-                return (self?.timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate!))!
-            }
-            .map { [weak self] in
-                (self?.formatDateComponentsToTextString(dateComponents: $0))!
-            }
-            .subscribe(onNext: { [weak self] in
-                self?.remainingTime.accept($0)
-            })
+    func checkRemainingTime(to date: Date) {
+        let today = Date()
+        let comparedDate = getNextArtworkDate(from: today)
+        let diffTimeDateComponents = timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate)
+        let timeStatus = formatDateComponentsToRemainingTimeStatus(dateComponents: diffTimeDateComponents)
+        remainingTime.accept(timeStatus)
     }
 }
 
@@ -75,11 +65,10 @@ private extension QuestionViewModel {
     }
     
     // 구현에 고민 필요, 깔끔하게 바꿀 필요성 보임
-    func formatDateComponentsToTextString(dateComponents: DateComponents) -> RemainingTimeStatus {
+    func formatDateComponentsToRemainingTimeStatus(dateComponents: DateComponents) -> RemainingTimeStatus {
         let day = dateComponents.day
         let hour = dateComponents.hour
         let minute = dateComponents.minute
-        let second = dateComponents.second
         
         if let day, day > 0 {
             return .moreThanOneDay(day: day)
