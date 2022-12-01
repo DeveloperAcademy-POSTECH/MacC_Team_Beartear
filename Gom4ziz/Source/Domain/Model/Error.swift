@@ -8,7 +8,7 @@
 import Foundation
 
 enum ArtworkRequestError: Error {
-    case noMoreDataError
+    case waitNextArtworkError
 }
 
 enum UserRequestError: Error {

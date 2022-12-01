@@ -120,7 +120,8 @@ private extension RemainingTimeView {
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: -3),
-            subTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
+            subTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            subTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -48)
         ])
     }
 }
