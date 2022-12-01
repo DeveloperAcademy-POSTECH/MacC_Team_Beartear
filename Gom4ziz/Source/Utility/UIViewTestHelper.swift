@@ -106,6 +106,11 @@ extension SceneDelegate {
             }
         }
     }
+    
+    func testMyFeedView() {
+        let naviVC = UINavigationController(rootViewController: MyFeedViewController(user: .mockData, artwork: .mockData, questionAnswer: .mockData))
+        changeRootViewController(naviVC)
+    }
 }
 #endif
 
