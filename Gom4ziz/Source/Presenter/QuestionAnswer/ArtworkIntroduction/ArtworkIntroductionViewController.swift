@@ -22,7 +22,7 @@ final class ArtworkIntroductionViewController: UIViewController {
         self.viewModel = viewModel
         self.artworkIntroductionView = ArtworkIntroductionView(
             artwork: viewModel.artwork,
-            artworkDescription: viewModel.artworkDescription!,
+            artworkDescription: viewModel.artworkDescriptionRelay.value.value!,
             review: viewModel.review.value,
             highlights: viewModel.highlights.value
         )
