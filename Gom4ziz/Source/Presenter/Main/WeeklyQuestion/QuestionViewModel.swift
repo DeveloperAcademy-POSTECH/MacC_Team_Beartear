@@ -41,27 +41,31 @@ final class QuestionViewModel {
             })
             .disposed(by: disposeBag)
     }
+}
+
+private extension QuestionViewModel {
     
-    func checkRemainingTime(to date: Date) {
+    func checkRemainingTime() -> RemainingTimeStatus {
         let today = Date()
         let comparedDate = getNextArtworkDate(from: today)
         let diffTimeDateComponents = timeDiffHandler.getDateComponentsDiff(from: today, to: comparedDate)
         let timeStatus = formatDateComponentsToRemainingTimeStatus(dateComponents: diffTimeDateComponents)
         remainingTime.accept(timeStatus)
+        return timeStatus
     }
-}
-
-private extension QuestionViewModel {
     
     func errorToFailedOrNoData(_ error: Error) -> WeeklyArtworkStatus? {
         let failedStatus = WeeklyArtworkStatus.failed(error)
         guard case let .failed(error) = failedStatus else {
             return nil
         }
-        guard let error = error as? ArtworkRequestError, error == .noMoreDataError else {
-            return failedStatus
+        if case RxFirestoreError.documentIsNotExist = error {
+            return .noMoreData
         }
-        return .noMoreData
+        if let error = error as? ArtworkRequestError, error == .waitNextArtworkError {
+            return .waitNextArtworkDay(checkRemainingTime())
+        }
+        return failedStatus
     }
     
     // 구현에 고민 필요, 깔끔하게 바꿀 필요성 보임

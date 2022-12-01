@@ -26,14 +26,14 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
     func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork> {
         let allocatedArtworkNum = getAllocatedArtworkCount(with: User.mockData)
         let nextArtworkId = userLastArtworkId + 1
-        if isNoMoreArtworkToSee(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
-            return Observable.error(ArtworkRequestError.noMoreDataError)
+        if shouldWaitNextArtwork(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
+            return Observable.error(ArtworkRequestError.waitNextArtworkError)
         }
 
         return artworkRepository.requestArtwork(of: nextArtworkId)
     }
     
-    private func isNoMoreArtworkToSee(nextArtworkId: Int, allocatedArtworkNum: Int) -> Bool {
+    private func shouldWaitNextArtwork(nextArtworkId: Int, allocatedArtworkNum: Int) -> Bool {
         nextArtworkId > allocatedArtworkNum
     }
     
