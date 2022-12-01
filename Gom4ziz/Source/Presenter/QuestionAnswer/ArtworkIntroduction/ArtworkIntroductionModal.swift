@@ -23,36 +23,27 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private var topDivider: CALayer?
     private var startY: CGFloat?
     private var bottomY: CGFloat!
-    private let contentInset: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
-    private var isInitiated: Bool = false
+    private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
 
     init(
+        frame: CGRect,
         artwork: Artwork,
         descrption: ArtworkDescription
     ) {
         self.artwork = artwork
         self.artworkDescription = descrption
         self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content)
-        super.init(frame: .zero)
+        self.bottomY = frame.minY
+        super.init(frame: frame)
         setUpPanGestureRecognizer()
         scrollView.delegate = self
+        hideModal()
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
 
-    // 첫 사이즈가 정해질 때, 각종 위치설정들을 정의함
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if !isInitiated {
-            guard let superview else { return }
-            isInitiated = true
-            frame = CGRect(x: superview.bounds.minX, y: superview.bounds.height - 160, width: superview.bounds.width, height: superview.bounds.height)
-            bottomY = superview.bounds.height - 160
-            hideModal()
-        }
-    }
 }
 
 // MARK: - 프로토콜 구현부
@@ -189,6 +180,7 @@ extension ArtworkIntroductionModal: UIScrollViewDelegate {
 private extension ArtworkIntroductionModal {
 
     func addTopDivider() {
+        guard topDivider == nil else { return }
         topDivider = CALayer()
         topDivider!.backgroundColor = UIColor.gray2.cgColor
         topDivider!.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 1)
@@ -234,7 +226,7 @@ private extension ArtworkIntroductionModal {
         scrollView.isScrollEnabled = true
         scrollView.showsVerticalScrollIndicator = true
         scrollView.indicatorStyle = .black
-        scrollView.contentInset = contentInset
+        scrollView.contentInset = baseInsets
     }
 
     func setUpArtistLabel() {
@@ -264,7 +256,7 @@ private extension ArtworkIntroductionModal {
     }
 
     @objc func keyboardWillHide() {
-        let contentInset = contentInset
+        let contentInset = baseInsets
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = .zero
     }
@@ -367,7 +359,7 @@ private extension ArtworkIntroductionModal {
 import SwiftUI
 struct ArtworkIntroductionModalPreview: PreviewProvider {
     static var previews: some View {
-        ArtworkIntroductionModal(artwork: .mockData, descrption: .mockData).toPreview()
+        ArtworkIntroductionModal(frame: CGRect(x: 0, y: 300, width: 400, height: 800), artwork: .mockData, descrption: .mockData).toPreview()
     }
 }
 #endif

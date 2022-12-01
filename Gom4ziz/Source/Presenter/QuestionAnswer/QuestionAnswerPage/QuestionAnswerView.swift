@@ -31,6 +31,24 @@ final class QuestionAnswerView: BaseAutoLayoutUIView {
 
 }
 
+// MARK: - 퍼블릭 API
+extension QuestionAnswerView {
+
+    func showSkeletonUI() {
+        isUserInteractionEnabled = false
+        questionView.showSkeleton(cornerRadius: 12)
+        myThinkLabel.showSkeleton(cornerRadius: 4)
+        answerInputTextView.showSkeleton(cornerRadius: 8)
+    }
+
+    func hideSkeletonUI() {
+        questionView.hideSkeleton()
+        myThinkLabel.hideSkeleton()
+        answerInputTextView.hideSkeleton()
+        isUserInteractionEnabled = true
+    }
+}
+
 extension QuestionAnswerView {
 
     func addSubviews() {

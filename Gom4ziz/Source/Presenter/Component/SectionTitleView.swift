@@ -7,8 +7,11 @@
 
 import UIKit
 
-final class SectionTitleView: UILabel {
-    
+final class SectionTitleView: UILabel, Skeletonable {
+
+    let originalCornerRadius: CGFloat = 0
+    var skeletonLayer: CALayer?
+
     init(title: String) {
         super.init(frame: .zero)
         self.text = title

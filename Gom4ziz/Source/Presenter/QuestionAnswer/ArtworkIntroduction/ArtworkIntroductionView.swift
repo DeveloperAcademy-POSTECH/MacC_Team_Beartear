@@ -9,27 +9,36 @@ import UIKit
 
 final class ArtworkIntroductionView: BaseAutoLayoutUIView {
 
+    private let artwork: Artwork
+    private let artworkDescription: ArtworkDescription
     private let artworkImage: ZoomableAsyncImageView
-    private let artworkModal: ArtworkIntroductionModal
+    private var artworkModal: ArtworkIntroductionModal!
+    private var isInitiated: Bool = false
 
     init(
         _ artwork: Artwork,
         _ artworkDescription: ArtworkDescription
     ) {
-        artworkImage = ZoomableAsyncImageView(url: artwork.imageUrl, contentMode: .scaleAspectFill)
-        artworkModal = ArtworkIntroductionModal(artwork: artwork, descrption: artworkDescription)
+        self.artwork = artwork
+        self.artworkDescription = artworkDescription
+        artworkImage = ZoomableAsyncImageView(url: artwork.imageUrl, contentMode: .scaleAspectFit)
         super.init(frame: .zero)
     }
 
     required init?(coder: NSCoder) {
         fatalError()
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        addArtworkInfoModal()
+    }
 }
 
 extension ArtworkIntroductionView {
 
     func addSubviews() {
-        addSubviews(artworkImage, artworkModal)
+        addSubviews(artworkImage)
     }
 
     func setUpConstraints() {
@@ -49,10 +58,23 @@ private extension ArtworkIntroductionView {
         artworkImage.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             artworkImage.widthAnchor.constraint(equalTo: widthAnchor),
-            artworkImage.heightAnchor.constraint(equalTo: artworkImage.widthAnchor, multiplier: 1.33),
+            artworkImage.heightAnchor.constraint(equalTo: artworkImage.widthAnchor, multiplier: 1.487),
             artworkImage.centerXAnchor.constraint(equalTo: centerXAnchor),
             artworkImage.topAnchor.constraint(equalTo: topAnchor)
         ])
+    }
+
+}
+
+private extension ArtworkIntroductionView {
+
+    func addArtworkInfoModal() {
+        if !isInitiated {
+            isInitiated = true
+            let modalFrame: CGRect = CGRect(x: frame.minX, y: artworkImage.frame.maxY, width: frame.width, height: frame.height)
+            artworkModal = ArtworkIntroductionModal(frame: modalFrame, artwork: artwork, descrption: artworkDescription)
+            addSubview(artworkModal)
+        }
     }
 
 }
