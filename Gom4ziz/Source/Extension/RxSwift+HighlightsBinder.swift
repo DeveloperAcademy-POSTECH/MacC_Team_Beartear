@@ -11,7 +11,7 @@ import RxSwift
 extension Reactive where Base: HighlightedTextView {
     var highlightsBinder: Binder<[Highlight]> {
         Binder(base) { target, value in
-            target.highlights = value
+            target.highlight = value
         }
     }
 }
