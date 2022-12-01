@@ -59,7 +59,7 @@ final class ErrorView: BaseAutoLayoutUIView {
         button.titleLabel?.font = .boldSystemFont(ofSize: 12)
         button.backgroundColor = .gray4
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(removeErrorView), for: .touchUpInside)
+        button.addTarget(self, action: #selector(retryButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -78,9 +78,12 @@ final class ErrorView: BaseAutoLayoutUIView {
         return stackView
     }()
     
-    init(message: ErrorViewMessage, isShowLogo: Bool = true) {
+    private let onRetryButtonTapped: () -> Void
+    
+    init(message: ErrorViewMessage, isShowLogo: Bool = true, onRetryButtonTapped: @escaping () -> Void) {
         self.message = message
         self.isShowLogo = isShowLogo
+        self.onRetryButtonTapped = onRetryButtonTapped
         super.init(frame: .zero)
     }
     
@@ -89,6 +92,8 @@ final class ErrorView: BaseAutoLayoutUIView {
     }
     
 }
+
+// MARK: - SetUp Layouts
 
 extension ErrorView {
     
@@ -112,9 +117,12 @@ extension ErrorView {
     
 }
 
+// MARK: - Button Actions
+
 private extension ErrorView {
     
-    @objc func removeErrorView() {
+    @objc func retryButtonTapped() {
+        onRetryButtonTapped()
         self.removeFromSuperview()
     }
     
@@ -124,7 +132,9 @@ private extension ErrorView {
 import SwiftUI
 struct ErrorViewPreview: PreviewProvider {
     static var previews: some View {
-        ErrorView(message: .tiramisul, isShowLogo: false)
+        ErrorView(message: .tiramisul, isShowLogo: false) {
+            
+        }
             .toPreview()
     }
 }

@@ -12,15 +12,21 @@ import RxSwift
 
 final class MyFeedViewController: UIViewController {
     
+    // MARK: - Data property
+    
     private let user: User
     private let artwork: Artwork
     private let questionAnswer: QuestionAnswer
     
-    private lazy var myFeedView: MyFeedView = .init(artwork: artwork, questionAnswer: questionAnswer)
+    // MARK: - UI Components
+    
+    private lazy var myFeedView: MyFeedView = .init(artwork: artwork,
+                                                    questionAnswer: questionAnswer)
     private lazy var backButton: UIBarButtonItem = .init(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backButtonTapped))
     private let editButton: UIBarButtonItem = .init(title: "편집")
     
     private let viewModel: MyFeedViewModel
+    private let myFeedViewModelDTO: BehaviorRelay<MyFeedViewModelDTO?> = .init(value: nil)
     private let disposeBag: DisposeBag = .init()
     
     init(user: User,
@@ -45,24 +51,24 @@ final class MyFeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchMyFeedViewModelMapper()
         setUpNavigationBar()
         setUpObservers()
+        fetchMyFeedViewModel()
     }
     
 }
 
 // MARK: - Private API
+
 private extension MyFeedViewController {
     
-    func fetchMyFeedViewModelMapper() {
+    func fetchMyFeedViewModel() {
         viewModel.fetchMyFeed(artworkId: artwork.id,
                               userId: user.id)
     }
     
     func setUpObservers() {
         setMyFeedViewModelObserver()
-        setErrorViewObserver()
     }
     
     func setMyFeedViewModelObserver() {
@@ -70,31 +76,46 @@ private extension MyFeedViewController {
             .asDriver()
             .drive { [weak self] model in
                 switch model {
-                case .notRequested, .isLoading:
-                    self?.setUpLoadingView()
+                case .notRequested:
+                    break
+                case .isLoading:
+                    self?.showLottieLoadingView()
                 case .loaded(let data):
-                    self?.removeLoadingView()
-                    self?.myFeedView.myFeedViewModelDTO = data
+                    self?.hideLottieLoadingView()
+                    self?.myFeedViewModelDTO.accept(data)
                 case .failed:
-                    self?.removeLoadingView()
-                    self?.setUpErrorView(.tiramisul, false)
+                    self?.hideLottieLoadingView()
+                    self?.setUpErrorView(.tiramisul, false) {
+                        self?.viewModel.fetchMyFeed(artworkId: (self?.artwork.id)!,
+                                                    userId: (self?.user.id)!)
+                    }
                 }
             }
             .disposed(by: disposeBag)
-    }
-    
-    func setErrorViewObserver() {
-        getErrorView()?.retryButton
-            .rx
-            .tap
-            .subscribe({ [weak self] _ in
-                self?.viewModel.fetchMyFeed(artworkId: (self?.artwork.id)!,
-                                            userId: (self?.user.id)!)
+        
+        myFeedViewModelDTO
+            .map(\.?.artworkDescription)
+            .subscribe(onNext: { [weak self] in
+                self?.myFeedView.highlightTextView.textView.text = $0 ?? " "
             })
+            .disposed(by: disposeBag)
+        
+        myFeedViewModelDTO
+            .map(\.?.highlights)
+            .subscribe(onNext: { [weak self] in
+                self?.myFeedView.highlightTextView.highlights = $0 ?? []
+            })
+            .disposed(by: disposeBag)
+        
+        myFeedViewModelDTO
+            .map(\.?.artworkReview)
+            .bind(to: myFeedView.reviewLabel.rx.text)
             .disposed(by: disposeBag)
     }
 
 }
+
+// MARK: - Button Actions
 
 private extension MyFeedViewController {
     
@@ -104,7 +125,8 @@ private extension MyFeedViewController {
     
 }
 
-// MARK: - Navigation Bar 설정 부분
+// MARK: - SetUp Navigation Bar
+
 private extension MyFeedViewController {
 
     func setUpNavigationBar() {

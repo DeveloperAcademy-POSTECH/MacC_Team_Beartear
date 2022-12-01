@@ -9,26 +9,8 @@ import UIKit
 
 extension UIViewController {
     
-    func setUpLoadingView() {
-        let loadingView: LoadingView = .init()
-        loadingView.tag = 1
-        self.view.addSubview(loadingView)
-        loadingView.startLoadingAnimation()
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            loadingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            loadingView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            loadingView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            loadingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
-    }
-    
-    func removeLoadingView() {
-        (self.view.viewWithTag(1) as? LoadingView)?.removeFromSuperview()
-    }
-    
-    func setUpErrorView(_ message: ErrorViewMessage, _ isShowLogo: Bool) {
-        let errorView: ErrorView = .init(message: message, isShowLogo: isShowLogo)
+    func setUpErrorView(_ message: ErrorViewMessage, _ isShowLogo: Bool, onRetryButtonTapped: @escaping () -> Void = { }) {
+        let errorView: ErrorView = .init(message: message, isShowLogo: isShowLogo, onRetryButtonTapped: onRetryButtonTapped)
         errorView.tag = 2
         self.view.addSubview(errorView)
         errorView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,9 +21,5 @@ extension UIViewController {
             errorView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-    
-    func getErrorView() -> ErrorView? {
-        self.view.viewWithTag(2) as? ErrorView
-    }
-    
+
 }

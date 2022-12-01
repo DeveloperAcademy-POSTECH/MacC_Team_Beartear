@@ -12,7 +12,10 @@ import Lottie
 extension UIViewController {
 
     func showLottieLoadingView() {
-        guard let window = view.window else { return }
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return }
+        
         let lottieLoadingView: LottieAnimationView = LottieAnimationView(name: "spinner")
         lottieLoadingView.loopMode = .loop
         lottieLoadingView.backgroundColor = .black.withAlphaComponent(0.5)
@@ -23,7 +26,9 @@ extension UIViewController {
     }
 
     func hideLottieLoadingView() {
-        guard let window = view.window else { return }
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScene = scenes.first as? UIWindowScene
+        guard let window = windowScene?.windows.first else { return }
         window.viewWithTag(1004)?.removeFromSuperview()
     }
 
