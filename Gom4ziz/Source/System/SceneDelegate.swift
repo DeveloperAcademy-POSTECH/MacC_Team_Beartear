@@ -23,8 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
-        testQuestionAnswerView()
-        changeStatusBarBgColor(bgColor: .white)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -59,7 +57,6 @@ extension SceneDelegate {
     
     /// user 상태에 따라 윈도우의 루트 뷰컨을 바꾸는 함수
     func changeRootViewControllerBasedOnUserStatus() {
-        userViewModel.fetchUser()
         userViewModel.userObservable
             .subscribe(
                 onNext: { [weak self] in
@@ -67,6 +64,7 @@ extension SceneDelegate {
                     switch $0 {
                     case .loaded:
                         self.changeRootViewController(MainViewController())
+                        print("loaded")
                     case .isLoading:
                         // loading 화면
                         print("loading")
@@ -82,6 +80,7 @@ extension SceneDelegate {
                     }
                 })
             .disposed(by: disposeBag)
+        userViewModel.fetchUser()
     }
 
     func changeStatusBarBgColor(bgColor: UIColor?) {

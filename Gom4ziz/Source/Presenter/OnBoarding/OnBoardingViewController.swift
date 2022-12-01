@@ -82,9 +82,8 @@ private extension OnBoardingViewController {
     }
     
     func skipOnBoarding() {
-        // TODO: 유저 서버에 등록 registerUser
         userViewModel
-            .fetchUser()
+            .addUser()
     }
 }
 
