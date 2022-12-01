@@ -36,9 +36,9 @@ final class UserViewModel {
         .disposed(by: disposeBag)
     }
     
-    func addUser() {
+    func addUser(for userId: String) {
         userObservable.accept(.isLoading(last: nil))
-        addUserUsecase.addUser()
+        addUserUsecase.addUser(for: userId)
             .subscribe(onSuccess: { [weak self] user in
                 self?.userObservable.accept(.loaded(user))
             },
