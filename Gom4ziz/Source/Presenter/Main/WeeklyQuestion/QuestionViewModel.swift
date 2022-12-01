@@ -27,9 +27,9 @@ final class QuestionViewModel {
         self.timeDiffHandler = timeDiffHandler
     }
     
-    func requestArtwork(_ userLastArtworkId: Int) {
+    func requestArtwork(with user: User) {
         artwork.accept(.loading)
-        requestNextArtworkUsecase.requestNextArtwork(userLastArtworkId)
+        requestNextArtworkUsecase.requestNextArtwork(with: user)
             .subscribe(onNext: { [weak self] in
                 let loadedStatus = WeeklyArtworkStatus.loaded($0)
                 self?.artwork.accept(loadedStatus)
