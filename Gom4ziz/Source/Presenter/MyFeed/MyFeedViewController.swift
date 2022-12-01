@@ -26,7 +26,6 @@ final class MyFeedViewController: UIViewController {
     private let editButton: UIBarButtonItem = .init(title: "편집")
     
     private let viewModel: MyFeedViewModel
-    private let myFeedViewModelDTO: BehaviorRelay<MyFeedViewModelDTO?> = .init(value: nil)
     private let disposeBag: DisposeBag = .init()
     
     init(user: User,
@@ -72,17 +71,16 @@ private extension MyFeedViewController {
     }
     
     func setMyFeedViewModelObserver() {
-        viewModel.myFeedViewModelRelay
-            .asDriver()
+        let myFeedViewModelDriver = viewModel.myFeedViewModelRelay.asDriver()
+        myFeedViewModelDriver
             .drive { [weak self] model in
                 switch model {
                 case .notRequested:
                     break
                 case .isLoading:
                     self?.showLottieLoadingView()
-                case .loaded(let data):
+                case .loaded:
                     self?.hideLottieLoadingView()
-                    self?.myFeedViewModelDTO.accept(data)
                 case .failed:
                     self?.hideLottieLoadingView()
                     self?.setUpErrorView(.tiramisul, false) {
@@ -93,23 +91,19 @@ private extension MyFeedViewController {
             }
             .disposed(by: disposeBag)
         
-        myFeedViewModelDTO
-            .map(\.?.artworkDescription)
-            .subscribe(onNext: { [weak self] in
-                self?.myFeedView.highlightTextView.textView.text = $0 ?? " "
-            })
+        myFeedViewModelDriver
+            .compactMap({ $0.value?.artworkDescription })
+            .drive(myFeedView.highlightTextView.textView.rx.text)
             .disposed(by: disposeBag)
         
-        myFeedViewModelDTO
-            .map(\.?.highlights)
-            .subscribe(onNext: { [weak self] in
-                self?.myFeedView.highlightTextView.highlights = $0 ?? []
-            })
+        myFeedViewModelDriver
+            .compactMap({ $0.value?.highlights })
+            .drive(myFeedView.highlightTextView.rx.highlightsBinder)
             .disposed(by: disposeBag)
         
-        myFeedViewModelDTO
-            .map(\.?.artworkReview)
-            .bind(to: myFeedView.reviewLabel.rx.text)
+        myFeedViewModelDriver
+            .compactMap({ $0.value?.artworkReview })
+            .drive(myFeedView.reviewLabel.rx.text)
             .disposed(by: disposeBag)
     }
 
