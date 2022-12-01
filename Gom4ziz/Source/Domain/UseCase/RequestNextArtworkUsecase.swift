@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 protocol RequestNextArtworkUsecase {
-    func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork>
+    func requestNextArtwork(with user: User) -> Observable<Artwork>
 }
 
 final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
@@ -22,9 +22,9 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
         self.artworkRepository = artworkRepository
     }
     
-    func requestNextArtwork(_ userLastArtworkId: Int) -> Observable<Artwork> {
-        let allocatedArtworkNum = artworkHelper.getAllocatedArtworkCount(with: User.mockData)
-        let nextArtworkId = userLastArtworkId + 1
+    func requestNextArtwork(with user: User) -> Observable<Artwork> {
+        let allocatedArtworkNum = artworkHelper.getAllocatedArtworkCount(with: user)
+        let nextArtworkId = user.lastArtworkId + 1
         if shouldWaitNextArtwork(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {
             return Observable.error(ArtworkRequestError.waitNextArtworkError)
         }
