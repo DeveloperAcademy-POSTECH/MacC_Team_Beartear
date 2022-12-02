@@ -68,7 +68,7 @@ extension SceneDelegate {
                     case .loaded(let user):
                         self.userViewModel.user = user
                             self.changeRootViewController(MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(), userViewModel: UserViewModel.shared))
-                    case .isLoading:
+                    case .isLoading, .notRequested:
                         self.changeRootViewController(UserLoadingViewController())
                     case .failed(let error):
                         if let error = error as? UserRequestError, error == .notRegisteredUser {
@@ -76,8 +76,6 @@ extension SceneDelegate {
                         } else {
                             // error 화면
                         }
-                    case .notRequested:
-                        self.changeRootViewController(UserLoadingViewController())
                     }
                 })
             .disposed(by: disposeBag)
