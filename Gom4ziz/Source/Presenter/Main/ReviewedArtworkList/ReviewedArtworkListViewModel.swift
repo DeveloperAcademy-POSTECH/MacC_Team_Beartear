@@ -19,8 +19,8 @@ final class ReviewedArtworkListViewModel {
     
     private let disposeBag: DisposeBag = .init()
     
-    init(fetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase,
-         fetchQuestionAnswerUsecase: FetchQuestionAnswerUsecase) {
+    init(fetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase = RealFetchReviewedArtworkUsecase(),
+         fetchQuestionAnswerUsecase: FetchQuestionAnswerUsecase = RealFetchQuestionAnswerUsecase()) {
         self.fetchReviewedArtworkUsecase = fetchReviewedArtworkUsecase
         self.fetchQuestionAnswerUsecase = fetchQuestionAnswerUsecase
     }
