@@ -14,19 +14,13 @@ import RxSwift
 final class ReviewedArtworkListViewController: UIViewController {
     
     private var tableView = UITableView()
-    private let viewModel: ReviewedArtworkListViewModel
-    private let userId: String
-    private let artworkCount: Int
+    private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
+    private let userViewModel = UserViewModel.shared
     private let disposeBag = DisposeBag()
-    private var sectionSubject = BehaviorRelay(value: [Section]())
     
-    init(viewModel: ReviewedArtworkListViewModel,
-         reviewedArtworkListCellViewModelList: [ReviewedArtworkListCellViewModel],
-         userId: String,
-         artworkCount: Int) {
-        self.viewModel = viewModel
-        self.userId = userId
-        self.artworkCount = artworkCount
+    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel,
+         reviewedArtworkListCellViewModelList: [ReviewedArtworkListCellViewModel]) {
+        self.reviewedArtworkListViewModel = reviewedArtworkListViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,10 +30,12 @@ final class ReviewedArtworkListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchReviewedArtworkListCellList(for: userId, before: artworkCount)
+        if let userId = userViewModel.user?.id, let lastArtworkId = userViewModel.user?.lastArtworkId {
+            reviewedArtworkListViewModel.fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
+        }
         setupViews()
         setupTableViewDataSource()
-        bind()
+        setObserver()
         
     }
     
@@ -74,28 +70,29 @@ final class ReviewedArtworkListViewController: UIViewController {
         }
     }
     
-    private func bind() {
-        viewModel.reviewedArtworkListCellListObservable
-            .asObservable()
-            .subscribe { status in
+    private func setObserver() {
+        // 리뷰된 작품이 불러와졌을 때의 스트림
+        reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
+            .asDriver()
+            .compactMap { $0.value}
+            .map { [Section(headerTitle: "감상 기록", items: $0)] }
+            .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        // 리뷰된 작품이 불러오는 중이거나 실패했을 때의 스트림
+        reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
+            .subscribe(onNext: { status in
                 switch status {
                     case .notRequested:
                         print("notRequested")
-                    case .loaded(let reviewedArtworkListCellViewModelList):
-                        print("loaded", reviewedArtworkListCellViewModelList)
-                        self.sectionSubject.accept([Section(headerTitle: "감상 기록", items: reviewedArtworkListCellViewModelList)])
                     case .failed(let error):
                         print("error", error)
                     case .isLoading(let last):
                         print("last")
+                    default:
+                        return
                 }
-            } onError: { error in
-                print(error)
-            }
-            .disposed(by: disposeBag)
-        
-        sectionSubject
-            .bind(to: tableView.rx.items(dataSource: dataSource))
+            })
             .disposed(by: disposeBag)
     }
     

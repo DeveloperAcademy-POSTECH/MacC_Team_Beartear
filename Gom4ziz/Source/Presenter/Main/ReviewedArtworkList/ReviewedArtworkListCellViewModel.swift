@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 import RxDataSources
 
 /// ReviewedArtworkListCell 뷰를 위한 모델
@@ -36,8 +37,8 @@ extension ReviewedArtworkListCellViewModel: IdentifiableType, Equatable {
         return "\(artworkId)"
     }
 }
-// TableView를 위한 Section
 
+// TableView를 위한 Section
 struct Section {
     var headerTitle: String = "감상기록"
     var items: [Item]

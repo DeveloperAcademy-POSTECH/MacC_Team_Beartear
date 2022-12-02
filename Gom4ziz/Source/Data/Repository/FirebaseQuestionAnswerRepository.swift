@@ -23,8 +23,9 @@ struct FirebaseQuestionAnswerRepository {
 extension FirebaseQuestionAnswerRepository: QuestionAnswerRepository {
     func fetchQuestionAnswerList(for userId: String, before artworkId: Int) -> Observable<[QuestionAnswer]> {
         var questionAnswerObservableList: [Observable<QuestionAnswer>] = []
-        for i in 1...artworkId {
-            questionAnswerObservableList.append(getQuestionAnswerRef(for: userId, before: i)
+        
+        for i in 0..<artworkId {
+            questionAnswerObservableList.append(getQuestionAnswerRef(for: userId, before: i + 1)
                 .rx
                 .decodable(as: QuestionAnswer.self))
         }

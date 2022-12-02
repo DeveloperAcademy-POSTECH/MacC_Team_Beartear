@@ -33,8 +33,8 @@ final class ReviewedArtworkListViewModel {
                     ReviewedArtworkListCellViewModel(artwork: artworkList[$0], questionAnswer: questionAnswerList[$0])
                 }
             }
-            .subscribe(onNext: {
-                self.reviewedArtworkListCellListObservable.accept(.loaded($0))
+            .subscribe(onNext: { [weak self] in
+                self?.reviewedArtworkListCellListObservable.accept(.loaded($0))
             }, onError: {
                 self.reviewedArtworkListCellListObservable.accept(.failed($0))
             })

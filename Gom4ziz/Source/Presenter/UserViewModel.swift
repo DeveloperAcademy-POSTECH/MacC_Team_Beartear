@@ -16,10 +16,12 @@ final class UserViewModel {
     private let addUserUsecase: AddUserUsecase
     private let disposeBag: DisposeBag = .init()
     let userObservable: BehaviorRelay<Loadable<User>> = .init(value: .notRequested)
+    var user: User?
     
     init(fetchUserUsecase: FetchUserUsecase, addUserUsecase: AddUserUsecase) {
         self.fetchUserUsecase = fetchUserUsecase
         self.addUserUsecase = addUserUsecase
+        self.user = nil
     }
     
     func fetchUser() {
