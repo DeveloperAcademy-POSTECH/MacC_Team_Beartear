@@ -34,15 +34,16 @@ struct ArtworkHelper {
         let today = Date()
         let weekDaysCount = dateHelper.countWeekBetweenDays(from: userFirstLoginedDate, to: today)
         let firstWeekAllocatedArtworkCount = getThisWeekArtworkCount(after: userFirstLoginedDate)
+        let defaultAllocatedArtworkCount: Int = 1
         if weekDaysCount == 0 {
             if userFirstLoginedDate.isInSameWeek(with: today) {
-                return firstWeekAllocatedArtworkCount - getThisWeekArtworkCount(after: today)
+                return defaultAllocatedArtworkCount + firstWeekAllocatedArtworkCount - getThisWeekArtworkCount(after: today)
             } else {
-                return firstWeekAllocatedArtworkCount + weeklyArtworksCount - getThisWeekArtworkCount(after: today)
+                return defaultAllocatedArtworkCount + firstWeekAllocatedArtworkCount + weeklyArtworksCount - getThisWeekArtworkCount(after: today)
             }
         } else {
             let lastWeekAllocatedArtworkCount = weeklyArtworksCount - getThisWeekArtworkCount(after: today)
-            return firstWeekAllocatedArtworkCount + weekDaysCount * weeklyArtworksCount + lastWeekAllocatedArtworkCount
+            return defaultAllocatedArtworkCount + firstWeekAllocatedArtworkCount + weekDaysCount * weeklyArtworksCount + lastWeekAllocatedArtworkCount
         }
     }
     
