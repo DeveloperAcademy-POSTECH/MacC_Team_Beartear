@@ -7,12 +7,16 @@
 
 import UIKit
 
+import RxSwift
+
 final class AsyncImageView: UIImageView {
 
-    private let url: String
+    private var url: String
     private var errorIndicator: UIButton?
     private let progressView: UIView
     private let filterOptions: [ImageFilterOption]
+    private var previousDisposable: Disposable?
+    private let asyncImageManager: AsyncImageManager = .shared
 
     init(
         url string: String,
@@ -34,9 +38,26 @@ final class AsyncImageView: UIImageView {
     }
 }
 
+// MARK: - 퍼블릭 API
+extension AsyncImageView {
+
+    func changeURL(_ url: URL) {
+        self.url = url.absoluteString
+        loadImageFromURL()
+    }
+
+    func changeURL(_ url: String) {
+        self.url = url
+        loadImageFromURL()
+    }
+
+}
+
 // MARK: - 내부구현
 private extension AsyncImageView {
+
     func addIndicator() {
+        guard progressView.superview == nil else { return }
         addSubview(progressView)
         progressView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -67,20 +88,34 @@ private extension AsyncImageView {
     }
 
     @objc func loadImageFromURL() {
+        previousDisposable?.dispose()
         startLoading()
-        loadImage(url: url, filterOptions: filterOptions) { [weak self] error in
-            self?.progressView.removeFromSuperview()
-            guard error == nil else {
-                self?.addErrorIndicator(error!)
-                return
-            }
-        }
+        removeErrorView()
+        previousDisposable = asyncImageManager
+            .loadImage(url: url, filterOptions: filterOptions)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] image in
+                guard let self else { return }
+                self.removeProgressView()
+                self.image = image
+            }, onFailure: { [weak self] error in
+                guard let self else { return }
+                self.removeProgressView()
+                self.addErrorIndicator(error)
+            })
+    }
+
+    func removeProgressView() {
+        progressView.removeFromSuperview()
+    }
+
+    func removeErrorView() {
+        errorIndicator?.removeFromSuperview()
+        errorIndicator = nil
     }
 
     func startLoading() {
         addIndicator()
-        errorIndicator?.removeFromSuperview()
-        errorIndicator = nil
     }
 }
 
