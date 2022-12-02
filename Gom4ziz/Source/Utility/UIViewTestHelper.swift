@@ -126,7 +126,7 @@ extension SceneDelegate {
     
     func testReviewedArtworkListView() {
         let vc = MainViewController(
-            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase()))
+            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase()), userViewModel: UserViewModel.shared)
         changeRootViewController(vc)
     }
 }

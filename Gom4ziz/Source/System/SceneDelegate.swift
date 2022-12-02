@@ -67,7 +67,7 @@ extension SceneDelegate {
                     switch $0 {
                     case .loaded(let user):
                         self.userViewModel.user = user
-                        self.changeRootViewController(MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase())))
+                            self.changeRootViewController(MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase()), userViewModel: UserViewModel.shared))
                         print("loaded")
                     case .isLoading:
                         // loading 화면

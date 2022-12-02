@@ -35,8 +35,8 @@ final class ReviewedArtworkListViewModel {
             }
             .subscribe(onNext: { [weak self] in
                 self?.reviewedArtworkListCellListObservable.accept(.loaded($0))
-            }, onError: {
-                self.reviewedArtworkListCellListObservable.accept(.failed($0))
+            }, onError: { [weak self] in
+                self?.reviewedArtworkListCellListObservable.accept(.failed($0))
             })
             .disposed(by: disposeBag)
     }

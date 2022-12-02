@@ -15,11 +15,12 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     
     private var tableView = UITableView()
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
-    private let userViewModel = UserViewModel.shared
+    private let userViewModel: UserViewModel
     private let disposeBag = DisposeBag()
     
-    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel) {
+    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel, userViewModel: UserViewModel) {
         self.reviewedArtworkListViewModel = reviewedArtworkListViewModel
+        self.userViewModel = userViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,10 +29,13 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        if let userId = userViewModel.user?.id, let lastArtworkId = userViewModel.user?.lastArtworkId {
-            reviewedArtworkListViewModel.fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
+        guard let user = userViewModel.user else {
+          return
         }
+        let userId = user.id
+        let lastArtworkId = user.lastArtworkId
+        reviewedArtworkListViewModel.fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
+        
         setupViews()
         setupTableViewDataSource()
         setObserver()
@@ -70,17 +74,20 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     }
     
     private func setObserver() {
+        
+        let reviewdArtworkCellListDriver = reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
+                     .asDriver()
+
         // 리뷰된 작품이 불러와졌을 때의 스트림
-        reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
-            .asDriver()
-            .compactMap { $0.value}
+        reviewdArtworkCellListDriver
+            .compactMap { $0.value }
             .map { [Section(headerTitle: "감상 기록", items: $0)] }
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         // 리뷰된 작품이 불러오는 중이거나 실패했을 때의 스트림
-        reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
-            .subscribe(onNext: { status in
+        reviewdArtworkCellListDriver
+            .drive(onNext: { status in
                 switch status {
                     case .notRequested:
                         print("notRequested")
