@@ -60,7 +60,8 @@ let appTarget: Target = Project.target(name: "Gom4ziz",
                                                       .package(product: "RxSwift"),
                                                       .package(product: "RxRelay"),
                                                       .package(product: "RxCocoa"),
-                                                      .package(product: "Lottie")
+                                                      .package(product: "Lottie"),
+                                                      .package(product: "RxDataSources")
                                                       ],
                                        additionalFiles: [".swiftlint.yml"])
 
