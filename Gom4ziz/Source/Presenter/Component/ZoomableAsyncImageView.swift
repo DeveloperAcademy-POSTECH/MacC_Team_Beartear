@@ -47,6 +47,19 @@ final class ZoomableAsyncImageView: UIScrollView {
     }
 }
 
+// MARK: - 퍼블릭 API
+extension ZoomableAsyncImageView {
+
+    func changeURL(_ url: URL) {
+        self.asyncImageView.changeURL(url)
+    }
+
+    func changeURL(_ url: String) {
+        self.asyncImageView.changeURL(url)
+    }
+
+}
+
 extension ZoomableAsyncImageView: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         self.asyncImageView

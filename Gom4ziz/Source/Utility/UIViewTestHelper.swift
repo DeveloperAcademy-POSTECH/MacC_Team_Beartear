@@ -64,6 +64,14 @@ extension SceneDelegate {
         let zoomable = ZoomableAsyncImageView(url: Artwork.mockData.imageUrl)
         vc.view.addSubview(zoomable)
         zoomable.frame = CGRect(x: 0, y: 100, width: 300, height: 300)
+        let retryButton = UIButton()
+        retryButton.titleLabel?.text = "다시 로딩"
+        retryButton.backgroundColor = .blue
+        retryButton.frame = CGRect(x: 150, y: 500, width: 100, height: 100)
+        retryButton.addAction(.init(handler: { _ in
+            zoomable.changeURL(Artwork.mockData.imageUrl)
+        }), for: .touchUpInside)
+        vc.view.addSubview(retryButton)
         changeRootViewController(vc)
     }
     
