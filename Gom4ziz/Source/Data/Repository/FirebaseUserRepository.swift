@@ -21,6 +21,7 @@ final class FirebaseUserRepository {
 
 // MARK: - UserRepository protocol extension
 extension FirebaseUserRepository: UserRepository {
+    
     func addUser(for userId: String) -> Single<User> {
         let user = User(id: userId,
                         lastArtworkId: 0,
@@ -30,17 +31,21 @@ extension FirebaseUserRepository: UserRepository {
             .setData(user)
             .map { user }
     }
+    
     func fetchUser(for userId: String) -> Observable<User> {
         return getUserRef(of: userId)
             .rx
             .decodable(as: User.self)
     }
+    
 }
 
 // MARK: - private extension
 private extension FirebaseUserRepository {
+    
     private func getUserRef(of userId: String) -> DocumentReference {
         db.collection(CollectionName.user)
             .document(userId)
     }
+    
 }

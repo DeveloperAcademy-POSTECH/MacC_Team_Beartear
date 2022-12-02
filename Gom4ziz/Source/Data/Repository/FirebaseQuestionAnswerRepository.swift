@@ -32,10 +32,12 @@ extension FirebaseQuestionAnswerRepository: QuestionAnswerRepository {
 
         return Observable.zip(observables)
     }
+    
 }
 
 // MARK: - private extension
 extension FirebaseQuestionAnswerRepository {
+    
     private func getQuestionAnswerRef(for userId: String, before artworkId: Int) -> DocumentReference {
         db
             .collection(CollectionName.artwork)
@@ -43,5 +45,6 @@ extension FirebaseQuestionAnswerRepository {
             .collection(CollectionName.questionAnswer)
             .document(String(userId))
     }
+    
 }
 
