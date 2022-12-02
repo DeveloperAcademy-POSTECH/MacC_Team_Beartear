@@ -23,7 +23,7 @@ final class MyFeedViewController: UIViewController {
     private lazy var myFeedView: MyFeedView = .init(artwork: artwork,
                                                     questionAnswer: questionAnswer)
     private lazy var backButton: UIBarButtonItem = .init(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backButtonTapped))
-    private let editButton: UIBarButtonItem = .init(title: "편집")
+    private lazy var editButton: UIBarButtonItem = .init(title: "편집", style: .plain, target: self, action: #selector(editButtonTapped))
     
     private let viewModel: MyFeedViewModel
     private let disposeBag: DisposeBag = .init()
@@ -34,9 +34,12 @@ final class MyFeedViewController: UIViewController {
         self.user = user
         self.artwork = artwork
         self.questionAnswer = questionAnswer
-        self.viewModel = .init(fetchArtworkReviewUseCase: RealFetchArtworkReviewUseCase(),
+        self.viewModel = .init(userId: user.id,
+                               of: artwork,
+                               fetchArtworkReviewUseCase: RealFetchArtworkReviewUseCase(),
                                fetchArtworkDescriptionUseCase: RealFetchArtworkDescriptionUseCase(),
-                               fetchHighlightUseCase: RealFetchHighlightUseCase())
+                               fetchHighlightUseCase: RealFetchHighlightUseCase(),
+                               addArtworkReviewUseCase: RealArtworkReviewUsecase())
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -63,8 +66,14 @@ final class MyFeedViewController: UIViewController {
 private extension MyFeedViewController {
     
     func fetchMyFeedViewModel() {
-        viewModel.fetchMyFeed(artworkId: artwork.id,
-                              userId: user.id)
+        viewModel.fetchMyFeed()
+        
+        viewModel.myAnswer
+            .asDriver()
+            .drive(onNext: {[weak self] in
+                self?.viewModel.myAnswer.accept(self?.questionAnswer.questionAnswer ?? $0)
+            })
+            .disposed(by: disposeBag)
     }
     
     func setUpObservers() {
@@ -85,8 +94,7 @@ private extension MyFeedViewController {
                 case .failed:
                     self?.hideLottieLoadingView()
                     self?.showErrorView(.tiramisul, false) {
-                        self?.viewModel.fetchMyFeed(artworkId: (self?.artwork.id)!,
-                                                    userId: (self?.user.id)!)
+                        self?.viewModel.fetchMyFeed()
                     }
                 }
             }
@@ -122,6 +130,14 @@ extension MyFeedViewController: ZoomableDelegateProtocol {
     
     @objc func backButtonTapped() {
         dismiss(animated: true)
+    }
+    
+    @objc func editButtonTapped() {
+        let vc = UpdateReviewViewController(viewModel)
+        
+        let naviVC = UINavigationController(rootViewController: vc)
+        naviVC.modalPresentationStyle = .fullScreen
+        present(naviVC, animated: true)
     }
     
 }
