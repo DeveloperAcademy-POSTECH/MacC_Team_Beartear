@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ZoomableDelegateProtocol {
+protocol ZoomableDelegateProtocol: AnyObject {
     func onImageViewTapped()
 }
 
@@ -156,7 +156,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return stackView
     }()
     
-    var delegate: ZoomableDelegateProtocol?
+    weak var delegate: ZoomableDelegateProtocol?
     
     init(artwork: Artwork,
          questionAnswer: QuestionAnswer) {
