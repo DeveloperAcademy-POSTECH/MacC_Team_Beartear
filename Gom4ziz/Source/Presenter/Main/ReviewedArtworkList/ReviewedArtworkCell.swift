@@ -90,7 +90,7 @@ private extension ReviewedArtworkCell {
     func setUpQuestionLableConstaints() {
         questionLable.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            questionLable.topAnchor.constraint(equalTo: tiramisulCountLable.bottomAnchor, constant: 4),
+            questionLable.topAnchor.constraint(equalTo: tiramisulCountLable.bottomAnchor, constant: 10),
             questionLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             questionLable.trailingAnchor.constraint(equalTo: artworkImageView.leadingAnchor, constant: -16)
         ])
@@ -99,7 +99,7 @@ private extension ReviewedArtworkCell {
     func setUpAnswerLableConstaints() {
         answerLable.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            answerLable.topAnchor.constraint(equalTo: questionLable.bottomAnchor, constant: 4),
+            answerLable.topAnchor.constraint(equalTo: questionLable.bottomAnchor, constant: 10),
             answerLable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             answerLable.trailingAnchor.constraint(equalTo: artworkImageView.leadingAnchor, constant: -16),
             artworkImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)

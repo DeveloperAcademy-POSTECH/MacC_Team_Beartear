@@ -9,7 +9,7 @@
 import UIKit
 
 extension SceneDelegate {
-
+    
     // 하이라이트 텍스트뷰를 테스트할 수 있는 코드입니다
     func testHighlightedTextView() {
         let vc = UIViewController()
@@ -32,10 +32,10 @@ extension SceneDelegate {
             textView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             textView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor)
         ])
-
+        
         changeRootViewController(vc)
     }
-
+    
     // 작품 소개 modal을 테스트할 수 있는 코드입니다.
     func testArtworkIntroductionModal() {
         let vc = UIViewController()
@@ -57,7 +57,7 @@ extension SceneDelegate {
         ])
         changeRootViewController(vc)
     }
-
+    
     // 확대/축소 가능한 이미지 뷰를 테스트할 수 있는 코드입니다.
     func testZoomableAsyncImageView() {
         let vc = UIViewController()
@@ -66,14 +66,14 @@ extension SceneDelegate {
         zoomable.frame = CGRect(x: 0, y: 100, width: 300, height: 300)
         changeRootViewController(vc)
     }
-
+    
     // 작품 소개 UI를 테스트할 수 있는 코드입니다.
     func testArtworkIntroductionView() {
         let vc = ArtworkIntroductionViewController(QuestionAnswerViewModel())
         let rootVc = UINavigationController(rootViewController: vc)
         changeRootViewController(rootVc)
     }
-
+    
     // 질문 답변 UI를 테스트할 수 있는 코드입니다.
     func testQuestionAnswerView() {
         let vc = QuestionAnswerViewController(artwork: Artwork.mockData, userId: User.mockData.id)
@@ -95,7 +95,7 @@ extension SceneDelegate {
         ])
         changeRootViewController(vc)
     }
-
+    
     // 에러 경고창을 테스트할 수 있는 코드입니다.
     func testErrorAlert() {
         let vc = UIViewController()
@@ -110,6 +110,16 @@ extension SceneDelegate {
     func testMyFeedView() {
         let naviVC = UINavigationController(rootViewController: MyFeedViewController(user: .mockData, artwork: .mockData, questionAnswer: .mockData))
         changeRootViewController(naviVC)
+    }
+    
+    func testReviewedArtworkListView() {
+        let vc = ReviewedArtworkListViewController(
+            viewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase()),
+            reviewedArtworkListCellViewModelList: ReviewedArtworkListCellViewModel.mockDatas,
+            userId: "질문1",
+            artworkCount: 3
+        )
+        changeRootViewController(vc)
     }
 }
 #endif

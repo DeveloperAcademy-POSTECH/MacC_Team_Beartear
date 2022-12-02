@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 /// ReviewedArtworkListCell 뷰를 위한 모델
 struct ReviewedArtworkListCellViewModel {
@@ -27,5 +28,28 @@ struct ReviewedArtworkListCellViewModel {
 extension ReviewedArtworkListCellViewModel: CustomStringConvertible {
     var description: String {
         "\(numberText), 질문 : \(question), 답변: \(answer)"
+    }
+}
+
+extension ReviewedArtworkListCellViewModel: IdentifiableType, Equatable {
+    var identity: String {
+        return "\(artworkId)"
+    }
+}
+// TableView를 위한 Section
+
+struct Section {
+    var headerTitle: String = "감상기록"
+    var items: [Item]
+}
+
+extension Section: AnimatableSectionModelType {
+    typealias Item = ReviewedArtworkListCellViewModel
+    var identity: String {
+        return headerTitle
+    }
+    init(original: Section, items: [ReviewedArtworkListCellViewModel]) {
+        self = original
+        self.items = items
     }
 }
