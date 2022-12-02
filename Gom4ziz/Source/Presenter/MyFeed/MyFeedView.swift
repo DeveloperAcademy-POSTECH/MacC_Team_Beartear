@@ -34,7 +34,11 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return label
     }()
     
-    private lazy var questionAnswerSectionTitleView = SectionTitleView(title: "나의 생각")
+    private lazy var questionAnswerSectionTitleView = {
+        let titleView = SectionTitleView(title: "나의 생각")
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        return titleView
+    }()
     
     private lazy var questionAnswerLabel: UILabel = {
         let label = UILabel()
@@ -104,9 +108,18 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     // 작품 소개
     
-    private lazy var artworkDesciptionSectionTitleView: SectionTitleView = .init(title: "작품 소개")
+    private lazy var artworkDesciptionSectionTitleView: SectionTitleView = {
+        let titleView = SectionTitleView(title: "작품 소개")
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        return titleView
+    }()
     
-    lazy var highlightTextView: HighlightedTextView = HighlightedTextView(text: " ", highlights: [], isEditable: false, isExpandable: false)
+    lazy var highlightTextView: HighlightedTextView = {
+        let textView = HighlightedTextView(text: " ", highlights: [], isEditable: false, isExpandable: false)
+        textView.textView.textStyle(.Body1, .blackFont)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
     
     private lazy var artworkDescriptionStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [artworkDesciptionSectionTitleView,
@@ -121,10 +134,15 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     // 나의 감상
     
-    private lazy var reviewSectionTitleView: SectionTitleView = .init(title: "나의 감상")
+    private lazy var reviewSectionTitleView: SectionTitleView = {
+        let titleView = SectionTitleView(title: "나의 감상")
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        return titleView
+    }()
     
     lazy var reviewLabel: UILabel = {
         let label = UILabel()
+        label.text = ""
         label.numberOfLines = 0
         label.textStyle(.Body1, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
