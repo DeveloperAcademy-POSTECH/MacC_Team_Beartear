@@ -74,7 +74,7 @@ private extension QuestionAnswerViewController {
                     self.focusOnTextView()
                 case .failed:
                     self.questionAnswerView.hideSkeletonUI()
-                    self.setUpErrorView(.artwork, true) {
+                    self.showErrorView(.artwork, true) {
                         self.viewModel.fetchArtworkDescription()
                     }
                 default: break
