@@ -15,6 +15,7 @@ protocol RequestNextArtworkUsecase {
 
 final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
 
+    private let initialArtworkNum: Int = 1
     private let artworkRepository: ArtworkRepository
     private let artworkHelper: ArtworkHelper = .init()
     
@@ -23,6 +24,9 @@ final class RealRequestNextArtworkUsecase: RequestNextArtworkUsecase {
     }
     
     func requestNextArtwork(with user: User) -> Observable<Artwork> {
+        guard user.lastArtworkId != 0 else {
+            return artworkRepository.requestArtwork(of: initialArtworkNum)
+        }
         let allocatedArtworkNum = artworkHelper.getAllocatedArtworkCount(with: user)
         let nextArtworkId = user.lastArtworkId + 1
         if shouldWaitNextArtwork(nextArtworkId: nextArtworkId, allocatedArtworkNum: allocatedArtworkNum) {

@@ -28,7 +28,7 @@ final class OnBoardingViewController: UIViewController {
     private let disposeBag: DisposeBag = .init()
     private var getDeviceUUID: String {
 #if DEBUG
-        return "질문1"
+        return "mock"
 #else
         return UIDevice.current.identifierForVendor!.uuidString
 #endif

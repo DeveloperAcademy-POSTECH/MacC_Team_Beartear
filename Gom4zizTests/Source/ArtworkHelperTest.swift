@@ -87,59 +87,23 @@ final class ArtworkHelperTest: XCTestCase {
         XCTAssertEqual(0, num)
     }
     
-    /// getThisWeekArtworkCount test all pass test 시간 12월 1일 목 오후 9시 45분
+    /// getThisWeekArtworkCount test all pass test 시간 12월 2일 금 오후 9시 15분
 
-    func test_이번주_일요일_유저가_가입_할당된_작품은_0개() throws {
+    func test_이번주_일요일_유저가_가입_할당된_작품은_1개() throws {
         // given
-        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 4)
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 5)
         let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
         
         // when
         let num = artworkHelper.getAllocatedArtworkCount(with: user)
         
         // then
-        XCTAssertEqual(0, num)
+        XCTAssertEqual(1, num)
     }
     
-    func test_저번주_목요일_유저가_가입_할당된_작품은_2개() throws {
+    func test_저번주_목요일_유저가_가입_할당된_작품은_3개() throws {
         // given
-        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 7)
-        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
-        
-        // when
-        let num = artworkHelper.getAllocatedArtworkCount(with: user)
-        
-        // then
-        XCTAssertEqual(2, num)
-    }
-    
-    func test_저번주_일요일_저녁_유저가_가입_할당된_작품은_2개() throws {
-        // given
-        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 11)
-        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
-        
-        // when
-        let num = artworkHelper.getAllocatedArtworkCount(with: user)
-        
-        // then
-        XCTAssertEqual(2, num)
-    }
-    
-    func test_저번주_토요일_아침_유저가_가입_할당된_작품은_4개() throws {
-        // given
-        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 12 - oneHourSeconds * 12)
-        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
-        
-        // when
-        let num = artworkHelper.getAllocatedArtworkCount(with: user)
-        
-        // then
-        XCTAssertEqual(4, num)
-    }
-    
-    func test_저번주_토요일_오후_유저가_가입_할당된_작품은_3개() throws {
-        // given
-        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 12 - oneHourSeconds * 7)
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 8)
         let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
         
         // when
@@ -147,6 +111,42 @@ final class ArtworkHelperTest: XCTestCase {
         
         // then
         XCTAssertEqual(3, num)
+    }
+    
+    func test_저번주_일요일_저녁_유저가_가입_할당된_작품은_3개() throws {
+        // given
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 12)
+        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
+        
+        // when
+        let num = artworkHelper.getAllocatedArtworkCount(with: user)
+        
+        // then
+        XCTAssertEqual(3, num)
+    }
+    
+    func test_저저번주_토요일_아침_유저가_가입_할당된_작품은_5개() throws {
+        // given
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 13 - oneHourSeconds * 12)
+        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
+        
+        // when
+        let num = artworkHelper.getAllocatedArtworkCount(with: user)
+        
+        // then
+        XCTAssertEqual(5, num)
+    }
+    
+    func test_저저번주_토요일_오후_유저가_가입_할당된_작품은_4개() throws {
+        // given
+        let loginedDate = Date(timeIntervalSinceNow: -oneDaySeconds * 13 - oneHourSeconds * 7)
+        let user = User(id: "1", lastArtworkId: 2, firstLoginedDate: loginedDate.yyyyMMddHHmmssFormattedInt)
+        
+        // when
+        let num = artworkHelper.getAllocatedArtworkCount(with: user)
+        
+        // then
+        XCTAssertEqual(4, num)
     }
     
     /// getNextArtworkDate test
