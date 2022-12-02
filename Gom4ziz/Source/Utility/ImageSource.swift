@@ -16,5 +16,5 @@ protocol ImageSource {
 
 /// 특정 url의 이미지를 캐싱할 수 있는 Image Source
 protocol CacheableImageSource: ImageSource {
-    func saveToCache(_ image: UIImage)
+    func saveToCache(for url: URL, _ image: UIImage)
 }

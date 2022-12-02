@@ -96,14 +96,4 @@ private extension AsyncImageManager {
 
 }
 
-extension FileManager {
-    static var cachePath: URL? {
-        FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
-    }
-}
 
-extension String {
-    var withoutPunctuations: String {
-        return self.components(separatedBy: CharacterSet.punctuationCharacters).joined(separator: "")
-      }
-}
