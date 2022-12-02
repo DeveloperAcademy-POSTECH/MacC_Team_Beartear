@@ -106,6 +106,18 @@ extension SceneDelegate {
             }
         }
     }
+
+    // 토스트 메시지를 테스트할 수 있는 코드입니다.
+    func testToastMessage() {
+        let vc = UIViewController()
+        let imageView: UIImageView = UIImageView(image: UIImage(named: ImageName.bakingFirst))
+        imageView.center = CGPoint(x: 0, y: 600)
+        vc.view.addSubview(imageView)
+        changeRootViewController(vc)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            vc.showToastMessage(text: "하루하루하루하루하루무더져가네ㅔ에")
+        }
+    }
     
     func testMyFeedView() {
         let naviVC = UINavigationController(rootViewController: MyFeedViewController(user: .mockData, artwork: .mockData, questionAnswer: .mockData))
