@@ -16,14 +16,14 @@ struct DiskImageSource: CacheableImageSource {
 
             guard let cachePath = FileManager.cachePath else {
                 single(.failure(RxError.unknown))
-                return
+                return Disposables.create()
             }
 
             let imagePath: URL = cachePath.appendingPathComponent(url.absoluteString.withoutPunctuations, isDirectory: false)
 
             guard let data = try? Data(contentsOf: imagePath), let image = UIImage(data: data) else {
                 single(.failure(RxError.unknown))
-                return
+                return Disposables.create()
             }
             single(.success(image))
 
