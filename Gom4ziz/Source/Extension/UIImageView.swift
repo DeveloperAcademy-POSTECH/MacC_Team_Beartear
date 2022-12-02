@@ -10,10 +10,9 @@ import UIKit
 extension UIImageView {
 
     func loadImage(url: URL,
-                   option: AsyncImageManager.Option = .useCache,
                    filterOptions: [ImageFilterOption] = [],
                    completion: ((Error?) -> Void)? = nil) {
-        AsyncImageManager.shared.loadImage(url: url, option: option, filterOptions: filterOptions) { image, error in
+        AsyncImageManager.shared.loadImage(url: url, filterOptions: filterOptions) { image, error in
             DispatchQueue.main.async {
                 guard error == nil, let image else {
                     completion?(error)
@@ -26,14 +25,13 @@ extension UIImageView {
     }
 
     func loadImage(url string: String,
-                   option: AsyncImageManager.Option = .useCache,
                    filterOptions: [ImageFilterOption] = [],
                    completion: ((Error?) -> Void)? = nil) {
         guard let url = URL(string: string) else {
             completion?(URLError(URLError.badURL))
             return
         }
-        loadImage(url: url, option: option, filterOptions: filterOptions, completion: completion)
+        loadImage(url: url, filterOptions: filterOptions, completion: completion)
     }
 
 }
