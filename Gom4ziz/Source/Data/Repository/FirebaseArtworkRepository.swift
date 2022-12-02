@@ -22,6 +22,7 @@ final class FirebaseArtworkRepository {
 
 // MARK: - ArtworkRepository protocol extension
 extension FirebaseArtworkRepository: ArtworkRepository {
+    
     func requestArtwork(of artworkId: Int) -> Observable<Artwork> {
         getArtworkRef(of: artworkId)
             .rx
@@ -33,10 +34,12 @@ extension FirebaseArtworkRepository: ArtworkRepository {
             .rx
             .decodable(as: [Artwork].self)
     }
+    
 }
 
 // MARK: - private extension
 extension FirebaseArtworkRepository {
+    
     func getArtworkRef(of artworkId: Int) -> DocumentReference {
         db
             .collection(CollectionName.artwork)
@@ -48,4 +51,5 @@ extension FirebaseArtworkRepository {
             .collection(CollectionName.artwork)
             .whereField("id", isLessThanOrEqualTo: artworkId)
     }
+    
 }

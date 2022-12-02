@@ -100,4 +100,5 @@ extension FirebaseArtworkReviewRepository {
             .collection(CollectionName.user)
             .document(uid)
     }
+    
 }
