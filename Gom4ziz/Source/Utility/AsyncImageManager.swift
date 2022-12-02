@@ -7,7 +7,7 @@
 
 import UIKit
 
-public final class NetworkImageManager {
+public final class AsyncImageManager {
 
     enum Option: Equatable {
         case useCache
@@ -22,7 +22,7 @@ public final class NetworkImageManager {
         }
     }
 
-    public static let shared: NetworkImageManager = NetworkImageManager()
+    public static let shared: AsyncImageManager = AsyncImageManager()
     private let session: URLSession = URLSession(configuration: .ephemeral)
     private init() { }
 
@@ -71,7 +71,7 @@ public final class NetworkImageManager {
     }
 }
 
-private extension NetworkImageManager {
+private extension AsyncImageManager {
 
     func loadFromDisk(url string: String) -> UIImage? {
         guard let cachePath = FileManager.cachePath else {
