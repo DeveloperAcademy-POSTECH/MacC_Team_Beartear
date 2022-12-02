@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private let disposeBag: DisposeBag = .init()
     private let userViewModel: UserViewModel = UserViewModel.shared
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene  else {
             return
@@ -23,9 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
-        changeRootViewControllerBasedOnUserStatus()
-//        testToastMessage()
-//        changeStatusBarBgColor(bgColor: .white)
+//        changeRootViewControllerBasedOnUserStatus()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -65,28 +63,24 @@ extension SceneDelegate {
                 onNext: { [weak self] in
                     guard let self else { return }
                     switch $0 {
-                    case .loaded(let user):
-                        self.userViewModel.user = user
+                        case .loaded(let user):
+                            self.userViewModel.user = user
                             self.changeRootViewController(MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(), userViewModel: UserViewModel.shared))
-                        print("loaded")
-                    case .isLoading:
-                        // loading 화면
-                        print("loading")
-                    case .failed(let error):
-                        if let error = error as? UserRequestError, error == .notRegisteredUser {
-                            self.changeRootViewController(OnBoardingViewController())
-                        } else {
-                            // error 화면
-                        }
-                    case .notRequested:
-                        // loading 화면
-                        print("loading")
+                            print("loaded")
+                        case .notRequested, .isLoading:
+                            self.changeRootViewController(TempSkeletonImageViewController(imageName: ImageName.mainLoading))
+                        case .failed(let error):
+                            if let error = error as? UserRequestError, error == .notRegisteredUser {
+                                self.changeRootViewController(OnBoardingViewController())
+                            } else {
+                                // error 화면
+                            }
                     }
                 })
             .disposed(by: disposeBag)
         userViewModel.fetchUser()
     }
-
+    
     func changeStatusBarBgColor(bgColor: UIColor?) {
         let statusBarManager = window?.windowScene?.statusBarManager
         let statusBarView = UIView(frame: statusBarManager?.statusBarFrame ?? .zero)
