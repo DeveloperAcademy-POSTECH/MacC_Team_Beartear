@@ -21,7 +21,12 @@ final class UserViewModel {
     init(fetchUserUsecase: FetchUserUsecase, addUserUsecase: AddUserUsecase) {
         self.fetchUserUsecase = fetchUserUsecase
         self.addUserUsecase = addUserUsecase
+#if DEBUG
+        self.user = User.mockData
+#else
         self.user = nil
+#endif
+
     }
     
     func fetchUser() {

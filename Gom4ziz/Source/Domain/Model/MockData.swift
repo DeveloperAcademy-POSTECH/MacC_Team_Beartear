@@ -10,8 +10,8 @@ import Foundation
 
 extension User {
     static var mockData: User {
-        User(id: "mock",
-             lastArtworkId: 5,
+        User(id: "질문1",
+             lastArtworkId: 3,
              firstLoginedDate: Date().yyyyMMddHHmmssFormattedInt)
     }
 }

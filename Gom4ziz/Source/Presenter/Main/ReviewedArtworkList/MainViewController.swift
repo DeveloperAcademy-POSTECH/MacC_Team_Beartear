@@ -1,5 +1,5 @@
 //
-//  ReviewedArtworkListViewController.swift
+//  MainViewController.swift
 //  Gom4ziz
 //
 //  Created by 이가은 on 2022/12/01.
@@ -11,15 +11,14 @@ import RxCocoa
 import RxDataSources
 import RxSwift
 
-final class ReviewedArtworkListViewController: UIViewController {
+final class MainViewController: UIViewController, UIScrollViewDelegate {
     
     private var tableView = UITableView()
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
     private let userViewModel = UserViewModel.shared
     private let disposeBag = DisposeBag()
     
-    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel,
-         reviewedArtworkListCellViewModelList: [ReviewedArtworkListCellViewModel]) {
+    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel) {
         self.reviewedArtworkListViewModel = reviewedArtworkListViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -94,14 +93,6 @@ final class ReviewedArtworkListViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-    }
-    
-}
-
-extension ReviewedArtworkListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
     }
     
 }

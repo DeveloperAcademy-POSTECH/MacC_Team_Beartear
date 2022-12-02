@@ -125,9 +125,8 @@ extension SceneDelegate {
     }
     
     func testReviewedArtworkListView() {
-        let vc = ReviewedArtworkListViewController(
-            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase()),
-            reviewedArtworkListCellViewModelList: ReviewedArtworkListCellViewModel.mockDatas)
+        let vc = MainViewController(
+            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase()))
         changeRootViewController(vc)
     }
 }

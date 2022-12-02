@@ -23,9 +23,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
-        testReviewedArtworkListView()
-        testToastMessage()
-        changeStatusBarBgColor(bgColor: .white)
+        changeRootViewControllerBasedOnUserStatus()
+//        testToastMessage()
+//        changeStatusBarBgColor(bgColor: .white)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -67,7 +67,7 @@ extension SceneDelegate {
                     switch $0 {
                     case .loaded(let user):
                         self.userViewModel.user = user
-                        self.changeRootViewController(MainViewController())
+                        self.changeRootViewController(MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(fetchReviewedArtworkUsecase: RealFetchReviewedArtworkUsecase(), fetchQuestionAnswerUsecase: RealFetchQuestionAnswerUsecase())))
                         print("loaded")
                     case .isLoading:
                         // loading 화면
