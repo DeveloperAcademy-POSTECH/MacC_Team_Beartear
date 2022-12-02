@@ -19,7 +19,7 @@ extension UIViewController {
         let lottieLoadingView: LottieAnimationView = LottieAnimationView(name: "spinner")
         lottieLoadingView.loopMode = .loop
         lottieLoadingView.backgroundColor = .black.withAlphaComponent(0.5)
-        lottieLoadingView.tag = 1004
+        lottieLoadingView.tag = ViewTag.lottieView.rawValue
         lottieLoadingView.frame = window.bounds
         window.addSubview(lottieLoadingView)
         lottieLoadingView.play()
@@ -29,7 +29,7 @@ extension UIViewController {
         let scenes = UIApplication.shared.connectedScenes
         let windowScene = scenes.first as? UIWindowScene
         guard let window = windowScene?.windows.first else { return }
-        window.viewWithTag(1004)?.removeFromSuperview()
+        window.viewWithTag(ViewTag.lottieView.rawValue)?.removeFromSuperview()
     }
 
 }

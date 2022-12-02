@@ -50,6 +50,7 @@ final class MyFeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        myFeedView.delegate = self
         setUpNavigationBar()
         setUpObservers()
         fetchMyFeedViewModel()
@@ -83,7 +84,7 @@ private extension MyFeedViewController {
                     self?.hideLottieLoadingView()
                 case .failed:
                     self?.hideLottieLoadingView()
-                    self?.setUpErrorView(.tiramisul, false) {
+                    self?.showErrorView(.tiramisul, false) {
                         self?.viewModel.fetchMyFeed(artworkId: (self?.artwork.id)!,
                                                     userId: (self?.user.id)!)
                     }
@@ -109,9 +110,15 @@ private extension MyFeedViewController {
 
 }
 
-// MARK: - Button Actions
+// MARK: - Tapped Actions
 
-private extension MyFeedViewController {
+extension MyFeedViewController: ZoomableDelegateProtocol {
+    
+    func onImageViewTapped() {
+        let vc = ZoomableImageViewController(url: artwork.imageUrl)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     @objc func backButtonTapped() {
         dismiss(animated: true)

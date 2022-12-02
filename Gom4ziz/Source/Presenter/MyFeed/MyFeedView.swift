@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ZoomableDelegateProtocol: AnyObject {
+    func onImageViewTapped()
+}
+
 final class MyFeedView: BaseAutoLayoutUIView {
     
     private let artwork: Artwork
@@ -54,7 +58,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     // 작품 정보
     
-    private lazy var artworkImageView: AsyncImageView = .init(
+    lazy var artworkImageView: AsyncImageView = .init(
         url: artwork.imageUrl,
         contentMode: .scaleAspectFill)
     
@@ -152,6 +156,8 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return stackView
     }()
     
+    weak var delegate: ZoomableDelegateProtocol?
+    
     init(artwork: Artwork,
          questionAnswer: QuestionAnswer) {
         self.artwork = artwork
@@ -209,7 +215,21 @@ extension MyFeedView {
     }
     
     func setUpUI() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+        artworkImageView.addGestureRecognizer(tap)
+        artworkImageView.isUserInteractionEnabled = true
+    }
+    
+}
 
+extension MyFeedView {
+    
+    func onImageViewTapped() {
+        delegate?.onImageViewTapped()
+    }
+    
+    @objc func imageViewTapped() {
+        onImageViewTapped()
     }
     
 }
