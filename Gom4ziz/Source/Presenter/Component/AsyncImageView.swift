@@ -36,6 +36,11 @@ final class AsyncImageView: UIImageView {
     required init?(coder: NSCoder) {
         fatalError()
     }
+
+    deinit {
+        previousDisposable?.dispose()
+    }
+
 }
 
 // MARK: - 퍼블릭 API
