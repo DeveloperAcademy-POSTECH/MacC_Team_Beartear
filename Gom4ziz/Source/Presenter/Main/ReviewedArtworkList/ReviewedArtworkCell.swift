@@ -15,9 +15,8 @@ final class ReviewedArtworkCell: UITableViewCell {
     private let answerLable = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-#warning("River: 호종이 작업 이후 temp 이미지로 수정하기")
         artworkImageView = AsyncImageView(
-            url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/440px-Image_created_with_a_mobile_phone.png",
+            url: "",
             contentMode: .scaleAspectFill)
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -31,10 +30,7 @@ final class ReviewedArtworkCell: UITableViewCell {
     }
     
     func setViewModel(reviewedArtworkListCellViewModel: ReviewedArtworkListCellViewModel) {
-#warning("River: 호종이 작업 이후 AsyncImageView run time 변경되는 함수로 수정하기 ")
-        artworkImageView = AsyncImageView(
-            url: reviewedArtworkListCellViewModel.imageURLString,
-            contentMode: .scaleAspectFill)
+        artworkImageView.changeURL(reviewedArtworkListCellViewModel.imageURLString)
         tiramisulCountLable.text = reviewedArtworkListCellViewModel.numberText
         questionLable.text = reviewedArtworkListCellViewModel.question
         answerLable.text = reviewedArtworkListCellViewModel.answer
