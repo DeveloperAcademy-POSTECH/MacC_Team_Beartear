@@ -17,6 +17,7 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
     private let userViewModel: UserViewModel
     private let disposeBag = DisposeBag()
+    private var skeletonView: MainViewSkeletonUI?
     
     init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel, userViewModel: UserViewModel) {
         self.reviewedArtworkListViewModel = reviewedArtworkListViewModel
@@ -85,27 +86,51 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-        // 리뷰된 작품이 불러오는 중이거나 실패했을 때의 스트림
+        // 작품 로딩 스트림
         reviewdArtworkCellListDriver
-            .drive(onNext: { [weak self] status in
-                switch status {
-                    case .failed:
-                        self?.showErrorView(.reviewedArtwork, false) {
-                            guard let user = self?.userViewModel.user else {
-                              return
-                            }
-                            let userId = user.id
-                            let lastArtworkId = user.lastArtworkId
-                            self?.reviewedArtworkListViewModel
-                                .fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
-                        }
-                    case .isLoading:
-                        break
-                    default:
+            .map {
+                $0.isLoading
+            }
+            .drive(onNext: { [weak self] isLoading in
+                guard let self else { return }
+                if isLoading {
+                    self.addLoadingView()
+                    return
+                }
+                self.removeLoadingView()
+            })
+            .disposed(by: disposeBag)
+
+        // 에러 스트림
+        reviewdArtworkCellListDriver
+            .compactMap { $0.error }
+            .drive(onNext: { [weak self] _ in
+                guard let self else { return }
+                self.showErrorView(.reviewedArtwork, false) {
+                    guard let user = self.userViewModel.user else {
                         return
+                    }
+                    self.reviewedArtworkListViewModel.fetchReviewedArtworkListCellList(for: user.id, before: user.lastArtworkId)
                 }
             })
             .disposed(by: disposeBag)
+
     }
-    
+
+    private func addLoadingView() {
+        skeletonView = .init()
+        skeletonView!.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(skeletonView!)
+        NSLayoutConstraint.activate([
+            skeletonView!.topAnchor.constraint(equalTo: view.topAnchor),
+            skeletonView!.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            skeletonView!.leftAnchor.constraint(equalTo: view.leftAnchor),
+            skeletonView!.rightAnchor.constraint(equalTo: view.rightAnchor),
+        ])
+    }
+
+    private func removeLoadingView() {
+        skeletonView?.removeFromSuperview()
+        skeletonView = nil
+    }
 }
