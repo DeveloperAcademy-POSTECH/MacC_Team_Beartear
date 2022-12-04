@@ -15,18 +15,41 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     
     private var tableView = UITableView()
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
+    private let questionViewModel: QuestionViewModel
     private let userViewModel: UserViewModel
+    private let remainingTimeView = RemainingTimeView()
+    private let noMoreDataView = NoMoreDataView()
     private let disposeBag = DisposeBag()
     private var skeletonView: MainViewSkeletonUI?
     
-    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel, userViewModel: UserViewModel) {
+    init(reviewedArtworkListViewModel: ReviewedArtworkListViewModel,
+         userViewModel: UserViewModel,
+         questionViewModel: QuestionViewModel) {
         self.reviewedArtworkListViewModel = reviewedArtworkListViewModel
         self.userViewModel = userViewModel
+        self.questionViewModel = questionViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if let headerView = tableView.tableHeaderView {
+
+            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+            var headerFrame = headerView.frame
+
+            //Comparison necessary to avoid infinite loop
+            if height != headerFrame.size.height {
+                headerFrame.size.height = height
+                headerView.frame = headerFrame
+                tableView.tableHeaderView = headerView
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -36,7 +59,35 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
     }
     
-    private func setupViews() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let user = userViewModel.user else { return }
+        questionViewModel
+            .requestArtwork(with: user)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updateHeaderViewHeight(for: tableView.tableHeaderView)
+    }
+
+    func updateHeaderViewHeight(for header: UIView?) {
+        guard let header = header else { return }
+        header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width - 32.0, height: 0)).height
+    }
+    
+    // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
+    var dataSource = RxTableViewSectionedReloadDataSource<Section> { dataSource, tableView, indexPath, item in
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
+        cell.setViewModel(reviewedArtworkListCellViewModel: item)
+        return cell
+        
+    }
+}
+
+private extension MainViewController {
+    
+    func setupViews() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -50,24 +101,44 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         tableView.register(ReviewedArtworkCell.self, forCellReuseIdentifier: "reviewedArtworkCell")
         tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
-        
     }
     
-    // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
-    var dataSource = RxTableViewSectionedReloadDataSource<Section> { _, tableView, indexPath, item in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
-        cell.setViewModel(reviewedArtworkListCellViewModel: item)
-        return cell
-        
-    }
-    
-    private func setupTableViewDataSource() {
+    func setupTableViewDataSource() {
         dataSource.titleForHeaderInSection = { dataSource, index in
             return dataSource.sectionModels[index].headerTitle
         }
     }
     
-    private func setObserver() {
+    func setObserver() {
+        
+        questionViewModel
+            .artwork
+            .asDriver()
+            .drive(onNext: { [weak self] status in
+                switch status {
+                case .waitNextArtworkDay(let remainingTimeStatus):
+                    let remainingTimeView = self?.remainingTimeView
+                    self?.remainingTimeView.remainingTimeStatus = remainingTimeStatus
+                    self?.tableView.tableHeaderView = remainingTimeView
+                    print(self?.tableView.tableHeaderView?.frame.height)
+                case .noMoreData:
+                    let noMoreDataView = self?.noMoreDataView
+                    self?.tableView.tableHeaderView = noMoreDataView
+                case .loaded(let artwork):
+                    self?.tableView.tableHeaderView = MainQuestionView(artwork: artwork)
+                case .failed:
+                    self?.showErrorView(.tiramisul, false) {
+                        guard let user = self?.userViewModel.user else { return }
+                        self?.questionViewModel.requestArtwork(with: user)
+                    }
+                case .loading:
+                    print("loading처리")
+                    //TODO: loading 처리
+                case .notRequested:
+                    print("not requested")
+                }
+            })
+            .disposed(by: disposeBag)
         
         let reviewdArtworkCellListDriver = reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
                      .asDriver()
@@ -146,3 +217,13 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         skeletonView = nil
     }
 }
+
+#if DEBUG
+import SwiftUI
+struct MainViewControllerPreview: PreviewProvider {
+    static var previews: some View {
+        MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(), userViewModel: UserViewModel.shared, questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase()))
+            .toPreview()
+    }
+}
+#endif

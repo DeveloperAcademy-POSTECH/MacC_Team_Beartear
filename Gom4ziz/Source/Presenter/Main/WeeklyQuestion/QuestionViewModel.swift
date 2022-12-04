@@ -17,8 +17,7 @@ final class QuestionViewModel {
     private let artworkHelper: ArtworkHelper = .init()
     private let disposeBag: DisposeBag = .init()
     
-    private(set) var artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
-    private(set) var possibleAnsweringNewQuestion: BehaviorRelay<Bool> = .init(value: true)
+    let artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
     
     init(requestNextQuestionUsecase: RequestNextArtworkUsecase,
          timeDiffHandler: TimeDiffHandler = TimeDiffHandler(

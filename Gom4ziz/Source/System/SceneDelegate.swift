@@ -38,7 +38,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
-        
+   
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
