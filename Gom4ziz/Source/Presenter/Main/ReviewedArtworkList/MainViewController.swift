@@ -60,7 +60,7 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     }
     
     // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
-    var dataSource = RxTableViewSectionedReloadDataSource<Section> { dataSource, tableView, indexPath, item in
+    var dataSource = RxTableViewSectionedReloadDataSource<Section> { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
         cell.setViewModel(reviewedArtworkListCellViewModel: item)
         return cell
@@ -89,9 +89,7 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         reviewdArtworkCellListDriver
             .drive(onNext: { [weak self] status in
                 switch status {
-                    case .notRequested:
-                        print("notRequested")
-                    case .failed(let error):
+                    case .failed:
                         self?.showErrorView(.reviewedArtwork, false) {
                             guard let user = self?.userViewModel.user else {
                               return
@@ -101,8 +99,8 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
                             self?.reviewedArtworkListViewModel
                                 .fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
                         }
-                    case .isLoading(let last):
-                        print("last")
+                    case .isLoading:
+                        break
                     default:
                         return
                 }
