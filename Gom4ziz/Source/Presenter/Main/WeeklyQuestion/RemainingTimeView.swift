@@ -21,13 +21,16 @@ final class RemainingTimeView: BaseAutoLayoutUIView {
         }
     }
     
-    init(_ timeStatus: RemainingTimeStatus) {
-        self.remainingTimeStatus = timeStatus
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        return CGSize(width: frame.size.width, height: 500)
     }
 }
 
@@ -111,7 +114,7 @@ private extension RemainingTimeView {
     func setUpTitleLabelConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: bakingLabel.bottomAnchor, constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: bakingLabel.bottomAnchor, constant: -5),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
@@ -119,39 +122,8 @@ private extension RemainingTimeView {
     func setUpSubTitleLabelConstraints() {
         subTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: -3),
-            subTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            subTitleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -48)
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: -15),
+            subTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor)
         ])
     }
 }
-
-#if DEBUG
-import SwiftUI
-struct RemainingTimeViewPreview1: PreviewProvider {
-    static var previews: some View {
-        RemainingTimeView(.moreThanOneDay(day: 3))
-            .toPreview()
-            .frame(width: 390, height: 400)
-            .previewDisplayName("1일 이상 남음")
-    }
-}
-
-struct RemainingTimeViewPreview2: PreviewProvider {
-    static var previews: some View {
-        RemainingTimeView(.lessThanDayMoreThanHour(hour: 4))
-            .toPreview()
-            .frame(width: 390, height: 400)
-            .previewDisplayName("1시간 이상 남음")
-    }
-}
-
-struct RemainingTimeViewPreview3: PreviewProvider {
-    static var previews: some View {
-        RemainingTimeView(.lessThanOneHour(minute: 39))
-            .toPreview()
-            .frame(width: 390, height: 400)
-            .previewDisplayName("1시간 미만 남음")
-    }
-}
-#endif
