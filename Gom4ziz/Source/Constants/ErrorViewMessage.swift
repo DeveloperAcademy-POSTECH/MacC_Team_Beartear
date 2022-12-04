@@ -10,4 +10,5 @@ import Foundation
 enum ErrorViewMessage: String {
     case artwork = "작품을 불러오는데 실패했습니다."
     case tiramisul = "티라미술을 불러오는데 실패했습니다."
+    case reviewedArtwork = "감상 기록을 불러오지 못했습니다."
 }

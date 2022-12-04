@@ -87,12 +87,20 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         
         // 리뷰된 작품이 불러오는 중이거나 실패했을 때의 스트림
         reviewdArtworkCellListDriver
-            .drive(onNext: { status in
+            .drive(onNext: { [weak self] status in
                 switch status {
                     case .notRequested:
                         print("notRequested")
                     case .failed(let error):
-                        print("error", error)
+                        self?.showErrorView(.reviewedArtwork, false) {
+                            guard let user = self?.userViewModel.user else {
+                              return
+                            }
+                            let userId = user.id
+                            let lastArtworkId = user.lastArtworkId
+                            self?.reviewedArtworkListViewModel
+                                .fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
+                        }
                     case .isLoading(let last):
                         print("last")
                     default:
