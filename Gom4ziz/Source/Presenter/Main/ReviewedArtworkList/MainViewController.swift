@@ -102,10 +102,8 @@ private extension MainViewController {
                         guard let user = self.userViewModel.user else { return }
                         self.questionViewModel.requestArtwork(with: user)
                     }
-                case .loading:
-                    print("loading")
-                case .notRequested:
-                    print("notRequested")
+                default:
+                    break
                 }
             })
             .disposed(by: disposeBag)

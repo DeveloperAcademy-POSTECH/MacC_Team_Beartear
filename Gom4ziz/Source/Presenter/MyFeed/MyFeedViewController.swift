@@ -53,6 +53,7 @@ final class MyFeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = false
         myFeedView.delegate = self
         setUpNavigationBar()
         setUpObservers()
@@ -129,7 +130,7 @@ extension MyFeedViewController: ZoomableDelegateProtocol {
     }
     
     @objc func backButtonTapped() {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func editButtonTapped() {
