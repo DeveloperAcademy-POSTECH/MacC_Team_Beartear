@@ -93,7 +93,7 @@ private extension MainQuestionView {
     
     func setUpQuestionNumberLabel() {
         questionNumberLabel.textStyle(.Headline1, UIColor.white)
-        questionNumberLabel.text = "\(artwork.id)번째 티라미술"
+        questionNumberLabel.text = "\(artwork.id)번째 작품"
         questionNumberLabel.textColor = .white
     }
     
