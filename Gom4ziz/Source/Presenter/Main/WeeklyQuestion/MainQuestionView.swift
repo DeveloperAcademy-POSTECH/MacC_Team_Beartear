@@ -16,13 +16,13 @@ final class MainQuestionView: BaseAutoLayoutUIView {
     private let questionImageView: AsyncImageView
     private let maskImageView: UIImageView = UIImageView()
     private let transparentLayer: CALayer = CALayer()
+    private let navigateLabel: UILabel = UILabel()
     private let imageMaskNames: [String] = [ImageName.questionImageMask]
     private var imageMask: UIImage? {
         let randomInt = Int.random(in: 0..<imageMaskNames.count)
         let imageName = imageMaskNames[randomInt]
         return UIImage(named: imageName)
     }
-    let navigateButton: UIButton = UIButton()
     
     init(artwork: Artwork) {
         self.artwork = artwork
@@ -50,7 +50,7 @@ extension MainQuestionView {
                     questionNumberLabel,
                     whiteDivider,
                     questionLabel,
-                    navigateButton)
+                    navigateLabel)
     }
     
     func setUpConstraints() {
@@ -59,7 +59,7 @@ extension MainQuestionView {
         setUpQuestionNumberLabelConstraints()
         setUpWhiteDividerConstraints()
         setUpQuestionLabelConstraints()
-        setUpNavigateButtonConstraints()
+        setUpNavigateLabelConstraints()
     }
     
     func setUpUI() {
@@ -69,7 +69,7 @@ extension MainQuestionView {
         setUpQuestionNumberLabel()
         setUpWhiteDivider()
         setUpQuestionLabel()
-        setUpNavigateButton()
+        setUpNavigateLabel()
     }
 }
 
@@ -109,17 +109,16 @@ private extension MainQuestionView {
         questionLabel.lineBreakMode = .byWordWrapping
     }
     
-    func setUpNavigateButton() {
-        var configuration = UIButton.Configuration.plain()
-        let attributes = navigateButton.textStyleAttributes(.Body2, .white)
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .light)
-        configuration.image = UIImage(systemName: ImageName.rightArrow)
-        configuration.imagePlacement = .trailing
-        configuration.imagePadding = 5
-        configuration.baseForegroundColor = .white
-        configuration.preferredSymbolConfigurationForImage = imageConfig
-        configuration.attributedTitle = AttributedString("질문에 답변하러 가기", attributes: attributes)
-        navigateButton.configuration = configuration
+    func setUpNavigateLabel() {
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(systemName: ImageName.rightArrow)?.withRenderingMode(.alwaysTemplate)
+        attachment.bounds = CGRect(x: 0, y: -2, width: 12, height: 12)
+        let attachmentString = NSAttributedString(attachment: attachment)
+        let contentString = NSMutableAttributedString(string: "질문에 답하러 가기")
+        contentString.append(NSAttributedString(string: "  "))
+        contentString.append(attachmentString)
+        navigateLabel.attributedText = contentString
+        navigateLabel.textStyle(.Body2, UIColor.white)
     }
     
     func setUpQuestionImageView() {
@@ -157,11 +156,11 @@ private extension MainQuestionView {
         ])
     }
     
-    func setUpNavigateButtonConstraints() {
-        navigateButton.translatesAutoresizingMaskIntoConstraints = false
+    func setUpNavigateLabelConstraints() {
+        navigateLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            navigateButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            navigateButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+            navigateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            navigateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
     }
     

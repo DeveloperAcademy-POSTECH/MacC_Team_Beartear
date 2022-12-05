@@ -197,14 +197,29 @@ private extension MainViewController {
     
     func setQuestionViewAsHeader(_ artwork: Artwork) {
         let questionView: MainQuestionView = MainQuestionView(artwork: artwork)
+        let tapGestureRecognizer = setTapGesture()
         questionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 520)
         tableView.tableHeaderView = questionView
+        questionView.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func setNoDataViewAsHeader() {
         let noDataView: NoMoreDataView = NoMoreDataView()
         noDataView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 390)
         tableView.tableHeaderView = noDataView
+    }
+}
+
+// MARK: - Tap Gesture
+private extension MainViewController {
+    
+    func setTapGesture() -> UITapGestureRecognizer {
+        return UITapGestureRecognizer(target: self, action: #selector(tapArtworkQuestion))
+    }
+
+    @objc func tapArtworkQuestion() {
+        print("tap")
+        //TODO: navigate
     }
 }
 
