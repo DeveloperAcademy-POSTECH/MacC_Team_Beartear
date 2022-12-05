@@ -219,7 +219,7 @@ private extension MainViewController {
 
     @objc func tapArtworkQuestion() {
         print("tap")
-        // TODO: navigate
+        //TODO: navigate
     }
 }
 
@@ -227,7 +227,7 @@ private extension MainViewController {
 import SwiftUI
 struct MainViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: UserViewModel.shared.user), userViewModel: UserViewModel.shared, questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase()))
+        MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: UserViewModel.shared.user!), userViewModel: UserViewModel.shared, questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase()))
             .toPreview()
     }
 }
