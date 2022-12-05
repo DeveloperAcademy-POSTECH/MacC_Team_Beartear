@@ -23,11 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         // 테스트를 위해서 루트 뷰컨트롤러를 변경할 수 있습니다.
-        testReviewedArtworkListView()
+        changeRootViewControllerBasedOnUserStatus()
         changeStatusBarBgColor(bgColor: .white)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -65,18 +66,20 @@ extension SceneDelegate {
                     guard let self else { return }
                     switch $0 {
                     case .loaded(let user):
-                        self.userViewModel.user = user
-                            self.changeRootViewController(MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(), userViewModel: UserViewModel.shared))
+                        let mainVC = MainViewController(
+                            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: user),
+                            userViewModel: UserViewModel.shared
+                        )
+                        let navigationController = UINavigationController(rootViewController: mainVC)
+                        self.changeRootViewController(navigationController)
                     case .isLoading:
                         self.changeRootViewController(UserLoadingViewController())
                     case .failed(let error):
                         if let error = error as? UserRequestError, error == .notRegisteredUser {
                             self.changeRootViewController(OnBoardingViewController())
-                        } else {
-                            // error 화면
                         }
-                    default:
-                        return
+                    case .notRequested:
+                        break
                     }
                 })
             .disposed(by: disposeBag)

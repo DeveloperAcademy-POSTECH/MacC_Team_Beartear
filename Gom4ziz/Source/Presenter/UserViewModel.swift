@@ -16,18 +16,25 @@ final class UserViewModel {
     private let addUserUsecase: AddUserUsecase
     private let disposeBag: DisposeBag = .init()
     let userObservable: BehaviorRelay<Loadable<User>> = .init(value: .notRequested)
-    var user: User?
+    var user: User? {
+        userObservable.value.value
+    }
     
-    init(fetchUserUsecase: FetchUserUsecase, addUserUsecase: AddUserUsecase) {
+    init(
+        fetchUserUsecase: FetchUserUsecase = RealFetchUserUsecase(),
+        addUserUsecase: AddUserUsecase = RealAddUserUsecase()
+    ) {
         self.fetchUserUsecase = fetchUserUsecase
         self.addUserUsecase = addUserUsecase
-#if DEBUG
-        self.user = User.mockData
-#else
-        self.user = nil
-#endif
-
     }
+
+#if DEBUG
+    init() {
+        self.fetchUserUsecase = RealFetchUserUsecase()
+        self.addUserUsecase = RealAddUserUsecase()
+        self.userObservable.accept(.loaded(User.mockData))
+    }
+    #endif
     
     func fetchUser() {
         userObservable.accept(.isLoading(last: nil))

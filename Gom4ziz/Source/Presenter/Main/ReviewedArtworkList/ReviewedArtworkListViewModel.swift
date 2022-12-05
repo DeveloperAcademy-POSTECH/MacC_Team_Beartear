@@ -14,23 +14,32 @@ final class ReviewedArtworkListViewModel {
     
     private let fetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase
     private let fetchQuestionAnswerUsecase: FetchQuestionAnswerUsecase
-    
+    private let user: User
     let reviewedArtworkListCellListObservable: BehaviorRelay<Loadable<[ReviewedArtworkListCellViewModel]>> = .init(value: .notRequested)
     
     private let disposeBag: DisposeBag = .init()
     
-    init(fetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase = RealFetchReviewedArtworkUsecase(),
-         fetchQuestionAnswerUsecase: FetchQuestionAnswerUsecase = RealFetchQuestionAnswerUsecase()) {
+    init(
+        fetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase = RealFetchReviewedArtworkUsecase(),
+        fetchQuestionAnswerUsecase: FetchQuestionAnswerUsecase = RealFetchQuestionAnswerUsecase(),
+        user: User
+    ) {
         self.fetchReviewedArtworkUsecase = fetchReviewedArtworkUsecase
         self.fetchQuestionAnswerUsecase = fetchQuestionAnswerUsecase
+        self.user = user
     }
     
-    func fetchReviewedArtworkListCellList(for userId: String, before artworkId: Int) {
+    func fetchReviewedArtworkListCellList() {
         reviewedArtworkListCellListObservable.accept(.isLoading(last: nil))
-        Observable.zip(fetchReviewedArtworkUsecase.requestReviewedArtworkList(before: artworkId), fetchQuestionAnswerUsecase.fetchQuestionAnswerList(for: userId, before: artworkId))
+        Observable.zip(fetchReviewedArtworkUsecase.requestReviewedArtworkList(before: user.lastArtworkId), fetchQuestionAnswerUsecase.fetchQuestionAnswerList(for: user.id, before: user.lastArtworkId))
             .map { (artworkList, questionAnswerList) in
-                Array(0..<artworkId).map {
-                    ReviewedArtworkListCellViewModel(artwork: artworkList[$0], questionAnswer: questionAnswerList[$0])
+                (artworkList.indices).map {
+                    let artwork = artworkList[$0]
+                    let answer = questionAnswerList[$0]
+                    return ReviewedArtworkListCellViewModel(
+                        artwork: artwork,
+                        questionAnswer: answer
+                    )
                 }
             }
             .subscribe(onNext: { [weak self] in

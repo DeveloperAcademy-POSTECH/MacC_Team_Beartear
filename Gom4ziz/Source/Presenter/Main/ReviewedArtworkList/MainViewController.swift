@@ -30,17 +30,10 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
-        guard let user = userViewModel.user else {
-          return
-        }
-        let userId = user.id
-        let lastArtworkId = user.lastArtworkId
-        reviewedArtworkListViewModel.fetchReviewedArtworkListCellList(for: userId, before: lastArtworkId)
-        
         setupViews()
         setupTableViewDataSource()
         setObserver()
-        
+        reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
     }
     
     private func setupViews() {
@@ -101,16 +94,35 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
             })
             .disposed(by: disposeBag)
 
+        tableView.rx.modelSelected(ReviewedArtworkListCellViewModel.self)
+            .subscribe(onNext: { [unowned self] in
+                let artwork: Artwork = Artwork(
+                    id: $0.artworkId,
+                    imageUrl: $0.imageURLString,
+                    question: $0.question,
+                    title: $0.artworkTitle,
+                    artist: $0.artist
+                )
+                let questionAnswer: QuestionAnswer = QuestionAnswer(
+                    questionAnswer: $0.answer,
+                    timeStamp: 0,
+                    uid: self.userViewModel.user!.id
+                )
+                let vc = MyFeedViewController(
+                    user: self.userViewModel.user!,
+                    artwork: artwork,
+                    questionAnswer: questionAnswer
+                )
+                navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
         // 에러 스트림
         reviewdArtworkCellListDriver
             .compactMap { $0.error }
             .drive(onNext: { [weak self] _ in
                 guard let self else { return }
                 self.showErrorView(.reviewedArtwork, false) {
-                    guard let user = self.userViewModel.user else {
-                        return
-                    }
-                    self.reviewedArtworkListViewModel.fetchReviewedArtworkListCellList(for: user.id, before: user.lastArtworkId)
+                    self.reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
                 }
             })
             .disposed(by: disposeBag)

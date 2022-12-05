@@ -11,14 +11,19 @@ import RxDataSources
 
 /// ReviewedArtworkListCell 뷰를 위한 모델
 struct ReviewedArtworkListCellViewModel {
+
     let artworkId: Int
     let numberText: String
+    let artworkTitle: String
     let question: String
     let answer: String
+    let artist: String
     let imageURLString: String
     
     init(artwork: Artwork, questionAnswer: QuestionAnswer) {
         self.artworkId = artwork.id
+        self.artist = artwork.artist
+        self.artworkTitle = artwork.title
         self.numberText = "\(artwork.id)번째 티라미술"
         self.question = artwork.question
         self.answer = questionAnswer.questionAnswer

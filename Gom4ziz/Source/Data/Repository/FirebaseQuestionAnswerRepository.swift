@@ -21,15 +21,16 @@ struct FirebaseQuestionAnswerRepository {
 
 // MARK: - QuestionAnswerRepository protocol extension
 extension FirebaseQuestionAnswerRepository: QuestionAnswerRepository {
+
     func fetchQuestionAnswerList(for userId: String, before artworkId: Int) -> Observable<[QuestionAnswer]> {
-        var questionAnswerObservableList: [Observable<QuestionAnswer>] = []
-        
-        for i in 0..<artworkId {
-            questionAnswerObservableList.append(getQuestionAnswerRef(for: userId, before: i + 1)
-                .rx
-                .decodable(as: QuestionAnswer.self))
+
+        guard artworkId > 0 else {
+            return Observable.just([])
         }
-        return Observable.zip(questionAnswerObservableList)
+
+        let observables = (1...artworkId).map { self.getQuestionAnswerRef(for: userId, before: $0).rx.decodable(as: QuestionAnswer.self) }
+
+        return Observable.zip(observables)
     }
 }
 
