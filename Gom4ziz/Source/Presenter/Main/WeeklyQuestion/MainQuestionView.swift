@@ -133,7 +133,7 @@ private extension MainQuestionView {
     func setUpQuestionNumberLabelConstraints() {
         questionNumberLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            questionNumberLabel.topAnchor.constraint(equalTo: topAnchor, constant: 53),
+            questionNumberLabel.topAnchor.constraint(equalTo: topAnchor, constant: 100),
             questionNumberLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 29)
         ])
     }

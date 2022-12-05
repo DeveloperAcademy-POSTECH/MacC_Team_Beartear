@@ -21,9 +21,10 @@ final class RemainingTimeView: BaseAutoLayoutUIView {
         }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+    init(remainingTimeStatus: RemainingTimeStatus) {
+            self.remainingTimeStatus = remainingTimeStatus
+            super.init(frame: .zero)
+        }
     
     required init?(coder: NSCoder) {
         fatalError()
