@@ -93,7 +93,7 @@ private extension MyFeedViewController {
                     self?.hideLottieLoadingView()
                 case .failed:
                     self?.hideLottieLoadingView()
-                    self?.showErrorView(.tiramisul, false) {
+                    self?.showErrorView(.loadFailed(type: .artwork), false) {
                         self?.viewModel.fetchMyFeed()
                     }
                 }

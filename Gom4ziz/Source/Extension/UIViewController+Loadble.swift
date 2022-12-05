@@ -9,8 +9,8 @@ import UIKit
 
 extension UIViewController {
     
-    func showErrorView(_ message: ErrorViewMessage, _ isShowLogo: Bool, onRetryButtonTapped: @escaping () -> Void = { }) {
-        let errorView: ErrorView = .init(message: message, isShowLogo: isShowLogo, onRetryButtonTapped: onRetryButtonTapped)
+    func showErrorView(_ message: ErrorViewMessage, _ isShowLogo: Bool, onButtonTapped: @escaping () -> Void = { }) {
+        let errorView: ErrorView = .init(message: message, isShowLogo: isShowLogo, onButtonTapped: onButtonTapped)
         errorView.tag = ViewTag.errorView.rawValue
         self.view.addSubview(errorView)
         errorView.translatesAutoresizingMaskIntoConstraints = false
