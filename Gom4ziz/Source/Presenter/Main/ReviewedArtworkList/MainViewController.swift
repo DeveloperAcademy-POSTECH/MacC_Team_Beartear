@@ -13,12 +13,10 @@ import RxSwift
 
 final class MainViewController: UIViewController, UIScrollViewDelegate {
     
-    private var tableView = UITableView()
+    private var tableView = UITableView(frame: .zero, style: .grouped)
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
     private let questionViewModel: QuestionViewModel
     private let userViewModel: UserViewModel
-    private let remainingTimeView = RemainingTimeView()
-    private let noMoreDataView = NoMoreDataView()
     private let disposeBag = DisposeBag()
     private var skeletonView: MainViewSkeletonUI?
     
@@ -35,23 +33,6 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if let headerView = tableView.tableHeaderView {
-
-            let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            var headerFrame = headerView.frame
-
-            //Comparison necessary to avoid infinite loop
-            if height != headerFrame.size.height {
-                headerFrame.size.height = height
-                headerView.frame = headerFrame
-                tableView.tableHeaderView = headerView
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         setupViews()
         setupTableViewDataSource()
@@ -66,16 +47,6 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
             .requestArtwork(with: user)
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        updateHeaderViewHeight(for: tableView.tableHeaderView)
-    }
-
-    func updateHeaderViewHeight(for header: UIView?) {
-        guard let header = header else { return }
-        header.frame.size.height = header.systemLayoutSizeFitting(CGSize(width: view.bounds.width - 32.0, height: 0)).height
-    }
-    
     // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
     var dataSource = RxTableViewSectionedReloadDataSource<Section> { dataSource, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
@@ -88,8 +59,10 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
 private extension MainViewController {
     
     func setupViews() {
+        tableView.backgroundColor = .white
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.contentInsetAdjustmentBehavior = .never
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -110,32 +83,28 @@ private extension MainViewController {
     }
     
     func setObserver() {
-        
+    
         questionViewModel
             .artwork
             .asDriver()
             .drive(onNext: { [weak self] status in
+                guard let self else { return }
                 switch status {
                 case .waitNextArtworkDay(let remainingTimeStatus):
-                    let remainingTimeView = self?.remainingTimeView
-                    self?.remainingTimeView.remainingTimeStatus = remainingTimeStatus
-                    self?.tableView.tableHeaderView = remainingTimeView
-                    print(self?.tableView.tableHeaderView?.frame.height)
+                    self.setRemainTimeViewAsHeader(remainingTimeStatus)
                 case .noMoreData:
-                    let noMoreDataView = self?.noMoreDataView
-                    self?.tableView.tableHeaderView = noMoreDataView
+                    self.setNoDataViewAsHeader()
                 case .loaded(let artwork):
-                    self?.tableView.tableHeaderView = MainQuestionView(artwork: artwork)
+                    self.setQuestionViewAsHeader(artwork)
                 case .failed:
-                    self?.showErrorView(.tiramisul, false) {
-                        guard let user = self?.userViewModel.user else { return }
-                        self?.questionViewModel.requestArtwork(with: user)
+                    self.showErrorView(.tiramisul, false) {
+                        guard let user = self.userViewModel.user else { return }
+                        self.questionViewModel.requestArtwork(with: user)
                     }
                 case .loading:
-                    print("loading처리")
-                    //TODO: loading 처리
+                    print("loading")
                 case .notRequested:
-                    print("not requested")
+                    print("notRequested")
                 }
             })
             .disposed(by: disposeBag)
@@ -215,6 +184,27 @@ private extension MainViewController {
     private func removeLoadingView() {
         skeletonView?.removeFromSuperview()
         skeletonView = nil
+    }
+}
+
+private extension MainViewController {
+    
+    func setRemainTimeViewAsHeader(_ remainingTime: RemainingTimeStatus) {
+        let remainTimeStatusView: RemainingTimeView = RemainingTimeView(remainingTimeStatus: remainingTime)
+        remainTimeStatusView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 390)
+        tableView.tableHeaderView = remainTimeStatusView
+    }
+    
+    func setQuestionViewAsHeader(_ artwork: Artwork) {
+        let questionView: MainQuestionView = MainQuestionView(artwork: artwork)
+        questionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 520)
+        tableView.tableHeaderView = questionView
+    }
+    
+    func setNoDataViewAsHeader() {
+        let noDataView: NoMoreDataView = NoMoreDataView()
+        noDataView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 390)
+        tableView.tableHeaderView = noDataView
     }
 }
 
