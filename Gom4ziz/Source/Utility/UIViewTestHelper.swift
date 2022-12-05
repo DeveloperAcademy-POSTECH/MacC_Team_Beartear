@@ -92,7 +92,7 @@ extension SceneDelegate {
     // 남은 시간 UI를 테스트할 수 있는 코드입니다.
     func testRemainingTimeView() {
         let vc = UIViewController()
-        let remainTimeView = RemainingTimeView(.moreThanOneDay(day: 5))
+        let remainTimeView = RemainingTimeView(remainingTimeStatus: .moreThanOneDay(day: 5))
         vc.view.addSubview(remainTimeView)
         remainTimeView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -134,7 +134,7 @@ extension SceneDelegate {
     
     func testReviewedArtworkListView() {
         let vc = MainViewController(
-            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: User.mockData), userViewModel: UserViewModel.shared)
+            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: User.mockData), userViewModel: UserViewModel.shared, questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase()))
         changeRootViewController(vc)
     }
 }

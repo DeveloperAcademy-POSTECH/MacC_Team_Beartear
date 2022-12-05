@@ -24,7 +24,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
         return scrollView
     }()
     
-    // N번째 티라미술
+    // N번째 작품
     private lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.text = artwork.question

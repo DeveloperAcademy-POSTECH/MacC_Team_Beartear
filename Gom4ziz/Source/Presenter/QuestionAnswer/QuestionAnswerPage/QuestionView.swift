@@ -126,7 +126,7 @@ private extension QuestionView {
     }
 
     func setUpQuestionNumberLabel() {
-        questionNumberLabel.text = "\(artwork.id)번째 티라미술"
+        questionNumberLabel.text = "\(artwork.id)번째 작품"
         questionNumberLabel.textColor = .white
         questionNumberLabel.textStyle(.Caption, .white)
     }

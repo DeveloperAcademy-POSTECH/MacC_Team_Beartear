@@ -24,7 +24,7 @@ struct ReviewedArtworkListCellViewModel {
         self.artworkId = artwork.id
         self.artist = artwork.artist
         self.artworkTitle = artwork.title
-        self.numberText = "\(artwork.id)번째 티라미술"
+        self.numberText = "\(artwork.id)번째 작품"
         self.question = artwork.question
         self.answer = questionAnswer.questionAnswer
         self.imageURLString = artwork.imageUrl

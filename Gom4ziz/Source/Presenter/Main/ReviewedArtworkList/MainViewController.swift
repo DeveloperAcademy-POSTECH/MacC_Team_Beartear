@@ -34,6 +34,7 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
+        setUpSelf()
         setupViews()
         setupTableViewDataSource()
         setObserver()
@@ -97,7 +98,7 @@ private extension MainViewController {
                 case .loaded(let artwork):
                     self.setQuestionViewAsHeader(artwork)
                 case .failed:
-                    self.showErrorView(.tiramisul, false) {
+                    self.showErrorView(.loadFailed(type: .artwork), false) {
                         guard let user = self.userViewModel.user else { return }
                         self.questionViewModel.requestArtwork(with: user)
                     }
@@ -161,7 +162,7 @@ private extension MainViewController {
             .compactMap { $0.error }
             .drive(onNext: { [weak self] _ in
                 guard let self else { return }
-                self.showErrorView(.reviewedArtwork, false) {
+                self.showErrorView(.loadFailed(type: .artwork), false) {
                     self.reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
                 }
             })
@@ -208,6 +209,10 @@ private extension MainViewController {
         noDataView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 390)
         tableView.tableHeaderView = noDataView
     }
+    
+    func setUpSelf() {
+            navigationController?.isNavigationBarHidden = true
+        }
 }
 
 // MARK: - Tap Gesture

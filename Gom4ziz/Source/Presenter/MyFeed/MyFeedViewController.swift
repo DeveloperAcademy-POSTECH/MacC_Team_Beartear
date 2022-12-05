@@ -147,7 +147,7 @@ extension MyFeedViewController: ZoomableDelegateProtocol {
 private extension MyFeedViewController {
 
     func setUpNavigationBar() {
-        navigationItem.title = "\(artwork.id)번째 티라미술"
+        navigationItem.title = "\(artwork.id)번째 작품"
         navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = editButton
         navigationController?.navigationBar.tintColor = .black
