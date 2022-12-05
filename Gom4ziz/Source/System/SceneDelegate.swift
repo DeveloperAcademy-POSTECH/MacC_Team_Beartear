@@ -68,7 +68,8 @@ extension SceneDelegate {
                     case .loaded(let user):
                         let mainVC = MainViewController(
                             reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: user),
-                            userViewModel: UserViewModel.shared
+                            userViewModel: UserViewModel.shared,
+                            questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase())
                         )
                         let navigationController = UINavigationController(rootViewController: mainVC)
                         self.changeRootViewController(navigationController)
