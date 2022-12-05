@@ -10,9 +10,9 @@ import Foundation
 
 extension User {
     static var mockData: User {
-        User(id: "질문1",
+        User(id: "mock",
              lastArtworkId: 3,
-             firstLoginedDate: 20221127110000)
+             firstLoginedDate: 20221111110000)
     }
 }
 
