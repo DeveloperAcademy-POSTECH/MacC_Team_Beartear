@@ -28,15 +28,15 @@ final class ErrorView: BaseAutoLayoutUIView {
     
     private lazy var errorMessageLabel: UILabel = {
         let label = UILabel()
-        label.text = message.rawValue
+        label.text = message.header
         label.textStyle(.Title, .blackFont)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let captionLabel: UILabel = {
+    private lazy var captionLabel: UILabel = {
         let label = UILabel()
-        label.text = "아래 버튼을 탭해서 다시 불러와 보세요."
+        label.text = message.description
         label.textStyle(.NavigationButton, .gray3)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -51,6 +51,16 @@ final class ErrorView: BaseAutoLayoutUIView {
         stackView.spacing = Size.messageStackViewSpcing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    lazy var appriciateArtworkButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("첫 작품 감상하러가기 →", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        button.backgroundColor = .gray4
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(appriciateArtworkButtonTapped), for: .touchUpInside)
+        return button
     }()
     
     lazy var retryButton: UIButton = {
@@ -69,7 +79,6 @@ final class ErrorView: BaseAutoLayoutUIView {
             stackView.addArrangedSubview(logoImageView)
         }
         stackView.addArrangedSubview(messageStackView)
-        stackView.addArrangedSubview(retryButton)
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.axis = .vertical
@@ -78,12 +87,12 @@ final class ErrorView: BaseAutoLayoutUIView {
         return stackView
     }()
     
-    private let onRetryButtonTapped: () -> Void
+    private let onButtonTapped: () -> Void
     
-    init(message: ErrorViewMessage, isShowLogo: Bool = true, onRetryButtonTapped: @escaping () -> Void) {
+    init(message: ErrorViewMessage, isShowLogo: Bool = true, onButtonTapped: @escaping () -> Void) {
         self.message = message
         self.isShowLogo = isShowLogo
-        self.onRetryButtonTapped = onRetryButtonTapped
+        self.onButtonTapped = onButtonTapped
         super.init(frame: .zero)
     }
     
@@ -102,13 +111,31 @@ extension ErrorView {
     }
     
     func setUpConstraints() {
+        setErrorViewConstraints()
+        setButtonConstraints()
+    }
+    
+    func setErrorViewConstraints() {
         NSLayoutConstraint.activate([
             errorStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            errorStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            
-            retryButton.widthAnchor.constraint(equalToConstant: Size.buttonWidth),
-            retryButton.heightAnchor.constraint(equalToConstant: Size.buttonHeight)
+            errorStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+    }
+    
+    func setButtonConstraints() {
+        if case .noReview = message {
+            errorStackView.addArrangedSubview(appriciateArtworkButton)
+            NSLayoutConstraint.activate([
+                appriciateArtworkButton.widthAnchor.constraint(equalToConstant: Size.buttonWidth),
+                appriciateArtworkButton.heightAnchor.constraint(equalToConstant: Size.buttonHeight)
+            ])
+        } else {
+            errorStackView.addArrangedSubview(retryButton)
+            NSLayoutConstraint.activate([
+                retryButton.widthAnchor.constraint(equalToConstant: Size.buttonWidth),
+                retryButton.heightAnchor.constraint(equalToConstant: Size.buttonHeight)
+            ])
+        }
     }
     
     func setUpUI() {
@@ -122,7 +149,12 @@ extension ErrorView {
 private extension ErrorView {
     
     @objc func retryButtonTapped() {
-        onRetryButtonTapped()
+        onButtonTapped()
+        self.removeFromSuperview()
+    }
+    
+    @objc func appriciateArtworkButtonTapped() {
+        onButtonTapped()
         self.removeFromSuperview()
     }
     
@@ -132,9 +164,9 @@ private extension ErrorView {
 import SwiftUI
 struct ErrorViewPreview: PreviewProvider {
     static var previews: some View {
-        ErrorView(message: .tiramisul, isShowLogo: false) {
+        ErrorView(message: .noReview, isShowLogo: false, onButtonTapped: {
             
-        }
+        })
             .toPreview()
     }
 }
