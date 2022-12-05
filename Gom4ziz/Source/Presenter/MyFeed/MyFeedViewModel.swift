@@ -78,7 +78,6 @@ final class MyFeedViewModel {
         let myAnswer = myAnswer.value
         let review = review.value
         let highlights = myFeedViewModelRelay.value.value?.highlights ?? []
-        print(myAnswer, review, highlights)
         addArtworkReviewUseCase.addArtworkReview(maker: userId,
                                                  of: artwork.id,
                                                  review: review,
