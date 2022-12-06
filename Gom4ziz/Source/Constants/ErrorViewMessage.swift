@@ -19,7 +19,7 @@ enum ErrorViewMessage {
     case networkError(type: ErrorType)
 }
 
-extension ErrorViewMessage {
+extension ErrorViewMessage: Equatable {
     
     var header: String {
         switch self {
