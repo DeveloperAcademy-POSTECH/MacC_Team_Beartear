@@ -155,7 +155,9 @@ private extension ErrorView {
     
     @objc func appriciateArtworkButtonTapped() {
         onButtonTapped()
-        self.removeFromSuperview()
+        if message != .noReview {
+            self.removeFromSuperview()
+        }
     }
     
 }

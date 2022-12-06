@@ -11,4 +11,5 @@ enum ViewTag: Int {
     case lottieView = 1
     case errorView = 2
     case zoomableImageView = 3
+    case questionView = 4
 }

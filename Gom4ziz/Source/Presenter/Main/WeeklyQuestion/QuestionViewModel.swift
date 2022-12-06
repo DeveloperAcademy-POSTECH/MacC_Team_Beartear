@@ -17,7 +17,8 @@ final class QuestionViewModel {
     private let artworkHelper: ArtworkHelper = .init()
     private let disposeBag: DisposeBag = .init()
     let addReviewInput: PublishRelay<Void> = .init()
-    let artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
+    let weeklyArtworkStatusRelay: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
+    let artwork: BehaviorRelay<Artwork?> = .init(value: nil)
     private var user: User
     
     init(
@@ -44,15 +45,16 @@ final class QuestionViewModel {
     }
 
     func requestArtwork() {
-        artwork.accept(.loading)
+        weeklyArtworkStatusRelay.accept(.loading)
         requestNextArtworkUsecase.requestNextArtwork(with: user)
             .subscribe(onNext: { [weak self] in
                 let loadedStatus = WeeklyArtworkStatus.loaded($0)
-                self?.artwork.accept(loadedStatus)
+                self?.weeklyArtworkStatusRelay.accept(loadedStatus)
+                self?.artwork.accept($0)
             },
                        onError: { [weak self] error in
                 guard let failedStatus = self?.errorToFailedOrNoData(error) else { return }
-                self?.artwork.accept(failedStatus)
+                self?.weeklyArtworkStatusRelay.accept(failedStatus)
             })
             .disposed(by: disposeBag)
     }
