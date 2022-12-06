@@ -147,4 +147,5 @@ private extension QuestionView {
     func setUpWhiteDivider() {
         whiteDivider.backgroundColor = .white
     }
+    
 }

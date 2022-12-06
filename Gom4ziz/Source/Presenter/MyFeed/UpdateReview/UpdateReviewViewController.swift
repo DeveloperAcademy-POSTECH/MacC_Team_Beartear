@@ -15,7 +15,7 @@ final class UpdateReviewViewController: UIViewController {
     private lazy var updateReviewView: UpdateReviewView = .init(question: viewModel.artwork.question, myAnswer: viewModel.myAnswer.value, myReview: viewModel.review.value)
 
     private lazy var cancelButton: UIBarButtonItem = .init(title: "취소", style: .plain, target: self, action: #selector(cancelButtonTapped))
-    private lazy var completeButton: UIBarButtonItem = .init(title: "완료", style: .plain, target: self, action: #selector(completeButtonTapped))
+    private lazy var completeButton: UIBarButtonItem = .init(title: "완료")
     
     let viewModel: MyFeedViewModel
     private let disposeBag: DisposeBag = .init()
@@ -58,11 +58,6 @@ extension UpdateReviewViewController {
         dismiss(animated: true)
     }
     
-    @objc func completeButtonTapped() {
-        viewModel.updateArtworkReview()
-        dismiss(animated: true)
-    }
-    
 }
 
 extension UpdateReviewViewController {
@@ -89,13 +84,21 @@ extension UpdateReviewViewController {
             .disposed(by: disposeBag)
         
         viewModel.review
-            .asDriver()
-            .drive(updateReviewView.myReviewInputTextView.rx.text)
+            .bind(to: updateReviewView.myReviewInputTextView.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.myAnswer
-            .asDriver()
-            .drive(updateReviewView.myAnswerInputTextView.rx.text)
+            .bind(to: updateReviewView.myAnswerInputTextView.rx.text)
+            .disposed(by: disposeBag)
+        
+        
+        completeButton
+            .rx
+            .tap
+            .subscribe(onNext: { [unowned self] in
+                self.viewModel.updateArtworkReview()
+                self.dismiss(animated: true)
+            })
             .disposed(by: disposeBag)
     }
     

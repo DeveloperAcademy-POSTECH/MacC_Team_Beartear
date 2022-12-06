@@ -50,11 +50,12 @@ final class UpdateReviewView: BaseAutoLayoutUIView {
 extension UpdateReviewView {
     
     func addSubviews() {
-        self.addSubview(questionLabel)
-        self.addSubview(myAnswerSectionTitleView)
-        self.addSubview(myAnswerInputTextView)
-        self.addSubview(myReviewSectionTitleView)
-        self.addSubview(myReviewInputTextView)
+        self.addSubview(scrollView)
+        scrollView.addSubview(questionLabel)
+        scrollView.addSubview(myAnswerSectionTitleView)
+        scrollView.addSubview(myAnswerInputTextView)
+        scrollView.addSubview(myReviewSectionTitleView)
+        scrollView.addSubview(myReviewInputTextView)
     }
     
     func setUpConstraints() {
@@ -64,17 +65,22 @@ extension UpdateReviewView {
         myReviewInputTextView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            questionLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.keyboardLayoutGuide.topAnchor, constant: -16),
+            
+            questionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            questionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+            questionLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
             
             myAnswerSectionTitleView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 40),
             myAnswerSectionTitleView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             myAnswerSectionTitleView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             myAnswerInputTextView.topAnchor.constraint(equalTo: myAnswerSectionTitleView.bottomAnchor, constant: 20),
-            myAnswerInputTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            myAnswerInputTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            myAnswerInputTextView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+            myAnswerInputTextView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
             myAnswerInputTextView.heightAnchor.constraint(equalToConstant: 240),
             
             myReviewSectionTitleView.topAnchor.constraint(equalTo: myAnswerInputTextView.bottomAnchor, constant: 40),
@@ -82,17 +88,34 @@ extension UpdateReviewView {
             myReviewSectionTitleView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             
             myReviewInputTextView.topAnchor.constraint(equalTo: myReviewSectionTitleView.bottomAnchor, constant: 20),
-            myReviewInputTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            myReviewInputTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            myReviewInputTextView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16),
+            myReviewInputTextView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -16),
             myReviewInputTextView.heightAnchor.constraint(equalToConstant: 240),
-            myReviewInputTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16)
+            myReviewInputTextView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor, constant: -16)
         ])
     }
     
     func setUpUI() {
         self.backgroundColor = .white
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(sender:))))
     }
     
+}
+
+private extension UpdateReviewView {
+
+    /// 유저가 화면을 탭할 경우, 키보드를 숨깁니다.
+    /// - Parameter sender: 제스쳐 식별기
+    @objc func handleTapGesture(sender: UITapGestureRecognizer) {
+        if myAnswerInputTextView.canResignFirstResponder {
+            _ = myAnswerInputTextView.resignFirstResponder()
+        }
+        
+        if myReviewInputTextView.canResignFirstResponder {
+            _ = myReviewInputTextView.resignFirstResponder()
+        }
+    }
+
 }
 
 #if DEBUG

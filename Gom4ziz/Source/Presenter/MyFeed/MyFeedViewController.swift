@@ -67,11 +67,7 @@ private extension MyFeedViewController {
     func fetchMyFeedViewModel() {
         viewModel.fetchMyFeed()
         viewModel.myAnswer
-            .asDriver()
-            .drive(onNext: {[weak self] in
-                self?.viewModel.myAnswer.accept(self?.questionAnswer.questionAnswer ?? $0)
-            })
-            .disposed(by: disposeBag)
+            .accept(questionAnswer.questionAnswer)
     }
     
     func setUpObservers() {
