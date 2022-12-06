@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class QuestionView: BaseAutoLayoutUIView, Skeletonable {
+final class QuestionView: BaseAutoLayoutUIView {
     let originalCornerRadius: CGFloat = 12
     var skeletonLayer: CALayer?
     private let artwork: Artwork

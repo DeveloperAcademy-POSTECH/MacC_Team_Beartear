@@ -40,9 +40,8 @@ final class QuestionAnswerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = false
         setUpNavigationBar()
-        setUpObservers() 
+        setUpObservers()
     }
 
     override func loadView() {
@@ -62,14 +61,6 @@ final class QuestionAnswerViewController: UIViewController {
 // MARK: - Private API
 private extension QuestionAnswerViewController {
 
-    func focusOnTextView() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
-            _ = questionAnswerView
-                .answerInputTextView
-                .becomeFirstResponder()
-        }
-    }
-
     func setUpObservers() {
 
         // 작품 설명 로딩 이벤트 관찰
@@ -77,13 +68,7 @@ private extension QuestionAnswerViewController {
             .asDriver()
             .drive(onNext: { [unowned self] event in
                 switch event {
-                case .isLoading:
-                    self.questionAnswerView.showSkeletonUI()
-                case .loaded:
-                    self.questionAnswerView.hideSkeletonUI()
-                    self.focusOnTextView()
                 case .failed:
-                    self.questionAnswerView.hideSkeletonUI()
                     self.showErrorView(.loadFailed(type: .artwork), true) {
                         self.answerViewModel.fetchArtworkDescription()
                     }
@@ -135,6 +120,7 @@ private extension QuestionAnswerViewController {
 
     func setUpNavigationBar() {
         navigationItem.rightBarButtonItem = nextButton
+        navigationController?.navigationBar.tintColor = .blackFont
         setUpNextButton()
     }
 

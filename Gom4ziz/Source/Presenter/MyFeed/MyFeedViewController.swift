@@ -22,7 +22,6 @@ final class MyFeedViewController: UIViewController {
     
     private lazy var myFeedView: MyFeedView = .init(artwork: artwork,
                                                     questionAnswer: questionAnswer)
-    private lazy var backButton: UIBarButtonItem = .init(image: UIImage(systemName: "arrow.left"), style: .plain, target: self, action: #selector(backButtonTapped))
     private lazy var editButton: UIBarButtonItem = .init(title: "편집", style: .plain, target: self, action: #selector(editButtonTapped))
     
     private let viewModel: MyFeedViewModel
@@ -53,13 +52,12 @@ final class MyFeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.isNavigationBarHidden = false
         myFeedView.delegate = self
         setUpNavigationBar()
         setUpObservers()
         fetchMyFeedViewModel()
     }
-    
+
 }
 
 // MARK: - Private API
@@ -128,10 +126,6 @@ extension MyFeedViewController: ZoomableDelegateProtocol {
         present(vc, animated: true)
     }
     
-    @objc func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    
     @objc func editButtonTapped() {
         let vc = UpdateReviewViewController(viewModel)
         
@@ -148,7 +142,6 @@ private extension MyFeedViewController {
 
     func setUpNavigationBar() {
         navigationItem.title = "\(artwork.id)번째 작품"
-        navigationItem.leftBarButtonItem = backButton
         navigationItem.rightBarButtonItem = editButton
         navigationController?.navigationBar.tintColor = .black
     }

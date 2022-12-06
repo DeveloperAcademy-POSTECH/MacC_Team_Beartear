@@ -38,12 +38,10 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         setObserver()
         reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
         questionViewModel.requestArtwork()
-        tableView.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
     }
     
     // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
@@ -51,16 +49,6 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
         cell.setViewModel(reviewedArtworkListCellViewModel: item)
         return cell
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        guard let header = tableView.headerView(forSection: 0) else {
-            return
-        }
-        guard !header.frame.isEmpty else {
-            return
-        }
     }
 
 }
@@ -72,7 +60,6 @@ private extension MainViewController {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.contentInsetAdjustmentBehavior = .never
-        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -81,6 +68,7 @@ private extension MainViewController {
         ])
         
         tableView.register(ReviewedArtworkCell.self, forCellReuseIdentifier: "reviewedArtworkCell")
+        tableView.register(CustomSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         tableView.delegate = self
         tableView.sectionHeaderTopPadding = 40
     }
@@ -265,7 +253,8 @@ private extension MainViewController {
 extension MainViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        SectionTitleView(title: "감상 기록")
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader")
+        return view
     }
 
 }
