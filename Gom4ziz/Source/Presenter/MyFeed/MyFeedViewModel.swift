@@ -78,17 +78,20 @@ final class MyFeedViewModel {
         let myAnswer = myAnswer.value
         let review = review.value
         let highlights = myFeedViewModelRelay.value.value?.highlights ?? []
-        addArtworkReviewUseCase.addArtworkReview(maker: userId,
-                                                 of: artwork.id,
-                                                 review: review,
-                                                 answer: myAnswer,
-                                                 highlights: highlights)
-        .subscribe(onSuccess: { [weak self] in
-            self?.updateEvent.accept(.loaded(()))
-        }, onFailure: { [weak self] in
-            self?.updateEvent.accept(.failed($0))
-        })
-        .disposed(by: disposeBag)
+        addArtworkReviewUseCase
+            .addArtworkReview(
+                maker: userId,
+                of: artwork.id,
+                review: review,
+                answer: myAnswer,
+                highlights: highlights
+            )
+            .subscribe(onSuccess: { [weak self] in
+                self?.updateEvent.accept(.loaded(()))
+            }, onFailure: { [weak self] in
+                self?.updateEvent.accept(.failed($0))
+            })
+            .disposed(by: disposeBag)
     }
     
     private func fetchArtworkDescription() -> Observable<ArtworkDescription> {

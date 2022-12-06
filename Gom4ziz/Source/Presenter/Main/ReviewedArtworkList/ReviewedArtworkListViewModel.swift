@@ -14,9 +14,9 @@ final class ReviewedArtworkListViewModel {
     
     private let fetchReviewedArtworkUsecase: FetchReviewedArtworkUsecase
     private let fetchQuestionAnswerUsecase: FetchQuestionAnswerUsecase
-    private let user: User
+    private var user: User
     let reviewedArtworkListCellListObservable: BehaviorRelay<Loadable<[ReviewedArtworkListCellViewModel]>> = .init(value: .notRequested)
-    
+    let addReviewInput: PublishRelay<Void> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init(
@@ -27,6 +27,18 @@ final class ReviewedArtworkListViewModel {
         self.fetchReviewedArtworkUsecase = fetchReviewedArtworkUsecase
         self.fetchQuestionAnswerUsecase = fetchQuestionAnswerUsecase
         self.user = user
+        setUpObserver()
+    }
+
+    private func setUpObserver() {
+        addReviewInput
+            .do(onNext: { [unowned self] in
+                user = User(id: user.id, lastArtworkId: user.lastArtworkId + 1, firstLoginedDate: user.firstLoginedDate)
+            })
+            .subscribe(onNext: { [unowned self] in
+                self.fetchReviewedArtworkListCellList()
+            })
+            .disposed(by: disposeBag)
     }
     
     func fetchReviewedArtworkListCellList() {

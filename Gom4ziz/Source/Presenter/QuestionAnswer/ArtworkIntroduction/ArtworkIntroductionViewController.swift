@@ -15,10 +15,16 @@ final class ArtworkIntroductionViewController: UIViewController {
     private var completeButton: UIBarButtonItem = UIBarButtonItem(title: "완료")
     private let viewModel: QuestionAnswerViewModel
     private let disposeBag: DisposeBag = .init()
+    private let questionViewModel: QuestionViewModel
+    private let listViewModel: ReviewedArtworkListViewModel
 
     init(
-        _ viewModel: QuestionAnswerViewModel
+        _ viewModel: QuestionAnswerViewModel,
+        _ questionViewModel: QuestionViewModel,
+        _ listViewModel: ReviewedArtworkListViewModel
     ) {
+        self.questionViewModel = questionViewModel
+        self.listViewModel = listViewModel
         self.viewModel = viewModel
         self.artworkIntroductionView = ArtworkIntroductionView(
             artwork: viewModel.artwork,
@@ -57,8 +63,11 @@ private extension ArtworkIntroductionViewController {
                     artworkIntroductionView.hideKeyboard()
                     showLottieLoadingView()
                 case .loaded:
-                    // TODO: 메인화면으로 이동하는 처리 해야함 and 토스트 메시지도
                     hideLottieLoadingView()
+                    showToastMessage(text: "감상문을 성공적으로 저장했습니다.")
+                    questionViewModel.addReviewInput.accept(())
+                    listViewModel.addReviewInput.accept(())
+                    navigationController?.popToRootViewController(animated: true)
                 case .failed:
                     hideLottieLoadingView()
                     showErrorAlert(title: "감상문을 저장하는데 실패했습니다.", suggestion: "작성한 감상문이 저장되지 않았습니다. 다시 시도하여 감상문을 저장해주세요.") { [unowned self] in
@@ -110,7 +119,11 @@ private extension ArtworkIntroductionViewController {
 import SwiftUI
 struct ArtworkIntroductionViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        UINavigationController(rootViewController: ArtworkIntroductionViewController(QuestionAnswerViewModel()))
+        UINavigationController(rootViewController: ArtworkIntroductionViewController(
+            QuestionAnswerViewModel(),
+            QuestionViewModel(user: .mockData),
+            ReviewedArtworkListViewModel(user: User.mockData)
+        ))
         .toPreview()
     }
 }

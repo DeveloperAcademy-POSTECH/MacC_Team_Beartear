@@ -14,13 +14,22 @@ final class QuestionAnswerViewController: UIViewController {
 
     private let questionAnswerView: QuestionAnswerView
     private let nextButton: UIBarButtonItem
-    private let viewModel: QuestionAnswerViewModel
+    private let answerViewModel: QuestionAnswerViewModel
+    private let questionViewModel: QuestionViewModel
+    private let listViewModel: ReviewedArtworkListViewModel
     private let disposeBag: DisposeBag = .init()
     private var isInitiated: Bool = false
 
-    init(artwork: Artwork, userId: String) {
+    init(
+        artwork: Artwork,
+        userId: String,
+        questionViewModel: QuestionViewModel,
+        listViewModel: ReviewedArtworkListViewModel
+    ) {
+        self.questionViewModel = questionViewModel
+        self.listViewModel = listViewModel
         self.questionAnswerView = QuestionAnswerView(artwork: artwork)
-        self.viewModel = QuestionAnswerViewModel(userId: userId, of: artwork)
+        self.answerViewModel = QuestionAnswerViewModel(userId: userId, of: artwork)
         self.nextButton = UIBarButtonItem(title: "다음")
         super.init(nibName: nil, bundle: nil)
     }
@@ -31,6 +40,7 @@ final class QuestionAnswerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = false
         setUpNavigationBar()
         setUpObservers() 
     }
@@ -43,7 +53,7 @@ final class QuestionAnswerViewController: UIViewController {
         super.viewDidAppear(animated)
         if !isInitiated {
             isInitiated = true
-            viewModel.fetchArtworkDescription()
+            answerViewModel.fetchArtworkDescription()
         }
     }
 
@@ -63,7 +73,7 @@ private extension QuestionAnswerViewController {
     func setUpObservers() {
 
         // 작품 설명 로딩 이벤트 관찰
-        viewModel.artworkDescriptionRelay
+        answerViewModel.artworkDescriptionRelay
             .asDriver()
             .drive(onNext: { [unowned self] event in
                 switch event {
@@ -75,7 +85,7 @@ private extension QuestionAnswerViewController {
                 case .failed:
                     self.questionAnswerView.hideSkeletonUI()
                     self.showErrorView(.loadFailed(type: .artwork), true) {
-                        self.viewModel.fetchArtworkDescription()
+                        self.answerViewModel.fetchArtworkDescription()
                     }
                 default: break
                 }
@@ -91,7 +101,7 @@ private extension QuestionAnswerViewController {
 
         // 유저 답변 입력, 그리고 상세 정보 로딩 완료 여부 검사
         Driver
-            .combineLatest(answer, viewModel.artworkDescriptionRelay.asDriver())
+            .combineLatest(answer, answerViewModel.artworkDescriptionRelay.asDriver())
             .map { answer, artworkDescription in
                 !answer.isEmpty && artworkDescription.value != nil
             }
@@ -99,7 +109,7 @@ private extension QuestionAnswerViewController {
             .disposed(by: disposeBag)
 
         answer
-            .drive(viewModel.myAnswer)
+            .drive(answerViewModel.myAnswer)
             .disposed(by: disposeBag)
     }
 
@@ -110,7 +120,11 @@ private extension QuestionAnswerViewController {
 
     func showArtworkIntroductionUI() {
         questionAnswerView.answerInputTextView.resignFirstResponder()
-        let artworkIntroductionViewController = ArtworkIntroductionViewController(viewModel)
+        let artworkIntroductionViewController = ArtworkIntroductionViewController(
+            answerViewModel,
+            questionViewModel,
+            listViewModel
+        )
         navigationController?.pushViewController(artworkIntroductionViewController, animated: true)
     }
 
@@ -141,7 +155,14 @@ private extension QuestionAnswerViewController {
 import SwiftUI
 struct QuestionAnswerViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        UINavigationController(rootViewController: QuestionAnswerViewController(artwork: Artwork.mockData, userId: User.mockData.id))
+        UINavigationController(
+            rootViewController: QuestionAnswerViewController(
+                artwork: Artwork.mockData,
+                userId: User.mockData.id,
+                questionViewModel: QuestionViewModel(user: .mockData),
+                listViewModel: .init(user: .mockData)
+            )
+        )
             .toPreview() 
     }
 }

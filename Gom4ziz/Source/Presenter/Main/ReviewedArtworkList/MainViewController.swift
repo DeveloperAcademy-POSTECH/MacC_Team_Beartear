@@ -13,7 +13,7 @@ import RxSwift
 
 final class MainViewController: UIViewController, UIScrollViewDelegate {
     
-    private var tableView = UITableView(frame: .zero, style: .grouped)
+    private var tableView = UITableView(frame: .zero, style: .plain)
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
     private let questionViewModel: QuestionViewModel
     private let userViewModel: UserViewModel
@@ -34,18 +34,16 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     }
     
     override func viewDidLoad() {
-        setUpSelf()
         setupViews()
-        setupTableViewDataSource()
         setObserver()
         reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
+        questionViewModel.requestArtwork()
+        tableView.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let user = userViewModel.user else { return }
-        questionViewModel
-            .requestArtwork(with: user)
+        navigationController?.isNavigationBarHidden = true
     }
     
     // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
@@ -53,8 +51,18 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
         cell.setViewModel(reviewedArtworkListCellViewModel: item)
         return cell
-        
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let header = tableView.headerView(forSection: 0) else {
+            return
+        }
+        guard !header.frame.isEmpty else {
+            return
+        }
+    }
+
 }
 
 private extension MainViewController {
@@ -73,18 +81,13 @@ private extension MainViewController {
         ])
         
         tableView.register(ReviewedArtworkCell.self, forCellReuseIdentifier: "reviewedArtworkCell")
-        tableView.rx.setDelegate(self)
-            .disposed(by: disposeBag)
+        tableView.delegate = self
+        tableView.sectionHeaderTopPadding = 40
     }
-    
-    func setupTableViewDataSource() {
-        dataSource.titleForHeaderInSection = { dataSource, index in
-            return dataSource.sectionModels[index].headerTitle
-        }
-    }
-    
+
     func setObserver() {
-    
+
+        // Header View를 설정하는 스트림
         questionViewModel
             .artwork
             .asDriver()
@@ -99,8 +102,7 @@ private extension MainViewController {
                     self.setQuestionViewAsHeader(artwork)
                 case .failed:
                     self.showErrorView(.loadFailed(type: .artwork), false) {
-                        guard let user = self.userViewModel.user else { return }
-                        self.questionViewModel.requestArtwork(with: user)
+                        self.questionViewModel.requestArtwork()
                     }
                 default:
                     break
@@ -108,14 +110,28 @@ private extension MainViewController {
             })
             .disposed(by: disposeBag)
         
-        let reviewdArtworkCellListDriver = reviewedArtworkListViewModel.reviewedArtworkListCellListObservable
-                     .asDriver()
+        let reviewdArtworkCellListDriver = reviewedArtworkListViewModel
+            .reviewedArtworkListCellListObservable
+            .asDriver()
 
         // 리뷰된 작품이 불러와졌을 때의 스트림
         reviewdArtworkCellListDriver
             .compactMap { $0.value }
             .map { [Section(headerTitle: "감상 기록", items: $0)] }
             .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+
+        // 감상한 기록이 아무것도 없을 경우
+        reviewdArtworkCellListDriver
+            .compactMap { $0.value }
+            .filter { $0.isEmpty }
+            .drive(onNext: { [weak self] _ in
+                guard let self else { return }
+                // TODO: 밑에만 다시 시도 버튼 띄워야함
+//                self.showErrorView(.noReview, false) {
+//
+//                }
+            })
             .disposed(by: disposeBag)
         
         // 작품 로딩 스트림
@@ -130,6 +146,13 @@ private extension MainViewController {
                     return
                 }
                 self.removeLoadingView()
+            })
+            .disposed(by: disposeBag)
+
+        tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                let cell = self?.tableView.cellForRow(at: indexPath)
+                cell?.isSelected = false
             })
             .disposed(by: disposeBag)
 
@@ -196,10 +219,11 @@ private extension MainViewController {
     
     func setQuestionViewAsHeader(_ artwork: Artwork) {
         let questionView: MainQuestionView = MainQuestionView(artwork: artwork)
-        let tapGestureRecognizer = setTapGesture()
+        let tapGestureRecognizer = setTapGesture(artwork)
         questionView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 520)
-        tableView.tableHeaderView = questionView
+        questionView.isUserInteractionEnabled = true
         questionView.addGestureRecognizer(tapGestureRecognizer)
+        tableView.tableHeaderView = questionView
     }
     
     func setNoDataViewAsHeader() {
@@ -207,31 +231,55 @@ private extension MainViewController {
         noDataView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 390)
         tableView.tableHeaderView = noDataView
     }
-    
-    func setUpSelf() {
-            navigationController?.isNavigationBarHidden = true
-        }
+
 }
 
 // MARK: - Tap Gesture
 private extension MainViewController {
     
-    func setTapGesture() -> UITapGestureRecognizer {
-        return UITapGestureRecognizer(target: self, action: #selector(tapArtworkQuestion))
+    func setTapGesture(_ artwork: Artwork) -> QuestionTapGesture {
+        QuestionTapGesture(question: artwork, target: self, action: #selector(tapArtworkQuestion(sender: )))
     }
 
-    @objc func tapArtworkQuestion() {
-        print("tap")
-        //TODO: navigate
+    @objc func tapArtworkQuestion(sender: QuestionTapGesture) {
+        let questionAnswerViewController: QuestionAnswerViewController = .init(
+            artwork: sender.question,
+            userId: userViewModel.user!.id,
+            questionViewModel: questionViewModel,
+            listViewModel: reviewedArtworkListViewModel
+        )
+        navigationController?.pushViewController(questionAnswerViewController, animated: true)
     }
+
+    final class QuestionTapGesture: UITapGestureRecognizer {
+        let question: Artwork
+
+        init(question: Artwork, target: Any?, action: Selector?) {
+            self.question = question
+            super.init(target: target, action: action)
+        }
+    }
+
+}
+
+extension MainViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        SectionTitleView(title: "감상 기록")
+    }
+
 }
 
 #if DEBUG
 import SwiftUI
 struct MainViewControllerPreview: PreviewProvider {
     static var previews: some View {
-        MainViewController(reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: UserViewModel.shared.user!), userViewModel: UserViewModel.shared, questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase()))
-            .toPreview()
+        MainViewController(
+            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: UserViewModel.shared.user!),
+            userViewModel: UserViewModel.shared,
+            questionViewModel: QuestionViewModel(user: .mockData)
+        )
+        .toPreview()
     }
 }
 #endif

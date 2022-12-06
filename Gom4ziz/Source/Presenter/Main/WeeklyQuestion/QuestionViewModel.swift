@@ -16,17 +16,34 @@ final class QuestionViewModel {
     private let timeDiffHandler: TimeDiffHandler
     private let artworkHelper: ArtworkHelper = .init()
     private let disposeBag: DisposeBag = .init()
-    
+    let addReviewInput: PublishRelay<Void> = .init()
     let artwork: BehaviorRelay<WeeklyArtworkStatus> = .init(value: .notRequested)
+    private var user: User
     
-    init(requestNextQuestionUsecase: RequestNextArtworkUsecase,
-         timeDiffHandler: TimeDiffHandler = TimeDiffHandler(
-            dateComponentsSet: [.day, .hour, .minute, .second])) {
+    init(
+        requestNextQuestionUsecase: RequestNextArtworkUsecase = RealRequestNextArtworkUsecase(),
+        timeDiffHandler: TimeDiffHandler = TimeDiffHandler(
+            dateComponentsSet: [.day, .hour, .minute, .second]),
+        user: User
+    ) {
+        self.user = user
         self.requestNextArtworkUsecase = requestNextQuestionUsecase
         self.timeDiffHandler = timeDiffHandler
+        setUpObserver()
     }
-    
-    func requestArtwork(with user: User) {
+
+    private func setUpObserver() {
+        addReviewInput
+            .do(onNext: { [unowned self] in
+                self.user = User(id: user.id, lastArtworkId: user.lastArtworkId + 1, firstLoginedDate: user.firstLoginedDate)
+            })
+            .subscribe(onNext: { [unowned self] in
+                self.requestArtwork()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func requestArtwork() {
         artwork.accept(.loading)
         requestNextArtworkUsecase.requestNextArtwork(with: user)
             .subscribe(onNext: { [weak self] in

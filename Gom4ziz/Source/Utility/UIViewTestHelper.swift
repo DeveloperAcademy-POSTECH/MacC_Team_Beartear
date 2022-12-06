@@ -77,14 +77,23 @@ extension SceneDelegate {
     
     // 작품 소개 UI를 테스트할 수 있는 코드입니다.
     func testArtworkIntroductionView() {
-        let vc = ArtworkIntroductionViewController(QuestionAnswerViewModel())
+        let vc = ArtworkIntroductionViewController(
+            QuestionAnswerViewModel(),
+            .init(user: .mockData),
+            .init(user: .mockData)
+        )
         let rootVc = UINavigationController(rootViewController: vc)
         changeRootViewController(rootVc)
     }
     
     // 질문 답변 UI를 테스트할 수 있는 코드입니다.
     func testQuestionAnswerView() {
-        let vc = QuestionAnswerViewController(artwork: Artwork.mockData, userId: User.mockData.id)
+        let vc = QuestionAnswerViewController(
+            artwork: Artwork.mockData,
+            userId: User.mockData.id,
+            questionViewModel: .init(user: .mockData),
+            listViewModel: .init(user: .mockData)
+        )
         let rootVc = UINavigationController(rootViewController: vc)
         changeRootViewController(rootVc)
     }
@@ -134,7 +143,10 @@ extension SceneDelegate {
     
     func testReviewedArtworkListView() {
         let vc = MainViewController(
-            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: User.mockData), userViewModel: UserViewModel.shared, questionViewModel: QuestionViewModel(requestNextQuestionUsecase: RealRequestNextArtworkUsecase()))
+            reviewedArtworkListViewModel: ReviewedArtworkListViewModel(user: User.mockData),
+            userViewModel: UserViewModel.shared,
+            questionViewModel: QuestionViewModel(user: .mockData)
+        )
         changeRootViewController(vc)
     }
 }

@@ -68,7 +68,6 @@ private extension MyFeedViewController {
     
     func fetchMyFeedViewModel() {
         viewModel.fetchMyFeed()
-        
         viewModel.myAnswer
             .asDriver()
             .drive(onNext: {[weak self] in
