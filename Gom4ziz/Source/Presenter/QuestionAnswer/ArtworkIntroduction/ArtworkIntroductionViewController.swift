@@ -101,10 +101,8 @@ private extension ArtworkIntroductionViewController {
 
     func setUpNavigationBar() {
         navigationItem.rightBarButtonItem = completeButton
-        navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .gray4
-        navigationController?.navigationBar.isTranslucent = false
-
+        navigationController?.navigationBar.backgroundColor = .white
         completeButton
             .rx
             .tap

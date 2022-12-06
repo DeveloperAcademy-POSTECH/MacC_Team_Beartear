@@ -24,6 +24,7 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private let myReviewTextView: PlaceholderTextView
     private var topDivider: CALayer?
     private var startY: CGFloat?
+    private var topY: CGFloat
     private var bottomY: CGFloat
     private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
 
@@ -39,6 +40,7 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
         self.artworkDescriptionTextView = HighlightedTextView(text: artworkDescription.content, highlights: highlights)
         self.myReviewTextView = PlaceholderTextView(placeholder: "작품을 보고 어떤 생각을 했나요?", text: review)
         self.bottomY = frame.minY
+        self.topY = 0
         super.init(frame: frame)
         setUpPanGestureRecognizer()
         scrollView.delegate = self
@@ -67,6 +69,10 @@ extension ArtworkIntroductionModal {
     func setFrame(_ frame: CGRect) {
         self.frame = frame
         self.bottomY = frame.minY
+    }
+
+    func setTopY(_ topY: CGFloat) {
+        self.topY = topY
     }
 
     func hideKeyboard() {
@@ -325,7 +331,7 @@ private extension ArtworkIntroductionModal {
         let targetY: CGFloat = startY + translation.y
 
         // 최종적으로 이동할 위치가, 화면 범위밖이면 이동하지 않는다
-        guard targetY <= bottomY && targetY >= 0 else { return }
+        guard targetY <= bottomY && targetY >= topY else { return }
         UIView.animate(withDuration: 0.2, delay: 0.02, options: .curveEaseInOut) { [self] in
             frame = CGRect(x: 0, y: startY + translation.y, width: frame.width, height: frame.height)
         }
@@ -374,7 +380,7 @@ private extension ArtworkIntroductionModal {
 
     func showModal() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) { [self] in
-            frame = CGRect(x: frame.minX, y: 0, width: frame.width, height: frame.height)
+            frame = CGRect(x: frame.minX, y: topY, width: frame.width, height: frame.height)
             layer.cornerRadius = 0
             scrollView.isUserInteractionEnabled = true
             addTopDivider()

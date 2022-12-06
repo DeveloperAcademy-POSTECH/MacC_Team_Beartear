@@ -15,4 +15,13 @@ public extension UIView {
         }
     }
 
+    var topBarHeight: CGFloat {
+        let statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0
+        guard let rootVC = window?.rootViewController as? UINavigationController else {
+            return 0
+        }
+        let navigationBarHeight = rootVC.navigationBar.frame.height
+        return statusBarHeight + navigationBarHeight
+    }
+
 }

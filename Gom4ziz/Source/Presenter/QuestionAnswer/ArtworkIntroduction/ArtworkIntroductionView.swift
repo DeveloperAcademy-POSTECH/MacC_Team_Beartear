@@ -82,7 +82,7 @@ private extension ArtworkIntroductionView {
             artworkImage.widthAnchor.constraint(equalTo: widthAnchor),
             artworkImage.heightAnchor.constraint(equalTo: artworkImage.widthAnchor, multiplier: 1.487),
             artworkImage.centerXAnchor.constraint(equalTo: centerXAnchor),
-            artworkImage.topAnchor.constraint(equalTo: topAnchor)
+            artworkImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
         ])
     }
 
@@ -94,8 +94,9 @@ private extension ArtworkIntroductionView {
     func addArtworkInfoModal() {
         if !isInitiated {
             isInitiated = true
-            let modalFrame: CGRect = CGRect(x: frame.minX, y: artworkImage.frame.maxY, width: frame.width, height: frame.height)
+            let modalFrame: CGRect = CGRect(x: frame.minX, y: artworkImage.frame.maxY, width: frame.width, height: frame.height - topBarHeight)
             artworkModal.setFrame(modalFrame)
+            artworkModal.setTopY(topBarHeight)
         }
     }
 
