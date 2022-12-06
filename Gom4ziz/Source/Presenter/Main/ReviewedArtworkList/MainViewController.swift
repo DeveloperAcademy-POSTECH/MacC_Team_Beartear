@@ -37,11 +37,12 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         setupViews()
         setObserver()
         reviewedArtworkListViewModel.fetchReviewedArtworkListCellList()
-        questionViewModel.requestArtwork()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        questionViewModel.requestArtwork()
+        setNavbarTransparent()
     }
     
     // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
@@ -55,8 +56,19 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
 
 private extension MainViewController {
     
+    func setNavbarTransparent() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+    }
+    
+    func setNavbarOrigin() {
+        navigationController?.navigationBar.standardAppearance = .init()
+    }
+    
     func setupViews() {
         tableView.backgroundColor = .white
+        tableView.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.contentInsetAdjustmentBehavior = .never
@@ -164,6 +176,7 @@ private extension MainViewController {
                     questionAnswer: questionAnswer
                 )
                 navigationController?.pushViewController(vc, animated: true)
+                setNavbarOrigin()
             })
             .disposed(by: disposeBag)
         // 에러 스트림
@@ -237,6 +250,7 @@ private extension MainViewController {
             listViewModel: reviewedArtworkListViewModel
         )
         navigationController?.pushViewController(questionAnswerViewController, animated: true)
+        setNavbarOrigin()
     }
 
     final class QuestionTapGesture: UITapGestureRecognizer {
