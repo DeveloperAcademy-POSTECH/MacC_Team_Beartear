@@ -64,7 +64,7 @@ extension ArtworkIntroductionView {
     }
 
     func setUpUI() {
-        backgroundColor = .gray1
+        backgroundColor = .white
     }
 
     func hideKeyboard() {
