@@ -21,7 +21,7 @@ import MyPlugin
 // MARK: - Project
 
 let projectName: String = "Gom4ziz"
-let bundleID: String = "team.gom4ziz.Ziz4gom"
+let bundleID: String = "com.gom4ziz.tiramisul"
 let iOSTargetVersion: String = "15.0"
 
 let infoPlist: InfoPlist = .extendingDefault(with: [
@@ -41,11 +41,12 @@ let infoPlist: InfoPlist = .extendingDefault(with: [
                 ])
             ])
         ])
-    ])
+    ]),
+    "UIUserInterfaceStyle": .string("Light")
 ])
 
 let appTarget: Target = Project.target(name: "Gom4ziz",
-                                       bundleId: "team.gom4ziz.Ziz4gom",
+                                       bundleId: bundleID,
                                        deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: [.iphone]),
                                        infoPlist: infoPlist,
                                        platform: .iOS,
@@ -63,7 +64,9 @@ let appTarget: Target = Project.target(name: "Gom4ziz",
                                                       .package(product: "Lottie"),
                                                       .package(product: "RxDataSources")
                                                       ],
-                                       additionalFiles: [".swiftlint.yml"])
+                                       additionalFiles: [
+                                        ".swiftlint.yml"
+                                       ])
 
 let testTarget: Target = Project.target(name: "Gom4zizTests",
                                         deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: [.iphone]),
