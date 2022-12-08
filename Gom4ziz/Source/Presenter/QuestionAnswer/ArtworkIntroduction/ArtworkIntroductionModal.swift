@@ -114,6 +114,7 @@ extension ArtworkIntroductionModal {
         setUpArtistLabel()
         setUpIntroductionLabel()
         setUpKeyboardObserver()
+        setUpMyReviewTextView()
     }
 
 }
@@ -194,7 +195,7 @@ private extension ArtworkIntroductionModal {
             myReviewTextView.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor),
             myReviewTextView.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor),
             myReviewTextView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            myReviewTextView.heightAnchor.constraint(equalToConstant: 140)
+            myReviewTextView.heightAnchor.constraint(greaterThanOrEqualToConstant: 140)
         ])
     }
 }
@@ -204,7 +205,7 @@ extension ArtworkIntroductionModal: UIScrollViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 만약 scrollView를 위쪽으로 계속 스크롤하면, 모달을 닫는다!
-        guard scrollView.contentOffset.y < -100 else {
+        guard scrollView.contentOffset.y < -50 else {
             return
         }
         hideModal()
@@ -294,6 +295,10 @@ private extension ArtworkIntroductionModal {
         let contentInset = baseInsets
         scrollView.contentInset = contentInset
         scrollView.scrollIndicatorInsets = .zero
+    }
+
+    func setUpMyReviewTextView() {
+        myReviewTextView.isScrollEnabled = false
     }
 }
 

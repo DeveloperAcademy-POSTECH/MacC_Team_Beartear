@@ -25,7 +25,7 @@ final class HighlightedTextView: BaseAutoLayoutUIView {
     private let highlightTextColor: UIColor
     let textView: UITextView = UITextView()
     private let addButton: UIButton = UIButton()
-    private let toggleButton: UILabel = UILabel()
+    private let toggleButton: PaddingLabel = PaddingLabel(.init(top: 8, left: 0, bottom: 4, right: 8))
     private let deleteButton: BubbleButton = BubbleButton(text: "삭제")
     private let isEditable: Bool
     var onHighlightsChanged: (([Highlight]) -> Void)?
@@ -91,8 +91,9 @@ extension HighlightedTextView {
             toggleButton.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 toggleButton.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
-                toggleButton.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 4),
-                toggleButton.bottomAnchor.constraint(equalTo: bottomAnchor)
+                toggleButton.topAnchor.constraint(equalTo: textView.bottomAnchor),
+                toggleButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+                toggleButton.heightAnchor.constraint(equalToConstant: 30)
             ])
         } else {
             NSLayoutConstraint.activate([textView.bottomAnchor.constraint(equalTo: bottomAnchor)])
