@@ -48,6 +48,11 @@ final class ArtworkIntroductionViewController: UIViewController {
     override func loadView() {
         self.view = artworkIntroductionView
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showToastMessage(text: "문장을 꾹 눌러 하이라이팅 할 수 있어요", duration: 2)
+    }
 }
 
 // MARK: - 뷰모델 릴레이 옵저버 설정
