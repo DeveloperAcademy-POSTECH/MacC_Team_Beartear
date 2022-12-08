@@ -23,7 +23,6 @@ final class QuestionAnswerViewModel {
     let myAnswer: BehaviorRelay<String> = .init(value: "")
     let review: BehaviorRelay<String> = .init(value: "")
     let highlights: BehaviorRelay<[Highlight]> = .init(value: [])
-    let canUpload: BehaviorRelay<Bool> = .init(value: false)
 
     init(
         userId: String,
@@ -35,7 +34,6 @@ final class QuestionAnswerViewModel {
         self.artwork = artwork
         self.fetchDescriptionUsecase = fetchDescriptionUsecase
         self.addReviewUsecase = addReviewUsecase
-        self.setUpObserver()
     }
 
     // 디버그용 생성자
@@ -46,7 +44,6 @@ final class QuestionAnswerViewModel {
         self.artworkDescriptionRelay.accept(.loaded(ArtworkDescription.mockData))
         self.fetchDescriptionUsecase = RealFetchArtworkDescriptionUseCase()
         self.addReviewUsecase = RealArtworkReviewUsecase()
-        self.setUpObserver()
     }
     #endif
 
@@ -80,22 +77,6 @@ final class QuestionAnswerViewModel {
                 // 업로드 도중 실패 시
                 self?.addEvent.accept(.failed(error))
             })
-            .disposed(by: disposeBag)
-    }
-
-}
-
-// MARK: - 옵저버 설정
-private extension QuestionAnswerViewModel {
-
-    func setUpObserver() {
-
-        // 질문 답변과, 감상평을 모두 작성해야 등록가능!
-        Observable.combineLatest(myAnswer, review)
-            .map { (answer, review) in
-                !answer.isEmpty && !review.isEmpty
-            }
-            .bind(to: canUpload)
             .disposed(by: disposeBag)
     }
 

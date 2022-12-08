@@ -77,11 +77,6 @@ private extension ArtworkIntroductionViewController {
             })
             .disposed(by: disposeBag)
 
-        viewModel
-            .canUpload
-            .bind(to: completeButton.rx.isEnabled)
-            .disposed(by: disposeBag)
-
         artworkIntroductionView
             .review
             .bind(to: viewModel.review)
