@@ -15,6 +15,7 @@ final class ArtworkIntroductionView: BaseAutoLayoutUIView {
     private let artworkDescription: ArtworkDescription
     private let artworkImage: ZoomableAsyncImageView
     private let artworkModal: ArtworkIntroductionModal
+    private let grayBackground: UIView = UIView()
     private var isInitiated: Bool = false
 
     var review: ControlProperty<String> {
@@ -56,7 +57,11 @@ final class ArtworkIntroductionView: BaseAutoLayoutUIView {
 extension ArtworkIntroductionView {
 
     func addSubviews() {
-        addSubviews(artworkImage, artworkModal)
+        addSubviews(
+            grayBackground,
+            artworkImage,
+            artworkModal
+        )
     }
 
     func setUpConstraints() {
@@ -65,6 +70,7 @@ extension ArtworkIntroductionView {
 
     func setUpUI() {
         backgroundColor = .white
+        grayBackground.backgroundColor = .gray1
     }
 
     func hideKeyboard() {
@@ -83,6 +89,14 @@ private extension ArtworkIntroductionView {
             artworkImage.heightAnchor.constraint(equalTo: artworkImage.widthAnchor, multiplier: 1.487),
             artworkImage.centerXAnchor.constraint(equalTo: centerXAnchor),
             artworkImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
+        ])
+        grayBackground.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            grayBackground.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            grayBackground.leftAnchor.constraint(equalTo: leftAnchor),
+            grayBackground.rightAnchor.constraint(equalTo: rightAnchor),
+            grayBackground.bottomAnchor.constraint(equalTo: bottomAnchor)
+
         ])
     }
 
