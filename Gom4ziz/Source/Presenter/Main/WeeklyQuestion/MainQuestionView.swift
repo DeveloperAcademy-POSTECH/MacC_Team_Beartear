@@ -92,8 +92,8 @@ private extension MainQuestionView {
     }
     
     func setUpQuestionNumberLabel() {
-        questionNumberLabel.textStyle(.Headline1, UIColor.white)
         questionNumberLabel.text = "\(artwork.id)번째 작품"
+        questionNumberLabel.textStyle(.Headline1, UIColor.white)
         questionNumberLabel.textColor = .white
     }
     
@@ -102,8 +102,8 @@ private extension MainQuestionView {
     }
     
     func setUpQuestionLabel() {
-        questionLabel.textStyle(.Display1, lineHeightMultiple: 1.5, alignment: .left, UIColor.white)
         questionLabel.text = artwork.question
+        questionLabel.textStyle(.Display1, lineHeightMultiple: 1.5, alignment: .left, UIColor.white)
         questionNumberLabel.textColor = .white
         questionLabel.numberOfLines = 0
         questionLabel.lineBreakMode = .byWordWrapping

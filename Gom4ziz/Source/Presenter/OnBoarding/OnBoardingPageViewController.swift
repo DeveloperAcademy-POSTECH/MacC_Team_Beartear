@@ -46,15 +46,12 @@ extension OnBoardingPageViewController: UIPageViewControllerDelegate {
         guard let previousViewController = previousViewControllers.first else { return }
         guard let previousIndex = pageViewControllerList.firstIndex(of: previousViewController) else { return }
         guard let currentIndex = pageViewControllerList.firstIndex(of: nowViewController) else { return }
+        
+        print(previousIndex, currentIndex)
 
         if completed {
-            if previousIndex < currentIndex {
-                onBoardingViewModel
-                    .addPageIdx()
-            } else if previousIndex > currentIndex {
-                onBoardingViewModel
-                    .minusPageIdx()
-            }
+            onBoardingViewModel
+                .setPageIdx(currentIndex)
         }
     }
 }
