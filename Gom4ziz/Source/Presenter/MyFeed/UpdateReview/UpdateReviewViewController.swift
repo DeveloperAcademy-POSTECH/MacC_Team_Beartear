@@ -64,7 +64,7 @@ extension UpdateReviewViewController {
     
     func setObserver() {
         viewModel.updateEvent
-            .asDriver()
+            .asDriver(onErrorJustReturn: .notRequested)
             .drive(onNext: { [weak self] in
                 switch $0 {
                 case .notRequested:
@@ -73,6 +73,7 @@ extension UpdateReviewViewController {
                     self?.showLottieLoadingView()
                 case .loaded:
                     self?.hideLottieLoadingView()
+                    self?.dismiss(animated: true)
                 case .failed:
                     self?.hideLottieLoadingView()
                     self?.showErrorAlert(title: "감상문을 편집하는데 실패했습니다.",
@@ -91,13 +92,11 @@ extension UpdateReviewViewController {
             .bind(to: updateReviewView.myAnswerInputTextView.rx.text)
             .disposed(by: disposeBag)
         
-        
         completeButton
             .rx
             .tap
             .subscribe(onNext: { [unowned self] in
                 self.viewModel.updateArtworkReview()
-                self.dismiss(animated: true)
             })
             .disposed(by: disposeBag)
     }

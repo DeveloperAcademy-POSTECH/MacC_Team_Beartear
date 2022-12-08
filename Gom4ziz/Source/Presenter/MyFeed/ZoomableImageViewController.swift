@@ -43,7 +43,7 @@ private extension ZoomableImageViewController {
     func setUpUI() {
         self.view.backgroundColor = .gray1
         self.view.addSubview(zoomableAsyncImageView)
-        self.zoomableAsyncImageView.addSubview(closeButton)
+        self.view.addSubview(closeButton)
     }
     
     func setConstraints() {
