@@ -19,7 +19,7 @@ final class QuestionAnswerViewModel {
     let artwork: Artwork
     // MARK: - Rx Relays
     let artworkDescriptionRelay: BehaviorRelay<Loadable<ArtworkDescription>> = .init(value: .notRequested)
-    let addEvent: BehaviorRelay<Loadable<Void>> = .init(value: .notRequested)
+    let addEvent: PublishRelay<Loadable<Void>> = .init()
     let myAnswer: BehaviorRelay<String> = .init(value: "")
     let review: BehaviorRelay<String> = .init(value: "")
     let highlights: BehaviorRelay<[Highlight]> = .init(value: [])

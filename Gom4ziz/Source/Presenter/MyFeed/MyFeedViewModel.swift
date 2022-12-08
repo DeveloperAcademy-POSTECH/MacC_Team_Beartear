@@ -32,7 +32,7 @@ final class MyFeedViewModel {
     private let addArtworkReviewUseCase: AddArtworkReviewUsecase
     
     let myFeedViewModelRelay: BehaviorRelay<Loadable<MyFeedViewModelDTO>> = .init(value: .notRequested)
-    let updateEvent: BehaviorRelay<Loadable<Void>> = .init(value: .notRequested)
+    let updateEvent: PublishRelay<Loadable<Void>> = .init()
     let myAnswer: BehaviorRelay<String> = .init(value: "")
     let review: BehaviorRelay<String> = .init(value: "")
     

@@ -60,7 +60,7 @@ private extension ArtworkIntroductionViewController {
 
     func setUpObserver() {
         viewModel.addEvent
-            .asDriver()
+            .asDriver(onErrorJustReturn: .notRequested)
             .drive(onNext: { [unowned self] in
                 switch $0 {
                 case .notRequested: break
