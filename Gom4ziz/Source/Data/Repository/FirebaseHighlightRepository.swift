@@ -18,17 +18,27 @@ final class FirebaseHighlightRepository {
     
     static let shared: HighlightRepository = FirebaseHighlightRepository()
     private let db: Firestore = Firestore.firestore()
-    
+    private var cache: Set<CacheKey> = []
     private init() { }
-    
+
+    struct CacheKey: Hashable {
+        let artworkId: Int
+        let userId: String
+    }
 }
 
 extension FirebaseHighlightRepository: HighlightRepository {
     
     func fetchHighlight(of artworkId: Int, _ userId: String) -> Observable<[Highlight]> {
-        getHighlightsRef(of: artworkId, userId)
+        let cacheKey: CacheKey = CacheKey(artworkId: artworkId, userId: userId)
+        let source: FirestoreSource = cache.contains(cacheKey) ? .cache: .server
+
+        return getHighlightsRef(of: artworkId, userId)
             .rx
-            .decodable(as: Highlight.self)
+            .decodable(as: Highlight.self, source: source)
+            .do(onNext: { _ in
+                self.cache.insert(cacheKey)
+            })
     }
 
 }

@@ -19,15 +19,19 @@ final class FirebaseArtworkDescriptionRepository {
     
     static let shared: FirebaseArtworkDescriptionRepository = .init()
     private let db: Firestore = Firestore.firestore()
-    
+    private var cache: Set<Int> = []
+
 }
 
 extension FirebaseArtworkDescriptionRepository: ArtworkDescriptionRepository {
     
     func fetchArtworkDescription(of artworkId: Int) -> Observable<ArtworkDescription> {
-        getArtworkDescripionRef(of: artworkId)
+        let source: FirestoreSource = cache.contains(artworkId) ? .cache: .server
+
+        return getArtworkDescripionRef(of: artworkId)
             .rx
-            .decodable(as: ArtworkDescription.self)
+            .decodable(as: ArtworkDescription.self, source: source)
+            .do(onNext: { _ in self.cache.insert(artworkId) })
     }
     
 }
