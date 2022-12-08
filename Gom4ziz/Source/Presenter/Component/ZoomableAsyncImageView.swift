@@ -11,6 +11,8 @@ final class ZoomableAsyncImageView: UIScrollView {
 
     private let asyncImageView: AsyncImageView
     private var isSizeDetermined: Bool = false
+    private let maximumScale: CGFloat = 10
+    private let minimumScale: CGFloat = 1
 
     init(
         url: String,
@@ -21,6 +23,7 @@ final class ZoomableAsyncImageView: UIScrollView {
         super.init(frame: .zero)
         addSubview(asyncImageView)
         setUpUI()
+        setUpDoubleTapGestureRecognizer()
         asyncImageView.frame = CGRect(x: 0, y: 0, width: 300, height: 300)
     }
 
@@ -31,10 +34,10 @@ final class ZoomableAsyncImageView: UIScrollView {
     private func setUpUI() {
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-        minimumZoomScale = 1
-        maximumZoomScale = 3
         alwaysBounceVertical = true
         alwaysBounceHorizontal = true
+        maximumZoomScale = maximumScale
+        minimumZoomScale = minimumScale
         delegate = self
     }
 
@@ -66,12 +69,31 @@ extension ZoomableAsyncImageView: UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if zoomScale > 3 {
-            zoomScale = 3
-        } else if zoomScale < 1 {
-            zoomScale = 1
+        if zoomScale > maximumScale {
+            zoomScale = maximumScale
+        } else if zoomScale < minimumScale {
+            zoomScale = minimumScale
         }
     }
+}
+
+// MARK: - 더블탭 제스처
+private extension ZoomableAsyncImageView {
+
+    func setUpDoubleTapGestureRecognizer() {
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        doubleTap.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTap)
+    }
+
+    @objc func doubleTapped() {
+        if zoomScale < 1.5 {
+            setZoomScale(4, animated: true)
+            return
+        }
+        setZoomScale(minimumScale, animated: true)
+    }
+
 }
 
 #if DEBUG
