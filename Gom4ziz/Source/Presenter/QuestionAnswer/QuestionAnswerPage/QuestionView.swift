@@ -68,6 +68,7 @@ private extension QuestionView {
 
     func setUpInfoContainerConstaints() {
         infoContainer.translatesAutoresizingMaskIntoConstraints = false
+        infoContainer.backgroundColor = .black.withAlphaComponent(0.3)
         NSLayoutConstraint.activate([
             infoContainer.topAnchor.constraint(equalTo: topAnchor),
             infoContainer.leftAnchor.constraint(equalTo: leftAnchor),
