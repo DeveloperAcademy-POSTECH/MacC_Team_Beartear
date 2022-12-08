@@ -64,7 +64,9 @@ final class MyFeedView: BaseAutoLayoutUIView {
     
     lazy var artworkImageView: AsyncImageView = .init(
         url: artwork.imageUrl,
-        contentMode: .scaleAspectFill)
+        contentMode: .scaleAspectFit,
+        sizeToAspectFit: true
+    )
     
     private lazy var artworkTitleLabel: UILabel = {
         let label = UILabel()
@@ -230,6 +232,10 @@ extension MyFeedView {
             reviewStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
             reviewStackView.bottomAnchor.constraint(equalTo: myFeedStackView.bottomAnchor)
         ])
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
     
     func setUpUI() {
