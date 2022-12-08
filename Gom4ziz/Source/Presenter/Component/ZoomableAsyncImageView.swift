@@ -21,6 +21,7 @@ final class ZoomableAsyncImageView: UIScrollView {
     ) {
         asyncImageView = AsyncImageView(url: url, contentMode: contentMode, filterOptions: filterOptions)
         super.init(frame: .zero)
+        isScrollEnabled = false
         addSubview(asyncImageView)
         setUpUI()
         setUpDoubleTapGestureRecognizer()
@@ -64,6 +65,7 @@ extension ZoomableAsyncImageView {
 }
 
 extension ZoomableAsyncImageView: UIScrollViewDelegate {
+
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         self.asyncImageView
     }
@@ -75,6 +77,16 @@ extension ZoomableAsyncImageView: UIScrollViewDelegate {
             zoomScale = minimumScale
         }
     }
+
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        if zoomScale > minimumScale && !isScrollEnabled {
+            isScrollEnabled.toggle()
+            return
+        } else if zoomScale == minimumScale && isScrollEnabled {
+            isScrollEnabled.toggle()
+        }
+    }
+
 }
 
 // MARK: - 더블탭 제스처
