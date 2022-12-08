@@ -17,14 +17,17 @@ final class AsyncImageView: UIImageView {
     private let filterOptions: [ImageFilterOption]
     private var previousDisposable: Disposable?
     private let asyncImageManager: AsyncImageManager = .shared
+    private let sizeToAspectFit: Bool
 
     init(
         url string: String,
         progressView: UIView = UIActivityIndicatorView(style: .large),
         contentMode: ContentMode = .scaleAspectFill,
-        filterOptions: [ImageFilterOption] = []
+        filterOptions: [ImageFilterOption] = [],
+        sizeToAspectFit: Bool = false
     ) {
         self.url = string
+        self.sizeToAspectFit = sizeToAspectFit
         self.filterOptions = filterOptions
         self.progressView = progressView
         super.init(frame: .zero)
@@ -103,11 +106,25 @@ private extension AsyncImageView {
                 guard let self else { return }
                 self.removeProgressView()
                 self.image = image
+                self.setSizeToAspectFit()
             }, onFailure: { [weak self] error in
                 guard let self else { return }
                 self.removeProgressView()
                 self.addErrorIndicator(error)
             })
+    }
+
+    func setSizeToAspectFit() {
+        guard sizeToAspectFit, let image, image.size.height > 0 else {
+            return
+        }
+
+        let aspectRatio: CGFloat = image.size.height / image.size.width
+
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: aspectRatio),
+            heightAnchor.constraint(lessThanOrEqualToConstant: 350)
+        ])
     }
 
     func removeProgressView() {
