@@ -104,6 +104,7 @@ private extension MainQuestionView {
     func setUpQuestionLabel() {
         questionLabel.text = artwork.question
         questionLabel.textStyle(.Display1, lineHeightMultiple: 1.5, alignment: .left, UIColor.white)
+        questionLabel.lineBreakStrategy = .hangulWordPriority
         questionNumberLabel.textColor = .white
         questionLabel.numberOfLines = 0
         questionLabel.lineBreakMode = .byWordWrapping
