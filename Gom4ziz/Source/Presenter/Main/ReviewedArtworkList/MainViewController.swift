@@ -41,8 +41,22 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        questionViewModel.requestArtwork()
+        requestArtworkIfWaiting()
         setNavbarTransparent()
+    }
+
+    private func requestArtworkIfWaiting() {
+        let status = questionViewModel.weeklyArtworkStatusRelay.value
+        switch status {
+        case .notRequested:
+            questionViewModel.requestArtwork()
+        case .waitNextArtworkDay:
+            questionViewModel.requestArtwork()
+        case .noMoreData:
+            questionViewModel.requestArtwork()
+        default:
+            break
+        }
     }
     
     // row 데이터 적용 (section은 dataSource.titleForHeaderInSection으로 설정)
@@ -50,6 +64,13 @@ final class MainViewController: UIViewController, UIScrollViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reviewedArtworkCell", for: indexPath) as! ReviewedArtworkCell
         cell.setViewModel(reviewedArtworkListCellViewModel: item)
         return cell
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            let xOffset: CGFloat = scrollView.contentOffset.x
+            scrollView.setContentOffset(.init(x: xOffset, y: 0), animated: false)
+        }
     }
 
 }
