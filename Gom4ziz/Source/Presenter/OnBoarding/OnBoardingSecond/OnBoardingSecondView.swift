@@ -10,7 +10,7 @@ import UIKit
 final class OnBoardingSecondView: BaseAutoLayoutUIView {
 
     private let onBoardingLabel: UILabel = UILabel()
-    private let guideVideoView: VideoView
+    let guideVideoView: VideoView
     
     init(urlString: String) {
         guideVideoView = VideoView(url: urlString)

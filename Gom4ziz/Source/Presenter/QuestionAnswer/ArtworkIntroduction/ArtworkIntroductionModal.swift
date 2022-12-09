@@ -27,6 +27,7 @@ final class ArtworkIntroductionModal: BaseAutoLayoutUIView {
     private var topY: CGFloat
     private var bottomY: CGFloat
     private let baseInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 16, right: -16)
+    private var isToastShowed: Bool = false
 
     init(
         frame: CGRect = .zero,
@@ -147,7 +148,8 @@ private extension ArtworkIntroductionModal {
         artworkNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             artworkNameLabel.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            artworkNameLabel.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor)
+            artworkNameLabel.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor),
+            artworkNameLabel.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor)
         ])
     }
 
@@ -155,7 +157,8 @@ private extension ArtworkIntroductionModal {
         artistLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             artistLabel.topAnchor.constraint(equalTo: artworkNameLabel.bottomAnchor, constant: 4),
-            artistLabel.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor)
+            artistLabel.leftAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leftAnchor),
+            artistLabel.rightAnchor.constraint(equalTo: scrollView.contentLayoutGuide.rightAnchor)
         ])
     }
 
@@ -255,6 +258,7 @@ private extension ArtworkIntroductionModal {
 
     func setUpArtworkNameLabel() {
         artworkNameLabel.text = artwork.title
+        artworkNameLabel.numberOfLines = 0
         artworkNameLabel.textStyle(.Title, .gray4)
     }
 
@@ -267,6 +271,7 @@ private extension ArtworkIntroductionModal {
 
     func setUpArtistLabel() {
         artistLabel.text = artwork.artist
+        artistLabel.numberOfLines = 0
         artistLabel.textStyle(.Body2, .gray3)
     }
 
@@ -389,6 +394,14 @@ private extension ArtworkIntroductionModal {
             layer.cornerRadius = 0
             scrollView.isUserInteractionEnabled = true
             addTopDivider()
+        }
+        if !isToastShowed {
+            isToastShowed = true
+            showToastMessage(
+                text: "문장을 꾹 눌러 하이라이팅 할 수 있어요",
+                duration: 4,
+                textAlignment: .center
+            )
         }
     }
 

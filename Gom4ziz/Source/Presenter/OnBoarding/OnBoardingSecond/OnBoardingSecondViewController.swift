@@ -18,6 +18,16 @@ final class OnBoardingSecondViewController: UIViewController {
     override func loadView() {
         self.view = onBoardingSecondView
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        onBoardingSecondView.guideVideoView.startVideo()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        onBoardingSecondView.guideVideoView.stopVideo()
+    }
 }
 
 #if DEBUG

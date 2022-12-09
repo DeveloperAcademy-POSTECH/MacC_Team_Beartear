@@ -31,6 +31,14 @@ final class VideoView: UIView {
         super.layoutSubviews()
         playerLayer?.frame = bounds
     }
+
+    func startVideo() {
+        player.play()
+    }
+
+    func stopVideo() {
+        player.pause()
+    }
     
     deinit {
         guard let observer = playerObserver else { return }
@@ -53,8 +61,8 @@ private extension VideoView {
         let playerLayer = AVPlayerLayer(player: self.player)
         playerLayer.frame = bounds
         playerLayer.videoGravity = .resizeAspect
-        playerObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { _ in
-            self.resetPlayer()
+        playerObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: nil) { [weak self] _ in
+            self?.resetPlayer()
            }
         
         return playerLayer
@@ -63,7 +71,6 @@ private extension VideoView {
     func setVideoPlayer(with playerLayer: AVPlayerLayer?) {
         guard let playerLayer = playerLayer else { return }
         layer.addSublayer(playerLayer)
-        player.play()
     }
 }
 
