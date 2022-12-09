@@ -183,6 +183,7 @@ private extension MainViewController {
                 let artwork: Artwork = Artwork(
                     id: $0.artworkId,
                     imageUrl: $0.imageURLString,
+                    thumbnailImage: $0.thumbnailImage,
                     question: $0.question,
                     title: $0.artworkTitle,
                     artist: $0.artist

@@ -19,8 +19,12 @@ struct ReviewedArtworkListCellViewModel {
     let answer: String
     let artist: String
     let imageURLString: String
+    let thumbnailImage: String
     
-    init(artwork: Artwork, questionAnswer: QuestionAnswer) {
+    init(
+        artwork: Artwork,
+        questionAnswer: QuestionAnswer
+    ) {
         self.artworkId = artwork.id
         self.artist = artwork.artist
         self.artworkTitle = artwork.title
@@ -28,6 +32,7 @@ struct ReviewedArtworkListCellViewModel {
         self.question = artwork.question
         self.answer = questionAnswer.questionAnswer
         self.imageURLString = artwork.imageUrl
+        self.thumbnailImage = artwork.thumbnailImage
     }
 }
 

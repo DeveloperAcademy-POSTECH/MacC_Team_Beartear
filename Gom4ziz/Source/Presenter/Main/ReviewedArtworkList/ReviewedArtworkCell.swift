@@ -30,7 +30,7 @@ final class ReviewedArtworkCell: UITableViewCell {
     }
     
     func setViewModel(reviewedArtworkListCellViewModel: ReviewedArtworkListCellViewModel) {
-        artworkImageView.changeURL(reviewedArtworkListCellViewModel.imageURLString)
+        artworkImageView.changeURL(reviewedArtworkListCellViewModel.thumbnailImage)
         tiramisulCountLable.text = reviewedArtworkListCellViewModel.numberText
         questionLable.text = reviewedArtworkListCellViewModel.question
         answerLable.text = reviewedArtworkListCellViewModel.answer

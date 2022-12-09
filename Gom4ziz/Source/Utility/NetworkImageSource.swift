@@ -14,7 +14,7 @@ struct NetworkImageSource: ImageSource {
     private let session: URLSession = URLSession(configuration: .ephemeral)
 
     func fetchImage(of url: URL) -> Single<UIImage> {
-        let request: URLRequest = URLRequest(url: url, timeoutInterval: 4)
+        let request: URLRequest = URLRequest(url: url, timeoutInterval: 10)
         return session
             .rx
             .data(request: request)

@@ -50,8 +50,10 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var questionStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [questionAnswerSectionTitleView,
-                                                      questionAnswerLabel])
+        let stackView = UIStackView(arrangedSubviews: [
+            questionAnswerSectionTitleView,
+            questionAnswerLabel
+        ])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -63,7 +65,7 @@ final class MyFeedView: BaseAutoLayoutUIView {
     // 작품 정보
     
     lazy var artworkImageView: AsyncImageView = .init(
-        url: artwork.imageUrl,
+        url: artwork.thumbnailImage,
         contentMode: .scaleAspectFit,
         sizeToAspectFit: true
     )
@@ -87,8 +89,10 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var artworkInfoStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [artworkTitleLabel,
-                                                      artworkArtistLabel])
+        let stackView = UIStackView(arrangedSubviews: [
+            artworkTitleLabel,
+            artworkArtistLabel
+        ])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -98,8 +102,10 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var artworkStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [artworkImageView,
-                                                       artworkInfoStackView])
+        let stackView = UIStackView(arrangedSubviews: [
+            artworkImageView,
+            artworkInfoStackView
+        ])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .center
@@ -117,15 +123,22 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     lazy var highlightTextView: HighlightedTextView = {
-        let textView = HighlightedTextView(text: " ", highlights: [], isEditable: false, isExpandable: false)
+        let textView = HighlightedTextView(
+            text: " ",
+            highlights: [],
+            isEditable: false,
+            isExpandable: false
+        )
         textView.textView.textStyle(.Body1, .blackFont)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
     
     private lazy var artworkDescriptionStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [artworkDesciptionSectionTitleView,
-                                                       highlightTextView])
+        let stackView = UIStackView(arrangedSubviews: [
+            artworkDesciptionSectionTitleView,
+            highlightTextView
+        ])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -152,8 +165,10 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var reviewStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [reviewSectionTitleView,
-                                                       reviewLabel])
+        let stackView = UIStackView(arrangedSubviews: [
+            reviewSectionTitleView,
+            reviewLabel
+        ])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -163,11 +178,13 @@ final class MyFeedView: BaseAutoLayoutUIView {
     }()
     
     private lazy var myFeedStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [questionLabel,
-                                                       questionStackView,
-                                                       artworkStackView,
-                                                       artworkDescriptionStackView,
-                                                       reviewStackView])
+        let stackView = UIStackView(arrangedSubviews: [
+            questionLabel,
+            questionStackView,
+            artworkStackView,
+            artworkDescriptionStackView,
+            reviewStackView
+        ])
         stackView.axis = .vertical
         stackView.distribution = .fill
         stackView.alignment = .fill
@@ -262,9 +279,11 @@ extension MyFeedView {
 import SwiftUI
 struct MyFeedViewPreview: PreviewProvider {
     static var previews: some View {
-        MyFeedView(artwork: .mockData,
-                   questionAnswer: .mockData)
-            .toPreview()
+        MyFeedView(
+            artwork: .mockData,
+            questionAnswer: .mockData
+        )
+        .toPreview()
     }
 }
 #endif
