@@ -27,7 +27,7 @@ final class MainQuestionView: BaseAutoLayoutUIView {
     init(artwork: Artwork) {
         self.artwork = artwork
         self.questionImageView = AsyncImageView(
-            url: artwork.imageUrl,
+            url: artwork.thumbnailImage,
             contentMode: .scaleAspectFill)
         super.init(frame: .zero)
     }

@@ -10,6 +10,7 @@ import Foundation
 struct Artwork: Codable, Identifiable {
     let id: Int
     let imageUrl: String
+    let thumbnailImage: String
     let question: String
     let title: String
     let artist: String

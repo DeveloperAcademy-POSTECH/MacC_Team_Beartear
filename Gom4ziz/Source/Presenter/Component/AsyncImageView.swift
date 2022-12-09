@@ -122,7 +122,7 @@ private extension AsyncImageView {
         let aspectRatio: CGFloat = image.size.height / image.size.width
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(lessThanOrEqualTo: widthAnchor, multiplier: aspectRatio)
+            heightAnchor.constraint(equalTo: widthAnchor, multiplier: aspectRatio)
         ])
     }
 
