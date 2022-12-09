@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>718965805636-pij3vtgm4483gl024bme51vhs8jrvf6t.apps.googleusercontent.com</string>
+	<string>718965805636-gjgfedokckn1flbbou286phkh9jqfl00.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.718965805636-pij3vtgm4483gl024bme51vhs8jrvf6t</string>
+	<string>com.googleusercontent.apps.718965805636-gjgfedokckn1flbbou286phkh9jqfl00</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBOTn-lsFFirudCCHt5KESkkDKQFsszqWk</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>team.gom4ziz.Ziz4gom</string>
+	<string>com.gom4ziz.tiramisul</string>
 	<key>PROJECT_ID</key>
 	<string>gom4ziz</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:718965805636:ios:a722b25d95a9d1bfee2211</string>
+	<string>1:718965805636:ios:2f4f41501635686bee2211</string>
 </dict>
 </plist>
