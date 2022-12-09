@@ -17,11 +17,14 @@ final class MainQuestionView: BaseAutoLayoutUIView {
     private let maskImageView: UIImageView = UIImageView()
     private let transparentLayer: CALayer = CALayer()
     private let navigateLabel: UILabel = UILabel()
-    private let imageMaskNames: [String] = [ImageName.questionImageMask]
+    private var imageMaskNames: [String] {
+            QuestionImageMasks.allCases.map {
+                QuestionImageMasks.prefixName + String($0.rawValue)
+            }
+        }
     private var imageMask: UIImage? {
-        let randomInt = Int.random(in: 0..<imageMaskNames.count)
-        let imageName = imageMaskNames[randomInt]
-        return UIImage(named: imageName)
+        let maskIndex = artwork.id % imageMaskNames.count
+        return UIImage(named: imageMaskNames[maskIndex])
     }
     
     init(artwork: Artwork) {
