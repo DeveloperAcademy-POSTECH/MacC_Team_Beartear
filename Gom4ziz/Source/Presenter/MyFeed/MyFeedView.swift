@@ -216,7 +216,7 @@ extension MyFeedView {
             
             questionLabel.topAnchor.constraint(equalTo: myFeedStackView.topAnchor, constant: 12),
             questionLabel.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
-            questionLabel.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
+            questionLabel.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -16),
 
             questionStackView.leftAnchor.constraint(equalTo: myFeedStackView.leftAnchor, constant: 16),
             questionStackView.rightAnchor.constraint(equalTo: myFeedStackView.rightAnchor, constant: -16),
