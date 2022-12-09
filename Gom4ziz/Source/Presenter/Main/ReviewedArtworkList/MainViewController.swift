@@ -13,7 +13,7 @@ import RxSwift
 
 final class MainViewController: UIViewController, UIScrollViewDelegate {
     
-    private var tableView = UITableView(frame: .zero, style: .plain)
+    private var tableView = UITableView(frame: .zero, style: .grouped)
     private let reviewedArtworkListViewModel: ReviewedArtworkListViewModel
     private let questionViewModel: QuestionViewModel
     private let userViewModel: UserViewModel
@@ -152,9 +152,8 @@ private extension MainViewController {
     
     func setTableViewObserver() {
         tableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                let cell = self?.tableView.cellForRow(at: indexPath)
-                cell?.isSelected = false
+            .subscribe(onNext: { [unowned self] indexPath in
+                self.tableView.deselectRow(at: indexPath, animated: true)
             })
             .disposed(by: disposeBag)
 
