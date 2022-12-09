@@ -29,8 +29,8 @@ extension OnBoardingThirdView {
     func setUpConstraints() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 180),
-            imageView.heightAnchor.constraint(equalToConstant: 248),
+            imageView.widthAnchor.constraint(equalToConstant: 314),
+            imageView.heightAnchor.constraint(equalToConstant: 406),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             imageView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])

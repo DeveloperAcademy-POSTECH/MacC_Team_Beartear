@@ -11,7 +11,6 @@ enum ImageName {
     // Asset
     static let onBoarding1Image = "onBoarding1Image"
     static let onBoarding3Image = "onBoarding3Image"
-    static let questionImageMask = "QuestionImageMask"
     static let bakingFirst = "BakingFirst"
     static let bakingSecond = "BakingSecond"
     static let errorImage = "ErrorImage"
@@ -19,4 +18,11 @@ enum ImageName {
     
     // SF Symbol
     static let rightArrow = "arrow.right"
+}
+
+enum QuestionImageMasks: Int, CaseIterable {
+    case zero = 0
+    case one, two, three, four, five, six, seven
+    
+    static let prefixName = "QuestionImageMask"
 }

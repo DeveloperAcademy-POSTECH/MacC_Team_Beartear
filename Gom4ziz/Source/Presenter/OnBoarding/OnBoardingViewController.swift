@@ -51,6 +51,7 @@ private extension OnBoardingViewController {
             .do(onNext: { [unowned self] in
                 let buttonText = $0 == self.pageViewControllerList.count - 1 ? "시작하기" : "다음으로"
                 self.onBoardingButton.setUpUI(text: buttonText)
+                self.startVideoNotiPost($0)
             })
             .subscribe(onNext: { [unowned self] in
                 self.changeSkipButtonUI(with: $0)
@@ -71,6 +72,7 @@ private extension OnBoardingViewController {
             .tap
             .bind {
                 self.userRegister()
+                self.removeVideoNoti()
             }
             .disposed(by: disposeBag)
     }
@@ -85,6 +87,7 @@ private extension OnBoardingViewController {
                 .accept(currentIdx + 1)
         } else {
             userRegister()
+            removeVideoNoti()
         }
     }
     
@@ -92,6 +95,16 @@ private extension OnBoardingViewController {
         userViewModel
             .addUser(for: getDeviceUUID)
     }
+    
+    func startVideoNotiPost(_ pageIndex: Int) {
+        if pageIndex == 1 {
+            NotificationCenter.default.post(name: Notification.Name.onBoardingVideoStart, object: nil, userInfo: nil)
+        }
+    }
+    
+    func removeVideoNoti() {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.onBoardingVideoStart, object: nil)
+        }
 }
 
 private extension OnBoardingViewController {

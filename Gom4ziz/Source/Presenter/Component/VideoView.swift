@@ -11,7 +11,7 @@ import UIKit
 final class VideoView: UIView {
     
     private let url: String
-    private let player = AVPlayer()
+    let player = AVPlayer()
     private var playerLayer: AVPlayerLayer?
     private var playerObserver: Any?
     
@@ -63,7 +63,6 @@ private extension VideoView {
     func setVideoPlayer(with playerLayer: AVPlayerLayer?) {
         guard let playerLayer = playerLayer else { return }
         layer.addSublayer(playerLayer)
-        player.play()
     }
 }
 
