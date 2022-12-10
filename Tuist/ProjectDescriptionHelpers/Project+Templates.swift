@@ -26,6 +26,17 @@ public let swiftlint = """
 
 """
 
+public let firebaseInfoScript = """
+case "${CONFIGURATION}" in
+  "Dev" )
+cp -r "$SRCROOT/Gom4ziz/Resource/Firebase/GoogleService-Info-Debug.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist" ;;
+  "Release" )
+cp -r "$SRCROOT/Gom4ziz/Resource/Firebase/GoogleService-Info-Prod.plist" "${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist" ;;
+*)
+;;
+esac
+"""
+
 public extension Project {
     static func target(
         name: String,
@@ -46,7 +57,7 @@ public extension Project {
         return Target(name: name,
                       platform: platform,
                       product: product,
-                      bundleId: bundleId ?? "team.gom4ziz.\(name.lowercased())",
+                      bundleId: bundleId ?? "com.gom4ziz.\(name.lowercased())",
                       deploymentTarget: deploymentTarget,
                       infoPlist: infoPlist,
                       sources: sources,

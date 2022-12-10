@@ -54,7 +54,10 @@ let appTarget: Target = Project.target(name: "Gom4ziz",
                                        sources: ["Gom4ziz/Source/**"],
                                        resources: ["Gom4ziz/Resource/**"],
                                        entitlements: "Gom4ziz/File/Gom4ziz.entitlements",
-                                       scripts: [.pre(script: swiftlint, name: "SwiftLint")],
+                                       scripts: [
+                                        .pre(script: swiftlint, name: "SwiftLint"),
+                                        .pre(script: firebaseInfoScript, name: "FirebaseInfo Generate")
+                                       ],
                                        dependencies: [.package(product: "FirebaseAuth"),
                                                       .package(product: "FirebaseFirestore"),
                                                       .package(product: "FirebaseFirestoreSwift"),
