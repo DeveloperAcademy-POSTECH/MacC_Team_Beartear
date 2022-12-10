@@ -12,26 +12,40 @@ import RxSwift
 import RxRelay
 
 protocol ArtworkReviewRepository {
+
     func fetchArtworkReview(of artworkId: Int, _ userId: String) -> Observable<ArtworkReview>
+
     func addArtworkReview(
         of artworkId: Int,
         review: ArtworkReview,
         answer: QuestionAnswer,
         highlights: [Highlight]
     ) -> Single<Void>
+
 }
 
 final class FirebaseArtworkReviewRepository {
     static let shared: FirebaseArtworkReviewRepository = FirebaseArtworkReviewRepository()
     private let db: Firestore = Firestore.firestore()
+    private var cache: Set<CacheKey> = .init()
+
+    struct CacheKey: Hashable {
+        let userId: String
+        let artworkId: Int
+    }
 }
 
 extension FirebaseArtworkReviewRepository: ArtworkReviewRepository {
 
     func fetchArtworkReview(of artworkId: Int, _ userId: String) -> Observable<ArtworkReview> {
-        getArtworkReviewRef(of: artworkId, userId)
+        let cacheKey: CacheKey = .init(userId: userId, artworkId: artworkId)
+
+        let source: FirestoreSource = cache.contains(cacheKey) ? .cache: .server
+
+        return getArtworkReviewRef(of: artworkId, userId)
             .rx
-            .decodable(as: ArtworkReview.self)
+            .decodable(as: ArtworkReview.self, source: source)
+            .do(onNext: { _ in self.cache.insert(cacheKey)} )
     }
 
     func addArtworkReview(
@@ -45,6 +59,10 @@ extension FirebaseArtworkReviewRepository: ArtworkReviewRepository {
         let answerRef: DocumentReference = getQuestionAnswerRef(of: artworkId, review.uid)
         let userRef: DocumentReference = getUserRef(of: review.uid)
         let highlightsRefs: [DocumentReference] = highlights.map { getHighlightsRef(of: artworkId, review.uid, $0.start) }
+
+        // 아트워크 리뷰를 업데이트하거나 추가하면, 다시 서버에서 불러와야 하므로 캐시키를 지운다.
+        let cacheKey: CacheKey = .init(userId: review.uid, artworkId: artworkId)
+        cache.remove(cacheKey)
 
         return db.rx
             .runTransaction {  (transaction, errorPointer) -> Void? in

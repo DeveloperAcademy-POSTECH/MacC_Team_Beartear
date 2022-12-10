@@ -10,5 +10,5 @@ import Foundation
 extension String {
     var convertNewLine: String {
         return self.replacingOccurrences(of: "\\n", with: "\n")
-      }
+    }
 }
