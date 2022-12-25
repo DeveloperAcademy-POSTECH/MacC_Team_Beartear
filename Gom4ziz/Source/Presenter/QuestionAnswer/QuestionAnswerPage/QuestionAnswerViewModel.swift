@@ -5,6 +5,8 @@
 //  Created by JongHo Park on 2022/11/23.
 //
 
+import Loadable
+import RxSwiftLoadable
 import RxSwift
 import RxRelay
 
@@ -53,11 +55,7 @@ final class QuestionAnswerViewModel {
         artworkDescriptionRelay.accept(.isLoading(last: nil))
         // 작품 상세 정보 fetch 요청
         fetchDescriptionUsecase.fetchArtworkDescription(of: artwork.id)
-            .subscribe(onNext: { [weak self] description in
-                self?.artworkDescriptionRelay.accept(.loaded(description))
-            }, onError: { [weak self] error in
-                self?.artworkDescriptionRelay.accept(.failed(error))
-            })
+            .bindLoadable(to: artworkDescriptionRelay)
             .disposed(by: disposeBag)
     }
 
@@ -70,13 +68,7 @@ final class QuestionAnswerViewModel {
         let highlights = highlights.value
         // DB 업로드 요청
         addReviewUsecase.addArtworkReview(maker: userId, of: artwork.id, review: review, answer: answer, highlights: highlights)
-            .subscribe(onSuccess: { [weak self] in
-                // 업로드 이벤트를 마무리한다.
-                self?.addEvent.accept(.loaded(()))
-            }, onFailure: { [weak self] error in
-                // 업로드 도중 실패 시
-                self?.addEvent.accept(.failed(error))
-            })
+            .bindLoadable(to: addEvent)            
             .disposed(by: disposeBag)
     }
 

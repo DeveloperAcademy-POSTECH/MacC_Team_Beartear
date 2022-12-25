@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Loadable
+import RxSwiftLoadable
 import RxCocoa
 import RxSwift
 
@@ -54,11 +56,7 @@ final class ReviewedArtworkListViewModel {
                     )
                 }
             }
-            .subscribe(onNext: { [weak self] in
-                self?.reviewedArtworkListCellListObservable.accept(.loaded($0))
-            }, onError: { [weak self] in
-                self?.reviewedArtworkListCellListObservable.accept(.failed($0))
-            })
+            .bindLoadable(to: reviewedArtworkListCellListObservable)
             .disposed(by: disposeBag)
     }
     

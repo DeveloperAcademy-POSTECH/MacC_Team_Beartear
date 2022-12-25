@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Loadable
+import RxSwiftLoadable
 import RxCocoa
 import RxSwift
 
@@ -38,27 +40,23 @@ final class UserViewModel {
     
     func fetchUser() {
         userObservable.accept(.isLoading(last: nil))
-        fetchUserUsecase.fetchUser().subscribe { [weak self] user in
-            self?.userObservable.accept(.loaded(user))
-        } onError: { [weak self] error in
-            if case RxFirestoreError.documentIsNotExist = error {
-                self?.userObservable.accept(.failed(UserRequestError.notRegisteredUser))
-            } else {
-                self?.userObservable.accept(.failed(error))
+        fetchUserUsecase
+            .fetchUser()
+            .catch { error in
+                if case RxFirestoreError.documentIsNotExist = error {
+                    return Observable.error(UserRequestError.notRegisteredUser)
+                } else {
+                    return Observable.error(error)
+                }
             }
-        }
-        .disposed(by: disposeBag)
+            .bindLoadable(to: userObservable)
+            .disposed(by: disposeBag)
     }
     
     func addUser(for userId: String) {
         userObservable.accept(.isLoading(last: nil))
         addUserUsecase.addUser(for: userId)
-            .subscribe(onSuccess: { [weak self] user in
-                self?.userObservable.accept(.loaded(user))
-            },
-                       onFailure: { [weak self] error in
-                self?.userObservable.accept(.failed(error))
-            })
+            .bindLoadable(to: userObservable)
             .disposed(by: disposeBag)
     }
 }

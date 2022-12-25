@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Loadable
+import RxSwiftLoadable
 import RxRelay
 import RxSwift
 
@@ -56,28 +58,31 @@ final class MyFeedViewModel {
     
     func fetchMyFeed() {
         myFeedViewModelRelay.accept(.isLoading(last: nil))
-        Observable.zip(fetchArtworkDescription(),
+        let observable = Observable.zip(fetchArtworkDescription(),
                        fetchHighlight(),
                        fetchArtworkReview())
         .map { (description: ArtworkDescription, highlights: [Highlight], review: ArtworkReview) in
-            MyFeedViewModelDTO(artworkDescription: description,
-                                  highlights: highlights,
-                                  artworkReview: review)
+            MyFeedViewModelDTO(
+                artworkDescription: description,
+                highlights: highlights,
+                artworkReview: review)
         }
-        .subscribe { [weak self] in
-            self?.myFeedViewModelRelay.accept(.loaded($0))
-            self?.review.accept($0.artworkReview)
-        } onError: { [weak self] in
-            self?.myFeedViewModelRelay.accept(.failed($0))
-        }
-        .disposed(by: disposeBag)
+
+        observable
+            .bindLoadable(to: myFeedViewModelRelay)
+            .disposed(by: disposeBag)
+
+        observable
+            .map(\.artworkReview)
+            .bind(to: review)
+            .disposed(by: disposeBag)
     }
     
     func updateArtworkReview() {
-        updateEvent.accept(.isLoading(last: nil))
         let myAnswer = myAnswer.value
         let review = review.value
         let highlights = myFeedViewModelRelay.value.value?.highlights ?? []
+        updateEvent.accept(.isLoading(last: nil))
         addArtworkReviewUseCase
             .addArtworkReview(
                 maker: userId,
@@ -86,11 +91,7 @@ final class MyFeedViewModel {
                 answer: myAnswer,
                 highlights: highlights
             )
-            .subscribe(onSuccess: { [weak self] in
-                self?.updateEvent.accept(.loaded(()))
-            }, onFailure: { [weak self] in
-                self?.updateEvent.accept(.failed($0))
-            })
+            .bindLoadable(to: updateEvent)
             .disposed(by: disposeBag)
     }
     
