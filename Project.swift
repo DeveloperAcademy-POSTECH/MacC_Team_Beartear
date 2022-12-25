@@ -65,7 +65,9 @@ let appTarget: Target = Project.target(name: "Gom4ziz",
                                                       .package(product: "RxRelay"),
                                                       .package(product: "RxCocoa"),
                                                       .package(product: "Lottie"),
-                                                      .package(product: "RxDataSources")
+                                                      .package(product: "RxDataSources"),
+                                                      .package(product: "Loadable"),
+                                                      .package(product: "RxSwiftLoadable")
                                                       ],
                                        additionalFiles: [
                                         ".swiftlint.yml"
@@ -102,7 +104,8 @@ let project = Project(
         .remote(url: "https://github.com/firebase/firebase-ios-sdk", requirement: .upToNextMajor(from: "9.0.0")),
         .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.0.0")),
         .remote(url: "https://github.com/airbnb/lottie-ios", requirement: .upToNextMajor(from: "3.0.0")),
-        .remote(url: "https://github.com/RxSwiftCommunity/RxDataSources.git", requirement: .upToNextMajor(from: "5.0.2"))
+        .remote(url: "https://github.com/RxSwiftCommunity/RxDataSources.git", requirement: .upToNextMajor(from: "5.0.2")),
+        .remote(url: "https://github.com/HoJongE/SwiftUtilityPackage", requirement: .branch("main"))
     ],
     settings: settings,
     targets: [
